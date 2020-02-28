@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512px" height="513px" viewBox="0 0 512 513" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.1 (51147) - http://www.bohemiancoding.com/sketch -->
+    <title>sad</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="sad" fill-rule="nonzero">
+            <g id="Group" transform="translate(256.000000, 256.500000) scale(-1, 1) rotate(-180.000000) translate(-256.000000, -256.500000) translate(0.000000, 0.000000)">
+                <g id="Shape">
+                    <g>
+                        <path d="M512,256.5 C512,115.1175 397.3825,0.5 256,0.5 C114.63125,0.5 0,115.1175 0,256.5 C0,397.86875 114.63125,512.5 256,512.5 C397.3825,512.5 512,397.86875 512,256.5" fill="#FFC10E"></path>
+                        <path d="M348.88875,196.66625 C348.88875,182.445 235.11125,210.88875 164,154 C192.445,225.11125 348.88875,225.11125 348.88875,196.66625 Z" fill="#333333"></path>
+                    </g>
+                </g>
+                <g transform="translate(148.000000, 257.000000)" fill="#333333" id="Oval">
+                    <circle cx="37.937" cy="37.231" r="37.216"></circle>
+                    <circle cx="178.664" cy="37.231" r="37.216"></circle>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

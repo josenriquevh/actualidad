@@ -1,0 +1,1 @@
+[15-Feb-2019 09:24:42 America/Caracas] PHP Fatal error:  Interface 'Psr\Log\LoggerInterface' not found in /home/pr3b04rd/public_html/actualidad/vendor/monolog/monolog/src/Monolog/Logger.php on line 28

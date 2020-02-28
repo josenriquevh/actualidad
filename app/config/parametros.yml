@@ -1,0 +1,93 @@
+parameters:
+    rol:
+        administrador: 1
+        alumno: 2
+        profesor: 3
+        revisor: 4
+    tipo_pagina:
+        libro_alumnos: 1
+        libro_profesores: 2
+        unidad: 3
+        tema: 4
+        ejercicio: 5
+    tipo_pregunta:
+        simple: 1
+        multiple: 2
+        asociacion: 3
+    tipo_elemento:
+        texto: 1
+        imagen: 2
+        interactivo: 3
+    tipo_noticias:
+        noticia: 1
+        novedad: 2
+    estatus_contenido:
+        activo: 1
+        inactivo: 2
+    tipo_destino:
+        alumnos: 1
+        profesores: 2
+        alumnos_seccion: 3
+        profesores_seccion: 4
+        libro: 5
+        grupo_alumnos: 6
+        grupo_profesores: 7
+    tipo_alarma:
+        unidad_completada: 1
+        evaluacion_aprobada: 2
+        alumno_registrado: 3
+        codigo_expirar: 4
+        espacio_creado : 5
+        aporte_espacio : 6
+        asignacion_creada: 7
+        aporte_actividad: 8
+    tipo_correo:
+        notificacion_programada: 1
+        cambio_clave: 2
+        aviso_vecimiento: 3
+        registro_usuario: 4
+    tipo_certificado:
+        libro: 1
+    estatus_pagina:
+        iniciada: 1
+        en_evaluacion: 2
+        completada: 3
+    estado_prueba:
+        aprobado: 'APROBADO'
+        curso: 'EN CURSO'
+        reprobado: 'REPROBADO'
+    codigo:
+        caracteres: 5
+        disponibles: 20000000
+        intentos_codigo: 20
+        palabra_valida: 5  
+        caracteres_sim: 2
+    correo_recuperacion:
+        asunto: 'Editorial Actualidad - Recuperación de usuario y clave.'
+        remitente: 'soporte@formacion2puntocero.com'
+    correo_soporte:
+        asunto: 'Editorial Actualidad - Solicitud de soporte virtual. '
+        remitente: 'soporte@formacion2puntocero.com'
+        destinatario: 'soporte@formacion2puntocero.com'
+        plantilla: 'ActualidadFrontendBundle:Soporte:EmailSoporte.html.twig'
+    ponderacion:
+        evaluacion: 0.2
+        porcentaje_aprueba: 50
+    max_intentos: 3
+    min_correctas: 3
+    secret: 315e95c941de6274d88f8529c9adf0a2c2b6613b
+    search_locale: 0
+    mailer_user: tutorvirtual@formacion2puntocero.com
+    sessionFront: 0
+    serviciosActivos:
+        interactivo: 1
+        evaluacion: 1
+    sistema_empresas:
+        # Colocar 1 en caso afirmativo si se quiere que el frontend esté habilitado para multiempresas
+        multiempresas: 0
+        # En caso de que multiempresas sea 1, exclusion iría los ids de cada empresa a excluir separados por comas. Si se quiere incluir a todas las empresas poner solo 0 dentro de los corchetes
+        exclusion: [ 0 ]
+        # En caso de que multiempresas sea 0, piloto iría el id de la empresa para la cual se presenta la interfaz
+        piloto: 1
+    comodines_correo: [ '%%usuario%%', '%%clave%%', '%%nombre%%', '%%apellido%%' ]
+    servidor_mantenimiento: 0

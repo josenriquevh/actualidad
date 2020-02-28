@@ -1,0 +1,323 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        #continuar {
+            cursor: pointer;
+        }
+        .blocked > img, img.blocked {
+            filter: grayscale(100%);
+        }
+        .blocked > span {
+            color: #8E8C8F !important;
+        }
+    </style>
+{% endblock %}
+
+{% block header %}
+    <div class="container-fluid">
+        <nav class="top-bar">
+            <svg onclick="toggleMenuNav()" style="width:54px; height:25px" id="closeMenuNav" class="pointer rotate-180 d-inline-block d-lg-none">
+                <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-collapse') }}"></use>
+            </svg>
+            <div>
+                <img style="height:70px" src="{{ asset('front/dist/img/logo-actualidad-light.png') }}" alt="">
+            </div>
+            <div class="menu d-none d-lg-flex">
+                <a href="{{ path('_inicio', { 'rol_id': app.session.get('usuario').rol_id }) }}">
+                    <svg class="icon-menu">
+                        <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-home') }}"></use>
+                    </svg>
+                    <span>{{ 'Inicio'|trans }}</span>
+                </a>
+                {% if app.session.get('usuario').rol_id == rol.profesor %}
+                    <a href="#">
+                        <svg class="icon-menu">
+                            <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-monitor') }}"></use>
+                        </svg>
+                        <span>{{ 'Monitoreo'|trans }}</span>
+                    </a>
+                    <a href="#">
+                        <svg class="icon-menu ">
+                            <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-novedades') }}"></use>
+                        </svg>
+                        <span>{{ 'Novedades'|trans }}</span>
+                    </a>
+                {% endif %}
+                {{ include('ActualidadFrontendBundle:Notificaciones:notificaciones.html.twig') }}
+                <a href="{{ path('_actualizacionUsuario', { 'rol_id': app.session.get('usuario').rol_id }) }}" class="py-1">
+                    <div class="avatar-xs">
+                        {% set img = app.session.get('usuario').foto is defined ? app.session.get('usuario').foto != '' ? uploads~app.session.get('usuario').foto : asset('front/dist/img/user.svg') : asset('front/dist/img/user.svg') %}
+                        <img style="width:60%;" src="{{ img }}" alt="">
+                    </div>
+                    <span class="mt-0">{{ app.session.get('usuario').nombre }} {{ app.session.get('usuario').apellido }}</span>
+                </a>
+                <a href="{{ path('_logout', { 'ruta': '_index' }) }}">
+                    <svg class="icon-menu rotate-180 ">
+                        <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-salir') }}"></use>
+                    </svg>
+                    <span>{{ 'Salir'|trans }}</span>
+                </a>
+            </div>
+            <div class="menu-responsive d-block d-lg-none">
+                <div class="d-inline-block d-lg-none" id="menu_hamb" onclick="showMenu()">
+                    <div class="main-item menu-hamb">
+                        <span class="line line01"></span>
+                        <span class="line line02"></span>
+                        <span class="line line03"></span>
+                    </div>
+                </div>
+                <div id="menuMobileItems">
+                    <div class="menu d-flex flex-column">
+                        <a href="{{ path('_inicio', { 'rol_id': app.session.get('usuario').rol_id }) }}">
+                            <svg class="icon-menu ">
+                                <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-home') }}"></use>
+                            </svg>
+                            <span>{{ 'Inicio'|trans }}</span>
+                        </a>
+                        {% if app.session.get('usuario').rol_id == rol.profesor %}
+                            <a href="#">
+                                <svg class="icon-menu ">
+                                    <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-monitor') }}"></use>
+                                </svg>
+                                <span>{{ 'Monitoreo'|trans }}</span>
+                            </a>
+                            <a href="#">
+                                <svg class="icon-menu ">
+                                    <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-novedades') }}"></use>
+                                </svg>
+                                <span>{{ 'Novedades'|trans }}</span>
+                            </a>
+                        {% endif %}
+                        <a href="#">
+                            <svg class="icon-menu">
+                                <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-notificacion') }}"></use>
+                            </svg>
+                            <span>{{ 'Notificaciones'|trans }}</span>
+                        </a>
+                        <a href="#" class="py-1">
+                            <div class="avatar-xs">
+                                <img style="width:60%;" src="{{ img }}" alt="">
+                            </div>
+                            <span class="mt-0">{{ app.session.get('usuario').nombre }} {{ app.session.get('usuario').apellido }}</span>
+                        </a>
+                        <a href="{{ path('_logout', { 'ruta': '_index' }) }}">
+                            <svg class="icon-menu rotate-180 ">
+                                <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-salir') }}"></use>
+                            </svg>
+                            <span>{{ 'Salir'|trans }}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>    
+    </div>
+{% endblock %}
+
+{% block body %}
+{{ parent() }}
+<input type="hidden" id="path_servicio" name="path_servicio" value="{{ path('_ajaxServicioEvaluacion') }}">
+<input type="hidden" id="url_refresh" name="url_refresh" value="{{ path('_ajaxRefreshMenu') }}">
+<input type="hidden" id="url_procesar" name="url_procesar" value="{{ path('_procesarEvaluacion', { 'prueba_log_id': parametros.prueba_log_id }) }}">
+<input type="hidden" id="unidad_id" name="unidad_id" value="{{ unidad.id }}">
+<input type="hidden" id="url_try" name="url_try" value="{{ path('_ajaxTryEvaluacion') }}">
+
+<main id="temas">
+
+    <aside class="bg-{{ libro.css }} temas" data-simplebar>
+        <nav>
+            <div class="info-wrapper">
+                <div class="d-flex justify-content-center align-items-center">
+                    <svg class="fill-white icon-materia-menu mr-3">
+                        <use  xlink:href="{{ asset('front/dist/img/icons.svg#icon-'~libro.css) }}"></use>
+                    </svg>
+                    <p class="mb-0">{{ libro.titulo }}</p>
+                </div>
+                <div class="info-unidad">
+                    <h5 class="mb-0">{{ 'UNIDAD'|trans }}</h5>
+                    <h2 class="fs-6 mt-0">{{ unidad.orden }}</h2>
+                    <div class="titulo-unidad text-left mb-2">
+                        {{ unidad.titulo }} 
+                    </div>
+                </div>
+            </div>
+            <ul class="temas-nav" id="sidebar_menu">
+                {{ sidebar_menu|raw }}
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="content position-relative w-100 p-4 px-5">
+       <div class="row my-3">
+            <div class="col-12 text-center">
+                <h1 class="fs-6 color-blue">¡{{ 'Felicidades'|trans }}!</h1>
+            </div>
+        </div> 
+        <div class="row mb-3 align-items-center rounded bg-gold">
+            <div class="col-3 col-xl-4 pl-5 position-relative">
+                <img style="top:-200px" class="position-absolute" src="{{ asset('front/dist/img/boy-fel.png') }}" alt="">
+            </div>
+            <div style="height: 300px" class="col-9 col-xl-6 py-4 fs-2-5 color-white">
+                <p class="pr-4 mt-3">{{ msg1 }}</p>
+                <p class="pr-4">{{ msg2 }}</p>
+            </div>
+        </div>
+        <div class=" d-flex align-items-center justify-content-center mt-4">
+            <div class="d-flex align-items-center">
+                <a href="{{ path('_unidades', { 'pagina_id': libro.id }) }}" class="btn-back px-3">
+                    {{ 'Salir'|trans }}
+                    <svg class="fill-white icon-materia-menu">
+                        <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-go-back') }}"></use>
+                    </svg>
+                </a>
+            </div>
+            {% if ok == 1 %}
+                <a href="#target" class="btn col-2 ml-5 btn-primary text-uppercase mr-5 resource" onclick="showInt()">{{ 'Comenzar'|trans }}
+                    <svg class="icon-menu">
+                        <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-btn-arrow') }}"></use>
+                    </svg>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div id="interactivo" class="interactivo">
+        <div id="controls" class="controles position-relative w-100">
+            <div class="ctrl-cerrar text-right">
+                <svg class="icon-close mr-5" onclick="hideInt()">
+                    <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-close') }}"></use>
+                </svg>
+            </div>
+            <div class="crtl-lateral">
+                <div class="d-flex flex-column align-items-center">
+                    &nbsp;
+                </div>
+                <div id="next" class="d-flex flex-column align-items-center">
+                    <img class="rotate-180" src="{{ asset('front/dist/img/icon-back.svg') }}" alt="" id="continuar">
+                    <span class="color-blue-light fs-1">{{ 'Continuar'|trans }}</span>
+                </div>
+            </div>
+        </div>
+        <div id="resourse-content">
+            {{ opcion.descripcion|raw }}
+        </div>
+    </div>
+
+</main>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/front/evaluacion.js') }}"></script>
+    <script type="text/javascript">
+        $('.resource').click(function(){
+            $('#next').attr("style", "display: none !important");
+            {% if localhost == 1 %}
+                setTimeout(function() {
+                    //finishResource();
+                    console.log('Se finaliza el recurso');
+                    $('#next').show();
+                }, 10000);
+            {% endif %}
+        });
+
+        function finishResource()
+        {
+            $.ajax({
+                type: "POST",
+                url: $('#path_servicio').val(),
+                async: false,
+                data: { codigo: "{{ codigo }}", visto: 1, prueba_log_id: {{ parametros.prueba_log_id }}, pregunta_id: {{ parametros.pregunta_id }}, correctas: "{{ parametros.correctas }}", incorrectas: "{{ parametros.incorrectas }}" },
+                dataType: "json",
+                success: function(data) {
+                    if (data.ok == 1)
+                    {
+                        refreshMenu();
+                    }
+                    else {
+                        alert(data.msg);
+                    }
+                },
+                error: function(){
+                    alert('Error procesando el recurso');
+                }
+            });
+        }
+
+        {% if localhost != 1 and ok == 1 %}
+            setTimeout(function() {
+                postMessage({{ parametros.prueba_log_id }}, "{{ parametros.correctas }}", "{{ parametros.incorrectas }}", {{ parametros.intentos }});
+            }, 5000);
+        {% endif %}
+
+        function postMessage(prueba_log_id, correctas, incorrectas, intentos)
+        {
+            var iframe = document.getElementById('ifr');
+            if (iframe !== null)
+            {
+                console.log('Llamada al postmessage');
+                iframe.contentWindow.postMessage({
+                    prueba_log_id: prueba_log_id,
+                    pregunta_id: {{ parametros.pregunta_id }},
+                    correctas: correctas,
+                    incorrectas: incorrectas,
+                    intentos: intentos,
+                    make_ajax: {{ parametros.make_ajax }},
+                    url: "{{ url(parametros.url) }}",
+                    max_intentos: {{ parametros.max_intentos }},
+                    min_correctas: {{ parametros.min_correctas }},
+                    dominio_origen: "{{ app.request.getSchemeAndHttpHost() }}",
+                }, "{{ servidor_recursos }}");
+            }
+            else {
+                alert('No existe iframe con id ifr');
+            }
+        }
+
+        window.addEventListener("message", receiveMessage, false);
+
+        function receiveMessage(event)
+        {
+            // Do we trust the sender of this message?
+            if (event.origin !== "{{ servidor_recursos }}")
+                return;
+
+            var try_again = event.data.try_again;
+            var intentos = event.data.intentos;
+        
+            console.log('try_again:'+try_again+', intentos:'+intentos);
+
+            if (try_again == 1)
+            {
+                console.log('Ejecutar ajax para try_again');
+                $.ajax({
+                    type:"POST",
+                    url: $('#url_try').val(),
+                    async: true,
+                    data: { pregunta_id: {{ parametros.pregunta_id }}, intentos: intentos, usuario_id: {{ app.session.get('usuario').id }} },
+                    dataType: "json",
+                    success: function(data){
+                        if (data.ok == 1)
+                        {
+                            postMessage(data.prueba_log_id, data.correctas, data.incorrectas, intentos);
+                        }
+                        else {
+                            alert('Superado el máximo de intentos');
+                        }
+                    },
+                    error: function(){
+                        alert('Error en el servidor al intentar de nuevo');
+                        postMessage({{ parametros.prueba_log_id }}, "{{ parametros.correctas }}", "{{ parametros.incorrectas }}", {{ parametros.intentos }});
+                    }
+                });
+            }
+            else {
+                $('#next').show();
+            }
+
+        }
+
+    </script>
+{% endblock %}

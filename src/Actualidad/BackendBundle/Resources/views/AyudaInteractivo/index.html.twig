@@ -1,0 +1,379 @@
+{% extends '::admin.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('front/js/plugins/jquery-upload-file/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('front/js/plugins/jquery-upload-file/css/jquery.fileupload.css') }}">
+    <link rel="stylesheet" href="{{ asset('jq/jquery-ui.css') }}">
+    <style>
+        .input-group .form-control {
+            z-index: 1;
+        }
+        .sty__title {
+            padding: 2px 5px;
+            box-shadow: 0px 3px 10px rgba(51, 51, 51, 0.5);
+            font-weight: bold;
+        }
+        .radar {
+            position: relative;
+            width: calc(1rem - 11px);
+            height: calc(1rem - 11px);
+            top: 49%;
+            top: -webkit-calc(50% - calc(3rem - 5px));
+            top: calc(50% - calc(1rem - 13.5px));
+            left: 49%;
+            left: -webkit-calc(50% - calc(3rem - 5px));
+            left: calc(50% - calc(1rem - 13.5px));
+            background-color: #5CAEE6;
+            border-radius: 50px; 
+        }
+        .radar::after {
+            content: "";
+            position: absolute;
+            top: calc(1rem - 13px);
+            right: calc(1rem - 13px);
+            border-bottom: 3px solid #5CAEE6;
+            border-left: 3px solid #5CAEE6;
+            border-radius: 0 0 0 calc(2rem + 2px);
+            width: calc(2rem - 8px);
+            height: calc(2rem - 8px);
+            background-color: rgba(92, 174, 230, 0.1);
+            -webkit-transform-origin: 100% 0%;
+            transform-origin: 100% 0%;
+            -webkit-animation: radar 1.5s linear infinite;
+            animation: radar 1.5s linear infinite; }
+        .radar::before {
+            content: "";
+            position: absolute;
+            top: calc(-1 * calc(1rem + 6px));
+            right: calc(-1 * calc(1rem + 6px));
+            border-top: 3px solid #5CAEE6;
+            border-right: 3px solid #5CAEE6;
+            border-radius: 0 calc(2rem + 2px) 0px 0;
+            width: calc(2rem - 8px);
+            height: calc(2rem - 8px);
+            background-color: rgba(92, 174, 230, 0.1);
+            -webkit-transform-origin: 0% 100%;
+            transform-origin: 0% 100%;
+            -webkit-animation: radar 1.5s linear infinite;
+            animation: radar 1.5s linear infinite; 
+        }
+
+        @-webkit-keyframes minAgu {
+          0% {
+            -webkit-transform: rotate(0deg); }
+          100% {
+            -webkit-transform: rotate(360deg); } }
+        @keyframes minAgu {
+          0% {
+            transform: rotate(0deg); }
+          100% {
+            transform: rotate(360deg); } }
+        @-webkit-keyframes hrAgu {
+          0% {
+            -webkit-transform: rotate(0deg); }
+          100% {
+            -webkit-transform: rotate(360deg); } }
+        @keyframes hrAgu {
+          0% {
+            transform: rotate(0deg); }
+          100% {
+            transform: rotate(360deg); } }
+        @-webkit-keyframes rArena {
+          0% {
+            -webkit-transform: rotate(0deg); }
+          50% {
+            -webkit-transform: rotate(180deg); }
+          100% {
+            -webkit-transform: rotate(360deg); } }
+        @keyframes rArena {
+          0% {
+            transform: rotate(0deg); }
+          50% {
+            transform: rotate(180deg); }
+          100% {
+            transform: rotate(360deg); } }
+        @-webkit-keyframes radar {
+          0% {
+            -webkit-transform: rotate(0deg); }
+          100% {
+            -webkit-transform: rotate(360deg); } }
+        @keyframes radar {
+          0% {
+            transform: rotate(0deg); }
+          100% {
+            transform: rotate(360deg); } }
+        @-webkit-keyframes rd {
+          0% {
+            -webkit-transform: rotate(0deg); }
+          100% {
+            -webkit-transform: rotate(360deg); } }
+        @keyframes rd {
+          0% {
+            transform: rotate(0deg); }
+          100% {
+            transform: rotate(360deg); } }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+<input type="hidden" id="url_list" name="url_list" value="{{ path('_ayudaInteractivo') }}">
+<input type="hidden" id="url_edit" name="url_edit" value="{{ path('_ajaxEditAyudaInteractivo') }}">
+<input type="hidden" id="url_update" name="url_update" value="{{ path('_ajaxRefreshTable') }}">
+<input type="hidden" id="url_deleteAyudaInteractivo" name="url_deleteAyudaInteractivo" value="{{ path( '_ajaxDeleteAyudaInteractivo') }}">
+<input type="hidden" id="url_uploadFiles_AyudaInteractivo" name="url_uploadFiles_AyudaInteractivo" value="{{ path( '_ajaxUploadFileAyudaInteractivo') }}">
+<div class="row align-items-center justify-content-between">
+    <div class="col-12 col-sm-12 page-title">
+        <h3>{{ 'Ayuda interactivo'|trans }}</h3>
+    </div>
+   <div class="col text-right">
+       <button type="button" class="bttn__nr new" data-toggle="modal" data-target="#formModal"><span class="fa fa-plus"></span><span class="text__nr">{{'Nuevo registro' | trans}}</span></button>
+   </div>
+</div>
+<div class="row">
+    <div class="col-sm-16">
+        <div class="card">
+            <div class="card-header"  style=" background: linear-gradient(to right, #d5ff00 0%, #A3C300 100%); ">
+                <h5 class="card-title">{{ 'Listado de ayudas interactivo' |trans}}</h5>
+            </div>
+            <div class="card-block">
+                <table class="table" id="tablaAyuda">
+                    <thead class="sty__title">
+                        <tr>
+                            <th class="hd__title">{{ 'Nombre'|trans }}</th>
+                            <th class="hd__title">Gif</th>
+                            <th class="hd__title">Descripcion</th>
+                            <th class="hd__title">{{ 'Acciones'|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody id="BodyTable">
+                     
+                    </tbody>
+                </table>                 
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block formModal %}
+
+<div class="modal-header" style="background: linear-gradient(to right, #0084db 0%, #00558D 100%); color: #fff;">
+    <h5 class="modal-title" id="exampleModalLongTitle">{{'Datos de ayuda interactivo'|trans}}</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true" style="color: #fff;">&times;</span>
+    </button>
+</div>
+<div class="modal-body" id="modal_body">
+    <form id="form" name="form" action="{{ path('_ajaxUpdateAyudaInteractivo') }}" method="POST">
+        <input type="hidden" id="fileUpload" value="">
+        <input type="hidden" id="ayuda_interactivo_id" name="ayuda_interactivo_id" value="">
+        <div class="form-group">
+            <label for="recipient-name" class="form-control-label">{{ 'Nombre'|trans }}:</label>
+            <input type="text" class="form-control form_sty_modal" id="nombre" name="nombre" value="">
+            <span class="fa fa-cube"></span>
+        </div>
+        <div class="form-group">
+            <label for="descripcion" class="form-control-label">{{ 'Mensaje'|trans }}:</label>
+            <input type="text" class="form-control form_sty_modal2" id="mensaje" name="mensaje" value="">
+            <span class="fa fa-align-justify"></span>
+        </div>
+        <div class="form-group">
+            <label for="recipient-name" class="form-control-label">Gif:</label>
+            <div class="input-group">
+                <input type="text" class="form-control " name="gif" id="gif" value="" readonly="readonly" placeholder="{{ 'Seleccione el archivo'|trans }}">
+                <a href="#" id="href_video" class="btn fileinput-button uploadFileHref" type="button" data-etiqueta="gif" >
+                    <span class="fa fa-file-video-o"></span>
+                    <input class="uploadFile" type="file" name="files[]" multiple>
+                </a>
+            </div>
+        </div>
+        <div class="row justify-content-center" style="display:none;" id="wait">
+            <div class="col-auto px-0 py-0">
+                <div class="contenedor">
+                    <div class="radar"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="col-sm-16 col-md-16 col-lg-16 alert alert-danger" role="alert" id="div-error" style="display:none;">
+        <ul id="error-messages"></ul>
+    </div>
+    <div class="alert alert-success" role="alert" id="alert-success" style="display:none;"> 
+        <strong>{{ 'Bien hecho'|trans }}!</strong> {{ 'La ayuda ha sido almacenada con éxito'|trans }}. 
+    </div>
+    <div class="card" id="detail" style="display:none;">
+        <div class="card-header" style="background: linear-gradient(to right, #0084db 0%, #00558D 100%);">
+            <h4 class="card-title" style="color: #fff; text-transform: uppercase">{{ 'Datos Básicos'|trans }}</h4>
+        </div>
+        <div class="card-block">
+            <div class="container">
+                <div class="row justify-content-between">
+                    <div class="col-sm-16 col-md-16 show__details">
+                        <h5>{{ 'Nombre'|trans }}:</h5>
+                        <p id="p-nombre">Lorem Ipsum</p>
+                    </div>
+                </div>
+                <br>
+                <div class="row justify-content-between">
+                    <div class="col-sm-16 col-md-16 show__details">
+                        <h5>{{ 'Mensaje'|trans }}:</h5>
+                        <p id="p-mensaje">Lorem Ipsum</p>
+                    </div>
+                </div>
+                <br>
+                <div class="row justify-content-between">
+                    <div class="col-sm-16 col-md-16 show__details">
+                        <h5>Gif:</h5>
+                        <p id="p-gif">https://Loremipsumdolorsitamet.domain/</p>
+                    </div>
+                </div>
+                <br>
+               
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="col-sm-16 col-md-16 text-right" id="buttons">
+                <button type="button" class="bttn__edit edit_footer edit" data-toggle="tooltip" data-placement="bottom" title="{{ 'Editar'|trans }}" id="detail-edit" data="" ><span class="fa fa-pencil"></span></button>
+                <button type="button" class="bttn__elim delete_fotter delete" data-toggle="tooltip" data-placement="bottom" title="{{ 'Eliminar'|trans }}" id="detail-delete" data="" data-ubicacion="2" ><span class="fa fa-trash"></span></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('jq/jquery-validation-1.15.0/dist/jquery.validate.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('jq/jquery-validation-1.15.0/dist/additional-methods.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('front/js/plugins/jquery-upload-file/js/vendor/jquery.ui.widget.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('front/js/plugins/jquery-upload-file/js/jquery.iframe-transport.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('front/js/plugins/jquery-upload-file/js/jquery.fileupload.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/admin/ayudaInteractivo.js') }}"></script>
+    <script type="text/javascript">
+
+        var table = $('#tablaAyuda').DataTable( //inicializacion de la tabla que contendra los registros   
+        {   
+            paging: true, 
+            searching: true, 
+            ajax: $('#url_update').val(),
+            order: [[ 0, "desc" ]],
+            responsive: false,
+            pageLength:10,
+            sPaginationType: "full_numbers",
+            lengthChange: false,
+            info: false,
+            oLanguage: {
+                "sProcessing":    "{{ 'Procesando'|trans }}...",
+                "sLengthMenu":    "{{ 'Mostrar'|trans }} _MENU_ {{ 'registros'|trans }}",
+                "sZeroRecords":   "{{ 'No se encontraron resultados'|trans }}",
+                "sEmptyTable":    "{{ 'Ningún dato disponible en esta tabla'|trans }}",
+                "sInfo":          "{{ 'Mostrando registros del'|trans }} _START_ {{ 'al'|trans }} _END_ {{ 'de un total de'|trans }} _TOTAL_.",
+                "sInfoEmpty":     "{{ 'Mostrando registros del'|trans }} 0 al 0 de un total de 0 registros",
+                "sInfoFiltered":  "({{ 'filtrado de un total de'|trans }} _MAX_ {{ 'registros'|trans }})",
+                "sInfoPostFix":   "",
+                "sSearch":        "{{ 'Buscar'|trans }}:",
+                "sUrl":           "",
+                "sInfoThousands":  ",",
+                "sLoadingRecords": "{{ 'Cargando..'|trans }}.",
+                oPaginate: {
+                    sFirst: "<<",
+                    sPrevious: "<",
+                    sNext: ">", 
+                    sLast: ">>" 
+                },
+                "oAria": {
+                    "sSortAscending":  ": {{ 'Activar para ordenar la columna de manera ascendente'|trans }}",
+                    "sSortDescending": ": {{ 'Activar para ordenar la columna de manera descendente'|trans }}"
+                }
+            }
+        } );
+
+        $("#form").validate({
+            errorLabelContainer: "#div-error ul",
+            wrapper: "li",
+            rules: {
+                'nombre': {
+                    required: true,
+                    minlength: 3
+                },
+                'mensaje':{
+                    required: true,
+                    minlength: 3
+                },
+                'gif': {
+                  required: true,
+                  extension: "gif"
+                }
+            },
+            messages: {
+                'nombre': {
+                    required: "- {{ 'El nombre de la ayuda es requerido'|trans }}.",
+                    minlength: "- {{ 'El nombre de la ayuda debe ser mínimo de 3 caracteres'|trans }}."
+                },
+                'mensaje':{
+                    required: "- {{ 'El mensaje es requerida.'|trans }}",
+                    minlength: "- {{ 'El mensaje debe ser mínimo de 3 caracteres.'|trans }}",
+                },
+                'gif':{
+                    required: "- {{ 'Gif requerido'|trans }}.",
+                    extension: "- {{ 'Extensiones aceptadas para gif'|trans }}: gif."
+                }
+            }
+        });
+
+        function failedRequest()
+        {
+            swal(""," {{ 'El archivo seleccionado no se cargo correctamente.'| trans }} ","error");
+            showButtons();
+            return 0;
+        }
+
+        function sweetAlertDeleteAyudaInteractivo(id,ubicacion,preg_opt=0)
+        {
+            swal({
+                title: "{{ '¿Desea eliminar el registro?'|trans }}",
+                text: "{{ 'Si acepta no puede revertir el cambio'|trans }}",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#e04646',
+                cancelButtonColor: '#97af21',
+                confirmButtonText: "{{ 'Eliminar'|trans }}",
+                confirmButtonClass: 'fa fa-trash',
+                cancelButtonClass: 'fa fa-times',
+                cancelButtonText: "{{ 'Cancelar'|trans }}",
+                allowOutsideClick: false
+            }).then(function () {
+                $.ajax({
+                    type: "POST",
+                    url: preg_opt == 0 ? $('#url_deleteAyudaInteractivo').val() : preg_opt,
+                    async: true,
+                    data: { id: id },
+                    dataType: "json",
+                    success: function(data) {
+                        swal(
+                            "{{ 'Eliminado'|trans }}!",
+                            "{{ 'Su registro ha sido eliminado'|trans }}",
+                            'success');
+                            if (ubicacion == 2) {
+                               $( "#detail-edit" ).attr( "disabled", true);
+                               $( "#detail-delete" ).attr("disabled",true);
+                            }
+                            table.ajax.reload(null,false);
+                    },
+                    error: function(){
+                        swal(
+                            "{{ 'Mensaje del servidor'|trans }}!",
+                            "{{ 'Ha ocurrido un error en la eliminación de este registro'|trans }}",
+                            'error'
+                        );
+                    }
+                });
+            });
+        }
+
+    </script>
+{% endblock %}

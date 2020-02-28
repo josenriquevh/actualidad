@@ -1,0 +1,91 @@
+Actualidad\ComunBundle\Entity\EaPruebaLog:
+    type: entity
+    table: ea_prueba_log
+    indexes:
+        IDX_5345EAB8E7DE889A:
+            columns:
+                - prueba_id
+        IDX_5345EAB8DB38439E:
+            columns:
+                - usuario_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        fechaInicio:
+            type: datetime
+            nullable: true
+            column: fecha_inicio
+        fechaFin:
+            type: datetime
+            nullable: true
+            column: fecha_fin
+        porcentajeAvance:
+            type: decimal
+            nullable: true
+            precision: 5
+            scale: 2
+            column: porcentaje_avance
+        correctas:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+        erradas:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+        nota:
+            type: decimal
+            nullable: true
+            precision: 5
+            scale: 2
+        estado:
+            type: string
+            nullable: true
+            length: 15
+            options:
+                fixed: false
+        preguntasErradas:
+            type: string
+            nullable: true
+            length: 100
+            options:
+                fixed: false
+            column: preguntas_erradas
+        preguntasCorrectas:
+            type: string
+            nullable: true
+            length: 100
+            options:
+                fixed: false
+            column: preguntas_correctas
+    manyToOne:
+        prueba:
+            targetEntity: EaPrueba
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                prueba_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        usuario:
+            targetEntity: AdminUsuario
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                usuario_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

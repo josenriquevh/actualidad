@@ -1,0 +1,2 @@
+[17-Feb-2019 04:21:48 America/Caracas] PHP Fatal error:  Class 'Doctrine\Bundle\DoctrineCacheBundle\Tests\TestCase' not found in /home/pr3b04rd/public_html/actualidad/vendor/doctrine/doctrine-cache-bundle/Tests/FunctionalTestCase.php on line 10
+[17-Feb-2019 17:46:30 America/Caracas] PHP Fatal error:  Class 'PHPUnit_Framework_TestCase' not found in /home/pr3b04rd/public_html/actualidad/vendor/doctrine/doctrine-cache-bundle/Tests/TestCase.php on line 10

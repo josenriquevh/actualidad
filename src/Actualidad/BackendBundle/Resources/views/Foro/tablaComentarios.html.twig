@@ -1,0 +1,39 @@
+
+<table class="table" id="dtSub">
+    <thead class="sty__title">
+        <tr>
+            <th class="hd__title">{{ 'Mensaje'|trans }}</th>
+            <th class="hd__title">{{ 'Participante'|trans }}</th>
+            <th class="hd__title">{{ 'Fecha'|trans }}</th>
+            <th class="hd__title">{{ 'Acciones'|trans }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for comentario in comentarios %}
+            {% set eo = cycle(['odd', 'even'], loop.index) %}
+            <tr class="{{ eo }}">
+                <td class="respuesta">{{ comentario.asunto }}</td>
+                <td>{{ comentario.nombre~' '~comentario.apellido }}</td>
+                <td>{{ comentario.fecharegistro  }}</td>
+                <td>
+                     {% if comentario.usuarioId == usuario.id %}
+                        <a href="#" title="{{'Editar' | trans}}" class="btn btn-link btn-sm edit" data-toggle="modal" data-target="#formModal" data="{{ comentario.id }}"><span class="fa fa-plus"></span></a>
+                     {% endif %}
+                    
+                    <a href="#" title="{{ 'Eliminar'|trans }}" class="{% if comentario.delete_disabled == '' %}delete{% endif %} {{ comentario.delete_disabled }}" data-toogle="modal" data="{{ comentario.id }}"><span class="fa fa-trash"></span></a>
+
+                    {% if comentario.archivos>0 %}
+                        <a href="#" title="{{ 'Archivos'| trans }}" class="btn btn-link btn-sm fileList" data-comentario="{{ comentario.id }}" ><span class="fa fa-archive "></span></a>
+
+                        <form id="{{ 'comentario'~comentario.id }}"  >
+                            <input type="hidden" name="usuario_id" value="{{ comentario.usuarioId }}" >
+                            <input type="hidden" name="foro_id" value="{{ comentario.id }}">
+                        </form>
+                    {% endif %}
+                </td>
+               
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+

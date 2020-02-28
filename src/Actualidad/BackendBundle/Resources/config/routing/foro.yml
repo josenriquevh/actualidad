@@ -1,0 +1,26 @@
+_foro:
+    path:     /listado
+    defaults: { _controller: ActualidadBackendBundle:Foro:index }
+
+_ajaxLibrosForo:
+    path:    /librosForo
+    defaults: { _controller: ActualidadBackendBundle:Foro:ajaxLibrosForo }
+
+_ajaxListaTemas:
+    path:  /temasForo
+    defaults: { _controller: ActualidadBackendBundle:Foro:ajaxListaTemas }
+
+_ajaxListaComentarios:
+    path: /comentariosForo
+    defaults: { _controller: ActualidadBackendBundle:Foro:ajaxListaComentarios }
+
+_ajaxFilesForoList:
+    path: /ajaxFilesForoList
+    defaults: { _controller: ActualidadBackendBundle:Foro:ajaxFilesForoList }
+
+_ajaxUnidadesForo:
+    path:    /unidadesForo
+    defaults: { _controller: ActualidadBackendBundle:Foro:ajaxUnidadesForo }
+
+
+

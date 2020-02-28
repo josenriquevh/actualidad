@@ -1,0 +1,150 @@
+{% extends '::admin.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('jq/jquery-timepicker/jquery.timepicker.min.css') }}" type="text/css">
+{% endblock %}
+
+{% block body %}
+
+{% set uri = app.request.getbasepath %}
+<br>
+<div class="row align-items-center justify-content-start">
+    <div class="col-sm-4 col-md-4 col-lg-4 ">
+        <a href="{{ path('_paginasEvaluacion', { 'app_id': app.session.get('app_id') })}}" class="bttn__bck2"><span class="fa fa-clipboard"></span><span class="text__bck2">{{ 'Ir al listado de evaluaciones'|trans }}</span></a>
+    </div>
+    {% if pregunta.prueba.id %}
+        <div class="col text-right">
+            <a href="{{ path('_preguntas', { 'prueba_id':pregunta.prueba.id })}}" class="bttn__bck2"><span class="fa fa-list-ol"></span><span class="text__bck2">{{ 'Ir al listado de preguntas'|trans }}</span></a>
+        </div>
+    {% endif %}
+    <div class="col-sm-8 col-md-8 col-lg-8 alert alert-danger" role="alert" id="div-error" style="display:none;">
+        <ul></ul>
+    </div>
+</div>
+
+<form id="form" name="form" action="{{ path('_editInteractivo', { 'pregunta_id': pregunta.id, 'cantidad': cantidad, 'total': total }) }}" method="POST" autocomplete="off">
+    <input type="hidden" id="root_site" name="root_site" value="{{ uri }}" />
+    <input type="hidden" id="d" name="d" value="{{ opcion.id }}" />
+    <input type="hidden" id="deslen" name="deslen" value="0" />
+    <input type="hidden" id="base_upload" name="base_upload" value="evaluaciones/">
+    <input type="hidden" id="prueba_id" name="prueba_id" value="{{ pregunta.prueba.id }}">
+    <input type="hidden" id="pregunta_id" name="pregunta_id" value="{{ pregunta.id }}" />
+    <input type="hidden" id="url_codigo" name="url_codigo" value="{{ path('_ajaxCodigoEvaluacion') }}">
+
+    <div class="row">
+	    <div class="col-sm-16">
+            <div class="card">
+                <div class="card-header gradiente">
+                    <div class="card-title">
+                        <h6>{{ 'Configuración de la evaluación'|trans }}</h6>
+                    </div>
+                </div>
+                <div class="card-block fnd__wzd">
+                    <div class="row">
+                        <div class="col-sm-16 col-lg-16 col-md-16">
+                            <label for="codigoInteractivo" class="col-sm-4 col-md-4 col-lg-4 col-form-label">{{ 'Código del interactivo'|trans }}</label>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <input type="text" id="codigo_interactivo" name="codigo_interactivo" value="{{ pregunta.codigoInteractivo }}" class="form-control form_sty1">
+                                <span class="fa fa-slack"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-16">
+                            <div class="form-group">
+                                <label for="texto" class="col-2 col-form-label">{{ 'Descripción'|trans }}</label>
+                                <div class="col-16">
+                                    <textarea class="ckeditor" rows="3" id="descripcion" name="descripcion" cols="30" rows="10">{{ opcion.descripcion|raw }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer" style="background: #e6e6e6;">
+                    <div class="col-sm-16 text-right">
+                        {% if cantidad == total %}
+                            <button type="button" class="bttn__end" id="finish"><span class="text__end">{{ 'Finalizar'|trans }}</span><span class="fa fa-check"></span></button>
+                        {% else %}
+                            <button type="button" class="bttn__end" id="finish"><span class="text__end">{{ 'Continuar'|trans }}</span><span class="fa fa-chevron-right"></span></button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+    	</div>
+    </div>
+</form>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('assets/vendor/ckeditor/ckeditor.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendor/ckeditor/config.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('jq/jquery-validation-1.15.0/dist/jquery.validate.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('jq/jquery-validation-1.15.0/dist/additional-methods.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/admin/interactivo.js') }}"></script>
+
+    <script type="text/javascript">
+        
+        $("form :input").attr("autocomplete", "off");
+
+        $('#finish').click(function()
+        {
+           var valid = $('#form').valid();
+           if(!valid)
+           {
+               notify($('#div-error').html());
+           }
+           else {
+                var deslen = $('#deslen').val();
+                var pregunta_id = $('#pregunta_id').val();
+                var codigo_interactivo = $.trim($('#codigo_interactivo').val());
+                // Se valida que este código no esté repetido
+                $.ajax({
+                    type: "POST",
+                    url: $('#url_codigo').val(),
+                    async: true,
+                    data: { pregunta_id: pregunta_id, codigo_interactivo: codigo_interactivo },
+                    dataType: "json",
+                    success: function(data) {
+                        if (data.ok != 0)
+                        {
+                            $('#div-error ul').html("<li>- {{ 'El código del interactivo ya existe'|trans }}.</li>");
+                            $('#div-error ul').show();
+                            notify($('#div-error').html());
+                        }
+                        else {
+                            $('#finish').hide();
+                            $('#form').submit();
+                        }
+                    },
+                    error: function(){
+                        $('#div-error ul').html("<li>- {{ 'Ha ocurrido un error en la validación del código del interactivo'|trans }}.</li>");
+                        $('#div-error ul').show();
+                        notify($('#div-error').html());
+                    }
+                });
+            }
+        });
+
+        $("#form").validate({
+            errorLabelContainer: "#div-error ul",
+            wrapper: "li",
+            ignore: "",
+            rules: {
+                'codigo_interactivo': {
+                    required: true
+                }
+            },
+            messages: {
+                'codigo_interactivo': {
+                    required: "- {{ 'El código del interactivo es requerido'|trans }}."
+                }
+            }
+        });
+        
+        
+    </script>
+{% endblock %}

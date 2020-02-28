@@ -1,0 +1,42 @@
+#profesor {
+    
+    header {
+        background-color: white;
+    }
+
+    .menu { 
+    
+        a {
+            color: $azul-primary;
+            
+            .icon-menu {
+                fill: $azul-primary;
+                transition: .3s;
+            }
+
+            &:hover .icon-menu {
+                fill: $naranja;
+            }
+            &:hover span {
+                color: $naranja;
+                
+            }
+          
+        }
+    
+    }
+
+    .avatar-xs {
+        border: 1px solid;
+    }
+
+    .line {
+        background: $azul-primary;
+
+    }
+
+    #menuMobileItems {
+        background-color: #fff;
+    }
+
+}

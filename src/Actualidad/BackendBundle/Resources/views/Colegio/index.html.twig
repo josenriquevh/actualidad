@@ -1,0 +1,178 @@
+{% extends '::admin.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/vendor/datatables/RowReorder-1.2.3/css/rowReorder.dataTables.min.css') }}" type="text/css">
+    <style type="text/css">
+        .modal-dialog {
+            max-width: 60%;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<input type="hidden" id="url_edit" name="url_edit" value="{{ path('_ajaxEditColegio') }}">
+<input type="hidden" id="url_list" name="url_list" value="{{ path('_colegios') }}">
+<input type="hidden" id="url_buscar" name="url_buscar" value="{{ path('_ajaxGetColegios') }}">
+<input type="hidden" id="resets" name="resets" value="1">
+<input type="hidden" id="error-msg-libro_id" name="error-msg-libro_id" value="Error obteniendo la lista de libros">
+<input type="hidden" id="error-msg-unidad_id" name="error-msg-unidad_id" value="Error obteniendo la lista de unidades">
+<br>
+
+<div class="row align-items-center justify-content-between">
+    <div class="col-12 col-sm-12 page-title">
+        <h3>Colegios</h3>
+    </div>
+    <div class="col text-right " style="display:none;" id="new_colegio">
+        <button type="button" class="bttn__nr new" data-toggle="modal" data-target="#formModal"><span class="fa fa-plus"></span><span class="text__nr">{{'Nuevo registro' | trans}}</span></button>
+    </div>
+</div>
+
+<div class="col-sm-8 col-md-8 col-lg-8 alert alert-danger" role="alert" id="div-error" style="display:none;">
+    <ul></ul>
+</div>
+<div class="col-sm-8 col-md-8 col-lg-8 alert alert-danger" role="alert" id="div-error-server" style="display:none;">
+</div>
+<div class="row">
+    <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8 offset-sm-4 offset-md-4 offset-lg-4">
+        <div class="card">
+            <div class="card-header"  style=" background: linear-gradient(to right, #d5ff00 0%, #A3C300 100%); ">
+                <h5 class="card-title">Seleccione la provincia y la ciudad</h5>
+            </div>
+            <div class="card-block">
+                <div class="row">
+                    <div class="col-sm-14 col-md-14 col-lg-14">
+                        <label for="seleccion" class="col-sm-12 col-md-12 col-lg-12 col-form-label" >Selecciona</label>
+                        <div class="col-sm-16 col-md-16 col-lg-16">
+                            <input type="radio" id="colegioB" name="colegioB" value="1"> Por nombre de colegio
+                            <input type="radio" id="colegioB1" name="colegioB" value="2"> Por provincia y ciudad
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div id="filtro1" style="display: none;"> 
+                    <div class="row">
+                        <div class="col-sm-16 col-md-16 col-lg-16">
+                            <label for="grado_id" class="col-sm-10 col-md-10 col-lg-10 col-form-label">Provincia</label>
+                            <div class="col-sm-16 col-md-16 col-lg-16">
+                                <select class="form_sty_sel form-control" style="border-radius: 5px" id="provincia_id" name="provincia_id" data="ciudad_id" entity="AdminCiudad" reference="provincia" orderBy="nombre">
+                                    <option value=""></option>
+                                    {% for provincia in provincias %}
+                                        {% set selected = colegio.id ? provincia.id == colegio.ciudad.provincia.id ? 'selected="selected"' : '' ? '' %}
+                                        <option value="{{ provincia.id }}" {{ selected }}>{{ provincia.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                                <span class="fa fa-institution"></span>
+                                <span class="bttn_d"><img src="{{ asset('img/down-arrowbck.png') }}"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-16 col-md-16 col-lg-16">
+                            <label for="libro_id" class="col-sm-10 col-md-10 col-lg-10 col-form-label">Ciudad</label>
+                            <div class="col-sm-16 col-md-16 col-lg-16">
+                                <select class="form_sty_sel form-control reset1" style="border-radius: 5px" id="ciudad_id" name="ciudad_id" reference="ciudad" orderBy="orden" reset="1">
+                                    <option value=""></option>
+                                    {% for ciudad in ciudades %}
+                                        {% set selected = colegio.id ? cuidad.id == colegio.ciudad.id ? 'selected="selected"' : '' ? '' %}
+                                        <option value="{{ ciudad.id }}" {{ selected }}>{{ ciudad.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                                <span class="fa fa-institution"></span>
+                                <span class="bttn_d"><img src="{{ asset('img/down-arrowbck.png') }}"></span>
+                                <img id="loader-ciudad_id" class="img-loader" src="{{ asset('img/ui-anim_basic_16x16.gif') }}" style="display:none;">
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+                <br>
+                <div id="filtro2" style="display: none;">
+                    <label for="nombre" class="col-sm-4 col-md-4 col-lg-4 col-form-label">{{ 'Nombre de colegio'|trans }}</label>
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <input type="text" class="form-control form_sty1" name="colegio_nombre" id="colegio_nombre" value="">
+                        <span class="fa fa-user-circle"></span>
+                    </div>
+                    <div class="col-sm-16 col-md-16 text-right">
+                        <button type="button" id="search" class="bttn__saved" data-toggle="tooltip" data-placement="bottom" title="{{ 'Buscar'|trans }}"><span class="fa fa-search"></span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" id="div-paginas" {% if not colegio.id %}style="display:none;"{% endif %}>
+    <div class="col-sm-16">
+        <div class="card">
+            <div class="card-header gradiente">
+                <h5 class="card-title" id="panelTitle">{{ header }}</h5>
+            </div>
+            <div class="card-block">
+                <div id="listado">
+                    {{ include('ActualidadBackendBundle:Colegio:colegios.html.twig', { 'colegios': colegio }) }}
+                </div>
+                <div class="load1 load-wrapper">
+                    <div class="loader">
+                        Loading...
+                    </div>  
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block formModal %}
+<div class="modal-header" style="background: linear-gradient(to right, #0084db 0%, #00558D 100%); color: #fff;">
+    <h5 class="modal-title" id="exampleModalLongTitle">{{'Datos del colegio'|trans}}</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true" style="color: #fff;">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form id="form" name="form" action="{{ path( '_ajaxUpdateColegio')}}"  method="POST">
+        <input type="hidden" id="colegio_id" name="colegio_id" value="">
+        <input type="hidden" id="m_provincia_id" name="m_provincia_id" value="">
+        <input type="hidden" id="m_ciudad_id" name="m_ciudad_id" value="">
+        <div class="form-group">
+            <label for="recipient-name" class="form-control-label">{{ 'Nombre'|trans }}:</label>
+            <input type="text" class="form-control form_sty_modal" id="nombre" name="nombre" value="">
+            <span class="fa fa-tags"></span>
+        </div>
+    </form>
+    <div class="alert alert-success" role="alert" id="alert-success" style="display:none;"> 
+        <strong>{{ 'Bien hecho'|trans }}!</strong> {{ 'El colegio ha sido almacenada con éxito'|trans }}. 
+    </div>
+    <div class="card" id="detail" style="display:none;">
+        <div class="card-header" style="background: linear-gradient(to right, #0084db 0%, #00558D 100%);">
+            <h4 class="card-title" style="color: #fff; text-transform: uppercase">{{'Datos Básicos'|trans}}</h4>
+        </div>
+        <div class="card-block">
+            <div class="container">
+                <div class="row justify-content-between">
+                    <div class="col-sm-16 col-md-16 show__details">
+                        <h5>{{ 'Colegio'|trans }}:</h5>
+                        <p id="p-nombre">Lorem Ipsum</p>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="col-sm-16 col-md-16 text-right">
+                <button type="button" class="bttn__edit edit" data-toggle="tooltip" data-placement="bottom" title="{{'Editar' |trans}}" id="detail-edit" data=""><span class="fa fa-pencil"></span></button>
+                <button type="button" class="bttn__elim" data-toggle="tooltip" data-placement="bottom" title="{{'Eliminar'|trans}}" id="detail-delete" data=""><span class="fa fa-trash"></span></button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('assets/vendor/datatables/RowReorder-1.2.3/js/dataTables.rowReorder.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('jq/jquery-validation-1.15.0/dist/jquery.validate.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/admin/colegios.js') }}"></script>
+{% endblock %}

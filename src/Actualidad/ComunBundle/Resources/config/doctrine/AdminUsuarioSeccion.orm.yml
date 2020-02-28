@@ -1,0 +1,41 @@
+Actualidad\ComunBundle\Entity\AdminUsuarioSeccion:
+    type: entity
+    table: admin_usuario_seccion
+    indexes:
+        IDX_A54B5369DB38439E:
+            columns:
+                - usuario_id
+        IDX_A54B53697A5A413A:
+            columns:
+                - seccion_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    manyToOne:
+        usuario:
+            targetEntity: AdminUsuario
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                usuario_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        seccion:
+            targetEntity: AdminSeccion
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                seccion_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

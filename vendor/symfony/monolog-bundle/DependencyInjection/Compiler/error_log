@@ -1,0 +1,2 @@
+[18-Feb-2019 00:43:03 America/Caracas] PHP Fatal error:  Interface 'Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface' not found in /home/pr3b04rd/public_html/actualidad/vendor/symfony/monolog-bundle/DependencyInjection/Compiler/DebugHandlerPass.php on line 29
+[18-Feb-2019 09:14:16 America/Caracas] PHP Fatal error:  Interface 'Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface' not found in /home/pr3b04rd/public_html/actualidad/vendor/symfony/monolog-bundle/DependencyInjection/Compiler/AddProcessorsPass.php on line 24

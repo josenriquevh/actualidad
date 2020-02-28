@@ -1,0 +1,46 @@
+
+// COLORES UI
+
+$azul-primary :       #0872B9;
+$azul-primary-light:  #42B3E5;
+$naranja       :      #FF8227;
+$naranja-light :      #FFBE54;
+$red           :      #FF5960;
+$verde         :      #6CC24A;
+$verde-light   :      hsla(96, 61%, 45%, 1);
+
+
+
+//  VARIABLES COLORES MATERIAS
+
+$color-mat  : #3EB6BF;
+$color-len  : #9B6398;
+$color-soc  : #0872B9;
+$color-nat  : #FF8227;
+$color-gold : #FFBE54;
+$color-block: #8E8C8F;
+
+$gray-darker: #585759;
+$gray       : #B6B4B8;
+$gray-light : #D9D7DB;
+$gray-lighter : #F5F8FA;
+
+
+// COLOR MATERIAS
+
+.color-mat { color: $color-mat;}
+.color-len { color: $color-len;}
+.color-soc { color: $color-soc;}
+.color-nat { color: $color-nat;}
+
+// BG MATERIAS
+
+.bg-mat { background-color: $color-mat;}
+.bg-len { background-color: $color-len;}
+.bg-soc { background-color: $color-soc;}
+.bg-nat { background-color: $color-nat;}
+
+.bg-light-grey {background-color: $gray-lighter;}
+.bg-dark-grey {background-color: $gray-darker;}
+.bg-gold { background-color: $color-gold;}
+

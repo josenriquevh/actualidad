@@ -1,0 +1,2 @@
+[17-Feb-2019 12:43:33 America/Caracas] PHP Fatal error:  Class 'Symfony\Component\HttpKernel\DependencyInjection\Extension' not found in /home/pr3b04rd/public_html/actualidad/vendor/doctrine/doctrine-cache-bundle/DependencyInjection/DoctrineCacheExtension.php on line 20
+[17-Feb-2019 14:46:37 America/Caracas] PHP Fatal error:  Interface 'Symfony\Component\Config\Definition\ConfigurationInterface' not found in /home/pr3b04rd/public_html/actualidad/vendor/doctrine/doctrine-cache-bundle/DependencyInjection/Configuration.php on line 15

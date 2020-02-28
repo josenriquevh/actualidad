@@ -1,0 +1,26 @@
+@font-face {
+    font-family: 'roboto-regular';
+    src: url('../fonts/Roboto-Regular.ttf');
+    font-display: fallback;
+    font-weight: normal;
+    font-style: normal;
+  }
+@font-face {
+    font-family: 'roboto-light';
+    src: url('../fonts/Roboto-Light.ttf');
+    font-display: fallback;
+    font-weight: normal;
+    font-style: normal;
+  }
+@font-face {
+    font-family: 'roboto-bold';
+    src: url('../fonts/Roboto-Bold.ttf');
+    font-display: fallback;
+    font-weight: normal;
+    font-style: normal;
+  }
+
+
+body {
+    font-family: "roboto-regular","Helvetica", "Arial", "Sans serif";
+}

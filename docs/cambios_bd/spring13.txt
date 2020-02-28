@@ -1,0 +1,14 @@
+1. Nuevo tabla: ea_certificado
+
+2. Nueva tabla: ea_tipo_certificado
+
+3. Nueva función de BD: fnactualizar_secuencias.sql
+
+4. Nuevos registros en la tabla admin_tipo_correo:
+	INSERT INTO admin_tipo_correo (id, nombre) VALUES (2, 'Cambio de contraseña');
+	INSERT INTO admin_tipo_correo (id, nombre) VALUES (3, 'Aviso de vencimiento de libro');
+	INSERT INTO admin_tipo_correo (id, nombre) VALUES (4, 'Registro de usuario');
+	SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('admin_tipo_correo', 'id'), 5, false);
+
+5. Nuevo registro de BD en la tabla ea_tipo_certificado:
+	INSERT INTO ea_tipo_certificado (id, nombre) VALUES (1, 'Por libro');

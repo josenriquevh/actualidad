@@ -1,0 +1,11 @@
+{% set img = uploads~pagina_usuario.pagina.foto %}
+<div class="col-6 col-lg-3 text-center mt-3">
+    <img src="{{ img }}" alt="" class="img-libro-agregado">
+    <div class="d-flex align-items-center justify-content-center">
+        <span class="color-green fw-b">{{ pagina_usuario.codigo }}
+            <svg class="fill-green icon-15 ml-1 mb-1">
+                <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-checked') }}"></use>
+            </svg>
+        </span>
+    </div>
+</div>

@@ -1,0 +1,322 @@
+{% extends '::base.html.twig' %}
+{% block stylesheets %}
+{{ parent ()}}
+<link rel="stylesheet" href="{{ asset('front/js/plugins/jquery-upload-file/css/style.css') }}">
+<link rel="stylesheet" href="{{ asset('front/js/plugins/jquery-upload-file/css/jquery.fileupload.css') }}">
+<style>
+    .blocked {
+        background-image: linear-gradient(-180deg, #8E8C8F 4%, #8E8C8F 95%) !important;
+        color: #ffffff !important;
+        }
+    body {
+    padding-top: 0px;
+    }
+    .bg{
+        height: 100%;
+        width: 100%;
+    }
+    .completo{
+        width: 100%;
+        height: 100%;
+    }
+    #infoPages label.error{
+        color: red;
+    }
+</style>
+{% endblock %}
+{% block body %}
+{{ parent() }}
+<input type="hidden" id="eye_unblocked" name="eye_unblocked" value="{{ asset('front/dist/img/eye.svg') }}">
+<input type="hidden" id="eye_blocked" name="eye_blocked" value="{{ asset('front/dist/img/eye-blocked.svg') }}">
+<input type="hidden" id="error-msg" name="error-msg" value="{{ 'Debes ingresar los datos obligatorios'|trans }}.">
+<input type="hidden" id="error-msg1" name="error-msg1" value="{{ 'Las contraseñas no coinciden'|trans }}.">
+<input type="hidden" id="url_select" name="url_select" value="{{ path('_ajaxGetSelect') }}">
+<input type="hidden" id="url_select_seccion" name="url_select_seccion" value="{{ path('_ajaxGetSelectSeccion') }}">
+<input type="hidden" id="resets" name="resets" value="3">
+<input type="hidden" id="url_seccion" name="url_seccion" value="{{ path('_ajaxSeccion') }}">
+<div class="col-sm-8 col-md-8 col-lg-8 alert alert-danger" role="alert" id="div-error" style="display:none;">
+    <ul></ul>
+</div>
+<main id="infoPages"  >          
+    <div class="bg-light-grey">
+        <div class="container ">
+            <div class="row  align-items-center ">
+                <div class="col-4 mt-3 text-left">
+                    <a href="{{ path('_inicio', { 'rol_id': app.session.get('usuario').rol_id }) }}" class=" btn-back ml-0 ">
+                        {{ 'Volver a Inicio'|trans }}
+                        <svg class="fill-white icon-materia-menu">
+                            <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-go-back') }}"></use>
+                        </svg>
+                    </a>
+                </div>
+                <div class="col-8 text-center mt-5 mb-5">
+                    <h1 class="color-blue fs-5">{{ 'Mis Datos'|trans }}</h1>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <form id="form-actualizacion" action="{{ path('_actualizacionUsuario', { 'rol_id': app.session.get('usuario').rol_id }) }}" method="POST">
+        <input type="hidden" id="url_upload" name="url_upload" value="{{ path('_ajaxUpload') }}">
+        <input type="hidden" id="file_input" name="file_input" value="foto">
+        <input type="hidden" id="uploads" name="uploads" value="{{ uploads }}">
+        <input type="hidden" id="base_upload" name="base_upload" value="usuarios/">
+        <div class="container">
+            <div class="row mt-4 justify-content-center justify-md-content-start">
+                <div class="col-3 mb-4 mb-md-0">
+                    <div class="hover-edit position-relative">
+                        <span class="wrap-avatar">
+                            {% set img = app.session.get('usuario').foto is defined ? app.session.get('usuario').foto is not null and app.session.get('usuario').foto != '' ? uploads~app.session.get('usuario').foto : asset('front/dist/img/avatar-datos.png') : asset('front/dist/img/avatar-datos.png') %}
+                            <input type="hidden" id="foto" name="foto" value="{{ foto }}" readonly="readonly">
+                            <a class="fileinput-button completo" title="{{ 'Cambiar imagen'|trans }}" data-toggle="tooltip" data-placement="bottom">
+                                <figure class="social-profile-pic completo" id="figure"><img  src="{{ img }}" id="foto_img" class="img-fluid bg foto" alt=""></figure>
+                                <img src="{{ asset('front/dist/img/icon-edit-avatar.svg') }}" style="display:none;"  class="icon"  alt="">
+                                <input type="file" class="fileupload" id="fileupload" name="files[]" multiple>
+                            </a>
+                        </span>
+                    </div>
+                    <img class="info-ilust img-fluid" src="{{ asset('front/dist/img/il-datos.png') }}" alt="">
+                </div>
+                <div class="col-12 col-md-9">
+                    <div class="form-row ">
+                        <div class="form-group offset-2 col-7 mb-4">
+                            <label for="usuario">{{ 'Usuario'|trans }}</label>
+                            <input type="text" class="form-control" id="usuario" value="{{ login }}" disabled>
+                        </div>
+                        <div class="form-group offset-2 col-7 mb-5">
+                            <label for="password">{{ 'Correo electrónico'|trans }}</label>
+                            <input type="text" id="correo" name="correo" class="form-control" id="correo" value="{{ correo }}" data-popover-content="#toolEmail" data-toggle="popover" data-placement="right">
+                        </div>
+                        <div id="toolEmail" style="display:none;">
+                            <div class="popover-body">
+                                {{ 'Ingresa un formato válido de correo'|trans }} "ejemplo@gmail.com "
+                            </div>
+                        </div>
+                    </div>   
+                    <div class="form-row mb-4 justify-content-start align-items-center">
+                        <label class="offset-2 pl-1" for="passSwitch">{{ '¿Quieres cambiar la contraseña?'|trans }}</label>
+                        <label class="switch ml-4" onclick="passDis()">
+                                <input type="checkbox" id="passSwitch" onclick="passDis()">
+                                <span class="slider round ">
+                                        <span class="sw-text"></span>
+                                    </span>
+                        </label>
+                    </div>
+                    <div class="form-row justify-content-center">
+                        <div class="form-group  col-4 mb-4">
+                            <label for="usuario">{{ 'Cambiar contraseña'|trans }}</label>
+                            <input type="password" class="form-control input-disabled " id="passLoginA" name="passLoginA" data-popover-content="#toolPass" data-toggle="popover" data-placement="bottom" >
+                            <img style="position: absolute; top: 44px;right: 35px;" id="imgPassA" data-tipo="passLoginA" class="icon-menu img-disabled"  src="{{ asset('front/dist/img/eye.svg') }}" alt="">
+                        </div>
+                        <div id="toolPass" style="display:none;">
+                            <div class="popover-body">
+                                {{ 'Crea tu contraseña entre 6 y 8 caracteres. Puede ser cualquier combinación de letras y/o números.'|trans }}
+                            </div>
+                         </div>
+                        <div class="form-group  col-4 mb-5">
+                            <label for="password">{{ 'Repetir contraseña'|trans }}</label>
+                            <input type="password" class="form-control input-disabled" id="passLoginB" name ="passLoginB">
+                            <img style="position: absolute; top: 44px;right: 35px;" id="imgPassB" data-tipo="passLoginB" class="icon-menu img-disabled  " src="{{ asset('front/dist/img/eye.svg') }}" alt="">
+                        </div>
+                    </div>  
+                    <div class="row mb-4">
+                        <h2 class="color-soc offset-2 ">Datos del alumno</h2>
+                    </div>
+                    <div class="form-row justify-content-center">
+                        <div class="form-group  col-4 mb-4">
+                            <label for="nombre">{{ 'Nombre'|trans }} <span class="ml-2 fs-14 color-gray">({{ 'requerido'|trans }})</span></label>
+                            <input type="text" id="nombre" name="nombre" class="form-control" value="{{ nombre }}">
+                        </div>
+                        <div class="form-group  col-4 mb-5">
+                            <label for="apellido">{{ 'Apellido'|trans }} <span class="ml-2 fs-14 color-gray" >({{ 'requerido'|trans }})</span></label>
+                            <input type="text" id="apellido" name="apellido" class="form-control" value="{{ apellido }}">
+                        </div>
+                    </div>  
+                    <div class="form-row justify-content-center">
+                        <div class="form-group  col-4 mb-4">
+                            <label for="">{{ 'Provincia'|trans }}</label>
+                            <div class="selectdiv ">
+                                <select id="provincia" name="provincia" data="ciudad" entity="AdminCiudad" reference="provincia" orderBy="nombre">
+                                    <option >  </option>
+                                    {%for provincia in provincias %}
+                                        <option value="{{ provincia.id }}" {{ provincia.selected }}>{{ provincia.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group  col-4 mb-5">
+                            <label for="">{{ 'Ciudad'|trans }}</label>
+                            <div class="selectdiv" id="selectdiv-cuidad">
+                                <select class="reset1" id="ciudad"  name="ciudad" reset="1" data="colegio" entity="AdminColegio" reference="ciudad" orderBy="nombre" reset="1">
+                                    <option>  </option>
+                                    {%for ciudad in ciudades %}
+                                        <option value="{{ ciudad.id }}" {{ ciudad.selected }}>{{ ciudad.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                                <img id="loader-ciudad" class="img-loader" src="/actualidad/web/img/ui-anim_basic_16x16.gif" style="display: none;">
+                            </div>
+                        </div>
+                    </div>  
+                    <div class="form-row">
+                        <div class="form-group offset-2  col-8 mb-4">
+                            <label for="">{{ 'Colegio'|trans }}</label>
+                            <input type="hidden" id="usuario_colegio_id" name="usuario_colegio_id" value="{{usuario_colegio_id}}">
+                            <div class="selectdiv" id="id="selectdiv-colegio"">
+                                <select class="reset2 mw-100" id="colegio" name="colegio" reset="2" data="seccion" entity="AdminSeccion" reference="colegio" orderBy="nombre" reset="2">
+                                    <option selected>  </option>
+                                    {%for colegio in colegios %}
+                                        <option value="{{ colegio.id }}" {{ colegio.selected }}>{{ colegio.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                                <img id="loader-colegio" class="img-loader" src="/actualidad/web/img/ui-anim_basic_16x16.gif" style="display:none;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group offset-2  col-2 mb-5">
+                            <label for="">{{ 'Grado'|trans }}</label>
+                            <div class="selectdiv " >
+                                <select id="grado_id" name="grado_id">
+                                {%for grado in grados %}
+                                    <option value="{{ grado.id }}" {{ grado.selected }}>{{ grado.nombre }}</option>
+                                {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group  col-2 mb-5">
+                            <label for="">{{ 'Sección'|trans }}</label>
+                            <input type="hidden" id="usaurio_seccion_id" name="usuario_seccion_id" value="{{usuario_seccion_id}}">
+                            <div class="selectdiv " id="selectdiv-seccion">
+                                <select class="reset3" id="seccion" name="seccion" reset="3" >
+                                {%for seccion in secciones %}
+                                    <option value="{{ seccion.id }}" {{ seccion.selected }}>{{ seccion.nombre }}</option>
+                                {% endfor %}
+                                </select>
+                                <img id="loader-seccion" class="img-loader" src="/actualidad/web/img/ui-anim_basic_16x16.gif" style="display:none;">
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="row mb-2" id="div-error">
+                        <div class="col-12 text-center">
+                            <span id="error" class="color-error text-center"></span>
+                        </div>
+                    </div> 
+                    <div class="form-group mb-5  ">
+                        <div class=" col-4 ml-auto">
+                            <a href="#target" class="btn  btn-primary text-uppercase " id="guardar">
+                                {{ 'Guardar'|trans }}
+                            </a>
+                        </div>
+                    </div>
+                    <br><br>
+                </div>
+            </div>
+            {% if libros %}
+                <div style="border-radius: 22px;" class="row bg-light-grey mb-5 pb-5 justify-content-center">
+                    <div class="col-12">
+                        <h1 class="text-center mt-4 mb-4 color-blue">{{ 'Certificados'|trans }}</h1>
+                    </div>
+                    {% for libro in libros %}
+                        <a href="{{ path('_certificadoPdf', { 'certificado_id': libro.certificado_id }) }}" class=" col-6 col-lg-2 text-center mt-3 mb-4" target="_blank">
+                            <div class="certificado">
+                                <div class="certificado-listo" ></div>
+                                <img class="img-libro-agregado"  src="{{libro.portada}}" alt="">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <span class="fw-b btn btn-primary" > {{ 'CERTIFICADO'|trans }}
+                                    
+                                    </span>
+                                    
+                                </div>
+                            </div>    
+                        </a>
+                    {% endfor %}
+                    <br>
+                    <br>
+                    <br>
+                </div>
+                <div class="w-100 mb-5 ">
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                </div>
+            {% endif %}
+        </div>
+    </form>
+        
+    
+</main>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('jq/jquery-validation-1.15.0/dist/jquery.validate.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('front/js/plugins/jquery-upload-file/js/vendor/jquery.ui.widget.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('front/js/plugins/jquery-upload-file/js/jquery.iframe-transport.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('front/js/plugins/jquery-upload-file/js/jquery.fileupload.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/front/comun.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/front/actualizacion_datos.js') }}"></script>
+    <script type="text/javascript">
+        $("#form-actualizacion").validate({
+            ignore: "",
+            //errorPlacement: function(error, element) {},
+            rules: {
+                'nombre': {
+                    required: true,
+                    minlength: 3
+                },
+                'apellido': {
+                    required: true,
+                    minlength: 3
+                },
+                'passLoginA': {
+                    required: {
+                        depends: function(element) {
+                            return $("#passSwitch").is(":checked");
+                            }
+                        },
+                    minlength: 6,
+                    maxlength: 8,
+                    alphanumeric: true
+                },
+                'passLoginB': {
+                    equalTo: "#passLoginA"
+                },
+                'correo': {
+                    email: true,
+                    required: true
+                }
+            },
+            messages: {
+                'nombre':{
+                    required: " * {{ 'El nombre es requerido'|trans }}",
+                    minlength: " * {{ 'El nombre debe ser mínimo de 3 caracteres'|trans }}"
+                },
+                'apellido': {
+                    required: " * {{ 'El apellido es requerido'|trans }}",
+                    minlength: " * {{ 'El apellido debe ser mínimo de 3 caracteres'|trans }}"
+                },
+                'passLoginA': {
+                    required: " * {{ 'La contraseña es requerida'|trans }}",
+                    minlength: " * {{ 'La contraseña debe ser mínimo de 6 caracteres'|trans }}",
+                    maxlength: " * {{ 'La contraseña debe ser máximo de 8 caracteres'|trans }}",
+                    alphanumeric: " * {{ 'No se aceptan caracteres especiales, ejemplo'|trans  }} !@#$%&"
+                },
+                'passLoginB': {
+                    equalTo: " * {{ 'Debes coincidir con la contraseña'|trans }}"
+                },
+                'correo': {
+                    email: " * {{ 'Debes ingresar un formato válido, ejemplo'|trans }}: ejemplo@gmail.com." ,
+                    required: " * {{ 'El correo es requerido'|trans }}"
+                }
+            }
+        });
+        jQuery.validator.addMethod("alphanumeric", function(value, element) {
+            return this.optional(element) || /^[\w.]+$/i.test(value);
+        }, "{{ 'Sólo se permiten letras, números y guiones bajos'|trans }}");
+    </script>
+    
+    
+{% endblock %}

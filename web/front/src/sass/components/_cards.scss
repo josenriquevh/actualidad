@@ -1,0 +1,691 @@
+//  CARDS UNIDADES
+
+.card-unid {
+
+    height: 240px;
+    width: 178px;
+    background-image: linear-gradient(0deg, #F0EDF2 0%, #FFFFFF 100%);
+    box-shadow: 
+    0 11px 13px -5px rgba(125, 122, 117, 0.5),
+    1px 0px 20px 0px rgba(92, 98, 102, 0.19);
+    border-radius: 12px;
+    padding-top: 1.5%;
+    position: relative;
+    margin: .5rem;
+
+
+    .icon-materia {
+        height: 34px;
+        width: 85%;
+        background-repeat: no-repeat;
+        position: absolute;
+        top: 8px;
+        left: 12px;
+    }
+
+    .numero {
+        border-radius: 50%;
+        width: 94px;
+        height: 94px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 4rem;
+        font-weight: 600;
+        margin: 1rem  auto 5px auto;
+
+        div {
+            padding-top: 5px;
+            line-height: 0.8;
+        }
+
+        span {
+            display: block;
+            color: white;
+            font-size: 0.75rem;
+        }
+    }
+
+    h3 {
+        margin-top: 10px;
+    }
+
+
+    
+}
+// card unidad matematicas
+.card-unid.mat {
+
+    .icon-materia {
+        // background-image: url('../img/icon-mat.svg');
+        fill: $color-mat;
+    }
+
+    .counter{ color: $color-mat; }
+
+    .numero {
+        background: $color-mat;
+        background-image: linear-gradient(-185deg, rgba(255,255,255,0.75) 3%, rgba(62,182,191,0.00) 42%);
+        box-shadow: -2px 7px 10px 0 darken($color-mat,12% );
+    }
+
+    h3 {
+        color: $color-mat;
+    }
+    .progreso {
+        background-color: $color-mat;
+    }
+    .barra-porcentaje{
+        span { color: $color-mat;}
+    }
+}
+
+// card unidad lenguaje
+.card-unid.len {
+
+    .icon-materia {
+        // background-image: url('../img/icon-len.svg');
+        fill: $color-len;
+    }
+
+    .counter {color: $color-len;}
+
+    .numero {
+        background: $color-len;
+        background-image: linear-gradient(-185deg, rgba(255,255,255,0.75) 3%, rgba(62,182,191,0.00) 42%);
+        box-shadow: -2px 7px 10px 0 darken($color-len,16% );
+    }
+
+    h3 {
+        color: $color-len;
+    }
+    .progreso {
+        background-color: $color-len;
+     
+    }
+    .barra-porcentaje{
+        span { color: $color-len;}
+    }
+}
+
+
+// card unidad sociales
+.card-unid.soc {
+
+    .icon-materia {
+        // background-image: url('../img/icon-soc.svg');
+        fill: $color-soc;
+    }
+
+    .counter {color: $color-soc;}
+    .numero {
+        background: $color-soc;
+        background-image: linear-gradient(-185deg, rgba(255,255,255,0.75) 3%, rgba(62,182,191,0.00) 42%);
+        box-shadow: -2px 7px 10px 0 darken($color-soc,16% );
+    }
+
+    h3{
+        color: $color-soc;
+    }
+    .progreso { background-color: $color-soc; }
+    .barra-porcentaje{
+        span { color: $color-soc;}
+    }
+}
+
+
+// card unidad naturales
+.card-unid.nat {
+
+    .icon-materia {
+        // background-image: url('../img/icon-nat.svg');
+        fill: $color-nat;
+    }
+
+    .counter {color: $color-nat;}
+
+    .numero {
+        background-color: $color-nat;
+        background-image: linear-gradient(-185deg, rgba(255,255,255,0.75) 3%, rgba(62,182,191,0.00) 42%);
+        box-shadow: -2px 7px 10px 0 darken($color-nat,16% );
+    }
+
+    h3 {
+        color: $color-nat;
+    }
+    .progreso { background-color: $color-nat; }
+    .barra-porcentaje{
+        span { color: $color-nat;}
+    }
+}
+
+.completa {
+    color: $color-gold !important;
+
+    .icon-materia { fill: $color-gold !important;}
+    
+    .numero {
+        background-color: $color-gold !important;
+        background-image: linear-gradient(-185deg, rgba(255, 255, 255, 0.75) 3%, rgba(191, 165, 62, 0) 42%) !important;
+        box-shadow: -2px 7px 10px 0 darken($color-gold,20% )!important;
+    }
+
+    h3 {
+        color: $color-gold !important;
+    }
+    .progreso {
+        background-color: $color-gold !important;
+    }
+
+    .btn-primary {
+        background-image: linear-gradient(-180deg, $azul-primary-light 4%, $azul-primary-light 95%) !important;
+    }
+    .span {
+        color : $color-gold;
+    }
+}
+
+.blocked {
+    color: $color-block !important;
+    pointer-events: none;
+    .numero {
+        background: $color-block !important;
+        background-image: linear-gradient(-185deg, rgba(255, 255, 255, 0.75) 3%, rgba(191, 165, 62, 0) 42%) !important;
+        box-shadow: -2px 7px 10px 0 darken($color-block,20% ) !important;
+    }
+    .icon-materia {
+        fill: $color-block !important;
+    }
+
+    h3 {
+        color: $color-block !important;
+    }
+    .progreso {
+        background-color: $color-block !important;
+    }
+
+    .btn-primary {
+        background-image: linear-gradient(-180deg, $color-block 4%, $color-block 95%) !important;
+    }
+}
+
+
+
+// .barra-progreso {
+//     background: #D9D7DB;
+//     border-radius: 9px;
+//     height: 7px;
+//     width: 70%;
+//     margin: 0 auto;
+//     display: flex;
+//     justify-content: flex-start;
+//     align-items: center;
+//     .progreso {
+//         border-radius: 9px;
+//         height: 7px;
+//     }
+// }
+
+.barra-porcentaje {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.barra-progreso {
+    background: #D9D7DB;
+    border-radius: 9px;
+    height: 7px;
+    width: 70%;
+    margin: 1rem auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .progreso {
+        border-radius: 9px;
+        height: 7px;
+        background-color: $azul-primary-light;
+    }
+}
+
+
+// CARDS LIBROS
+
+.card-libro {
+    // background: #f5f5f5;
+    border-radius: 12px;
+    width: 178px;
+    height: 100%;
+    margin: .8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    .cover-libro {
+        width:178px;
+        height: 210px;
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px 0 rgba(96,96,96,0.52);
+        transition: transform 0.3s;
+        &:hover {
+            box-shadow: 0px 0px 3px 1px $azul-primary-light;
+        }
+        &:active {
+            transform: scale(0.96);
+        }
+
+        :not(.inactivo):active {
+            transform: scale(1);
+        }
+
+    }
+
+    
+
+}
+
+.card-libro.completado {
+
+    position: relative;
+
+    &:before{
+        content: url('../img/medal.svg');   
+        position: absolute;
+        top: -2px;
+        right: -14px;
+        z-index: 10;
+        transition: .3s;
+    }
+
+    &:active:before {
+        transform: scale(0.96);
+    }
+
+    .progreso {
+        background-color: $naranja-light;
+    }
+
+    span {
+        color: $naranja-light;
+    }
+}
+
+.card-libro.inactivo .cover-libro img {
+    filter: grayscale(100%);
+
+}
+
+.card-libro.inactivo {
+
+    position: relative;
+
+    .agregar-cod {
+        display: flex;
+        width: 200px;
+        height: 150px;
+        background-image: linear-gradient(-180deg, #FFFFFF 0%, #F9F7FA 98%);
+        box-shadow: 0 9px 14px 0 rgba(89,83,83,0.20);
+        border-radius: 12px;
+        transform: scale(0);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        position: absolute;
+        top: 20%;
+        left: -6%;
+        padding: 0.5rem;
+        transition: 0.3s;
+        z-index: 20;
+    }
+
+    &.hover .agregar-cod {
+        transform: scale(1);
+        opacity: 1;
+        top: 15%;
+    }
+
+    &.hover .add-code {
+        opacity: 0;
+    }
+
+    .icon-menu  {
+        position: absolute;
+        top: 5px;
+        right: 6px;
+        width: 15px;
+        height: 15px;
+        fill: $azul-primary-light;
+        &:hover {
+            cursor: pointer;
+            fill: $naranja;
+        }
+    }
+
+    .add-code {
+        position: absolute;
+        bottom: 10px;
+        left:22px;
+        z-index: 10;
+        
+    }
+
+}
+
+.card-libro.expiro .cover-libro {
+    filter: grayscale(100%) brightness(80%);
+    pointer-events: none;
+ 
+}
+
+
+
+.card-libro.expiro {
+
+    position: relative;
+    
+    .barra-progreso , span {
+        display: none;
+    }
+
+    .mensaje {
+        content: "";
+        position: absolute;
+        left: 50%;
+        margin-left: -80px;
+        top: 50%;
+        margin-top: -25px;
+        width: 160px;
+        height: 50px;
+        background-color: #3EB6BF;
+        color: white;
+        border-radius: 12px;
+        z-index: 2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+}
+
+
+//********** UNIDADES ****************
+
+// CURRENT UNIDAD
+
+.card-unid-current {
+    @extend .card-unid;
+    width: 520px;
+    min-height: 280px;
+    max-height: 400px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 1rem;
+    position: absolute;
+    top: -100px;
+
+
+    .info-current {
+        width: 180px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+    
+    }
+    
+    .content {
+        width: 75%;
+        color: $gray-darker;
+
+        ol {
+            margin-left: -10px;
+            padding-top: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 180px;
+        }
+    
+        li{
+            font-size: 0.8rem;
+            position:relative;
+        }
+
+        h2 {
+            margin-top: 10px;
+        }
+    
+    }
+
+    &.nat {
+        h2 {
+            color: $color-nat;
+        }
+    }
+    &.mat {
+        h2 {
+            color: $color-mat;
+        }
+    }
+    &.len {
+        h2 {
+            color: $color-len;
+        }
+    }
+    &.soc {
+        h2 {
+            color: $color-soc;
+        }
+    }
+
+}
+
+
+// SINGLE UNIDAD
+
+
+.card-unid-single {
+    @extend .card-unid;
+    width: 360px;
+    height: 240px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    overflow: hidden;
+    margin-bottom: 2rem;
+
+    .info-current {
+        display: flex;
+        justify-content: center;
+        width: 35%;
+       
+
+        .numero {
+            width: 74px;
+            height: 74px;
+            font-size: 2rem;
+        }
+    }
+
+    .content {
+        width: 80%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        padding: 0.5rem;
+
+        h3 {
+            height: 80px;
+            width: 95%;
+        }
+
+        .barra-porcentaje {
+            flex-direction: column;
+
+        }
+    }
+
+    &.nat{
+
+        .bg-icon {
+            position: absolute;
+            top: 109px;
+            left: -120px;
+            opacity: 0.3;
+            fill: $color-nat;
+            
+            
+        }
+    } 
+    &.mat{
+
+        .bg-icon {
+            position: absolute;
+            top: 130px;
+            left: -120px;
+            opacity: 0.3;
+            fill: $color-mat;
+            
+            
+        }
+    } 
+    &.len{
+
+        .bg-icon {
+            position: absolute;
+            top: 120px;
+            left: -120px;
+            opacity: 0.3;
+            fill: $color-len;
+            
+            
+        }
+    } 
+    &.soc{
+
+        .bg-icon {
+            position: absolute;
+            top: 105px;
+            left: -120px;
+            opacity: 0.3;
+            fill: $color-soc;
+            
+            
+        }
+    } 
+}
+
+.card-unid-single.completa{
+
+    color: $naranja-light;
+
+    &:after {
+        content: url('../img/medal-unid.png');
+        position: absolute;
+        top: -3px;
+        left: 300px;
+        max-height: 100%;
+        width: 100%;
+    }
+
+    .barra-porcentaje span, .counter {
+        color: $color-gold !important;
+    }
+    .bg-icon {
+        fill: $color-gold!important;
+    }
+}
+
+.card-unid-single.blocked {
+
+    .bg-icon, .barra-porcentaje span, .counter {
+        fill: $color-block !important;
+        color: $color-block !important;
+    }
+
+}
+
+
+// CARD-INTERACTIVOS
+
+.card-int {
+    width: 175px;
+    height: 160px;
+    box-shadow: 0 7px 13px 1px rgba(146,138,124,0.47);
+    border-radius: 12px;
+    border: 4px solid $naranja;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.3s;
+    margin: 2rem;
+    .num {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 30px;
+        height: 30px;
+        color: white;
+        border-radius: 50%;
+        background-color: $naranja;
+        margin:0.2rem;
+    }
+
+    .tag {
+        background-color: $naranja;
+        border-radius: 12px;
+        text-align: center;
+        color: white;
+        margin-top: 50%;
+        width: 60%;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.7;
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
+    &:active {
+        transform: scale(0.96);
+    }
+}
+
+.card-int.hecho {
+    border: 4px solid $color-gold;
+    .num{background-color: $color-gold;}
+    .tag {background-color: $azul-primary-light;}
+}
+.card-int.active {
+    border: 4px solid $verde;
+    .num{background-color: $verde;}
+    .tag {background-color: $verde;}
+}
+.card-int.blocked {
+    filter: grayscale(100%) ;
+    border: 4px solid $color-block;
+    .num{background-color: $color-block;}
+    .tag {background-color: $color-block;}
+}
+
+.certificado{
+    position: relative;
+    width: 150px;
+    margin: 0 auto;
+}
+ 
+    .certificado-listo:before {
+        content: url(../img/medal.svg);
+        position: absolute;
+        top: -2px;
+        right: -3px;
+        z-index: 10;
+        transition: .3s;
+    }
+
+    

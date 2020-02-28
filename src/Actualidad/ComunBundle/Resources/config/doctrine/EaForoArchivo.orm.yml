@@ -1,0 +1,58 @@
+Actualidad\ComunBundle\Entity\EaForoArchivo:
+    type: entity
+    table: ea_foro_archivo
+    indexes:
+        IDX_C8244EC4F5FF53F6:
+            columns:
+                - foro_id
+        IDX_C8244EC4DB38439E:
+            columns:
+                - usuario_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        descripcion:
+            type: text
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        archivo:
+            type: string
+            nullable: true
+            length: 250
+            options:
+                fixed: false
+        fechaCreacion:
+            type: datetime
+            nullable: true
+            column: fecha_creacion
+    manyToOne:
+        foro:
+            targetEntity: EaForo
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                foro_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        usuario:
+            targetEntity: AdminUsuario
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                usuario_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

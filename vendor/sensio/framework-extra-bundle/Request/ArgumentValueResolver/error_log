@@ -1,0 +1,1 @@
+[18-Feb-2019 03:05:03 America/Caracas] PHP Fatal error:  Interface 'Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface' not found in /home/pr3b04rd/public_html/actualidad/vendor/sensio/framework-extra-bundle/Request/ArgumentValueResolver/Psr7ServerRequestResolver.php on line 25

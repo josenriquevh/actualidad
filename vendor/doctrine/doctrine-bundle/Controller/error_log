@@ -1,0 +1,2 @@
+[15-Feb-2019 09:18:44 America/Caracas] PHP Fatal error:  Interface 'Symfony\Component\DependencyInjection\ContainerAwareInterface' not found in /home/pr3b04rd/public_html/actualidad/vendor/doctrine/doctrine-bundle/Controller/ProfilerController.php on line 16
+[17-Feb-2019 12:45:23 America/Caracas] PHP Fatal error:  Interface 'Symfony\Component\DependencyInjection\ContainerAwareInterface' not found in /home/pr3b04rd/public_html/actualidad/vendor/doctrine/doctrine-bundle/Controller/ProfilerController.php on line 16

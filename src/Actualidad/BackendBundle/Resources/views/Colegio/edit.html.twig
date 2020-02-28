@@ -1,0 +1,177 @@
+{% extends '::admin.html.twig'%}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('front/js/plugins/jquery-upload-file/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('front/js/plugins/jquery-upload-file/css/jquery.fileupload.css') }}">
+    <style>
+        .input-group-addon{
+            padding:0px;
+            border-radius: 50px !important;
+        }
+        .input-group .form-control {
+            z-index: 1;
+        }
+        .input-group {
+            margin-top: 35px;
+            margin-left: 20px;
+        }
+        .fileinput-button {
+            position: absolute;
+        }
+        #btn_foto, #btn_pdf {
+            padding-top: 17px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+{% set uri = app.request.getbasepath %}
+<form id="form" action="{{ path('_editColegio') }}" method="POST">
+<input type="hidden" id="root_site" name="root_site" value="{{ uri }}" />
+<input type="hidden" id="deslen" name="deslen" value="0" />
+<input type="hidden" id="deslen2" name="deslen2" value="0" />
+<input type="hidden" id="file_input" name="file_input" value="">
+<input type="hidden" id="resets" name="resets" value="1">
+
+<br><br>
+<input type="hidden" id="photo" name="photo" value="{{ asset('img/picture.png') }}">
+<div class="row align-items-center justify-content-start">
+    <div class="col-sm-8 col-md-8 col-lg-8 alert alert-danger" role="alert" id="div-error" style="display:none;">
+        <ul></ul>
+    </div>
+</div>
+<div class="row">
+	<div class="col-sm-16">
+		<div class="card">
+			<div class="card-header gradiente">
+                <div class="card-title">
+                    <h6>Registro colegios</h6>
+                </div>
+            </div>
+           	<div class="card-block">
+                <div class="container_wizard wizard-thin">
+                	<div class="stepwizard">
+                		<div class="stepwizard-row setup-panel d-flex">
+            				<div class="stepwizard-step col">
+                                <a href="#det0" class="btn bttn__fndo pass">
+                                    <span class="btn-round">1</span>
+                                    <p>Datos Básicos</p>
+                                </a>
+                            </div>
+                		</div>
+                	</div>
+            		<div class="row setup-content" id="det0">	
+            			<div class="col-sm-16">
+            				<div class="row">
+                                <div class="col-sm-16">
+                                    <h3 class="mb-2">Paso 1</h3>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-sm-16 col-md-16 col-lg-16">
+                                    <label for="grado_id" class="col-sm-10 col-md-10 col-lg-10 col-form-label">Provincia</label>
+                                    <div class="col-sm-16 col-md-16 col-lg-16">
+                                        <select class="form_sty_sel form-control" style="border-radius: 5px" id="provincia_id" name="provincia_id" data="ciudad_id" entity="AdminCiudad" reference="provincia" orderBy="nombre">
+                                            <option value=""></option>
+                                            {% for provincia in provincias %}
+                                                {% set selected = colegio.id ? provincia.id == colegio.ciudad.provincia.id ? 'selected="selected"' : '' ? '' %}
+                                                <option value="{{ provincia.id }}" {{ selected }}>{{ provincia.nombre }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <span class="fa fa-institution"></span>
+                                        <span class="bttn_d"><img src="{{ asset('img/down-arrowbck.png') }}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-sm-16 col-md-16 col-lg-16">
+                                    <label for="libro_id" class="col-sm-10 col-md-10 col-lg-10 col-form-label">Ciudad</label>
+                                    <div class="col-sm-16 col-md-16 col-lg-16">
+                                        <select class="form_sty_sel form-control reset1" style="border-radius: 5px" id="ciudad_id" name="ciudad_id" reference="ciudad" orderBy="orden" reset="1">
+                                            <option value=""></option>
+                                            {% for ciudad in ciudades %}
+                                                {% set selected = colegio.id ? cuidad.id == colegio.ciudad.id ? 'selected="selected"' : '' ? '' %}
+                                                <option value="{{ ciudad.id }}" {{ selected }}>{{ ciudad.nombre }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <span class="fa fa-institution"></span>
+                                        <span class="bttn_d"><img src="{{ asset('img/down-arrowbck.png') }}"></span>
+                                        <img id="loader-ciudad_id" class="img-loader" src="{{ asset('img/ui-anim_basic_16x16.gif') }}" style="display:none;">
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-sm-16 col-lg-16 col-md-16">
+                                    <label for="titulo" class="col-sm-2 col-md-2 col-lg-2 col-form-label">Nombre</label>
+                                    <div class="col-sm-16 col-md-16 col-lg-16">
+                                        <input type="text" id="Nombre" name="Nombre" value="{{ colegio.Nombre }}" class="form-control form_sty1">
+                                        <span class="fa fa-font"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="wizard-footer">
+                                <div class="col-sm-16 text-right">
+                                    <button type="button" class="bttn__end" id="finish"><span class="text__end">Finalizar</span><span class="fa fa-check"></span></button>
+                                </div>
+                            </div>
+            			</div>
+            		</div>
+                </div>
+            </div>
+		</div>
+	</div>
+</div>
+</form>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('assets/vendor/ckeditor/ckeditor.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendor/ckeditor/config.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendor/ckfinder/ckfinder.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('jq/jquery-validation-1.15.0/dist/jquery.validate.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('jq/jquery-validation-1.15.0/dist/additional-methods.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('front/js/plugins/jquery-upload-file/js/vendor/jquery.ui.widget.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('front/js/plugins/jquery-upload-file/js/jquery.iframe-transport.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('front/js/plugins/jquery-upload-file/js/jquery.fileupload.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/admin/pagina.js') }}"></script>
+    <script type="text/javascript">
+
+        $("#form").validate({
+            errorLabelContainer: "#div-error ul",
+            wrapper: "li",
+            ignore: "",
+            rules: {
+                'provincia_id': {
+                    required: {% if mover > 0 %}false{% else %}true{% endif %}
+                },
+                'ciudad_id': {
+                    required: {% if mover > 0 %}false{% else %}true{% endif %}
+                },
+                'nombre': {
+                    required: true,
+                    minlength: 3
+                }
+            },
+            messages: {
+                'provincia_id': {
+                    required: "- El provincia es requerida."
+                },
+                'ciudad_id': {
+                    required: "- El ciudad es requerida."
+                },
+                'nombre': {
+                    required: "- El nombre es requerido.",
+                    minlength: "- El nombre debe ser mínimo de 3 caracteres."
+                }
+            }
+        });
+
+    </script>
+{% endblock %}

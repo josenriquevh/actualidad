@@ -1,0 +1,183 @@
+@keyframes bounce {
+    0% { transform: scale(0); }
+    80% {  transform: scale(1.2);}
+    100% { transform: scale(1);}
+  }
+
+
+  .container-fixed {
+
+    position: fixed;
+    z-index: 108;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    
+}
+
+.barras { 
+  width: 100%;
+
+
+  &:before{
+    content: url('../img/barras.png');
+    top: -126px;
+    left: -497px;
+    width: 44%;
+    position: absolute;
+  }
+
+  &:after {
+    content: url('../img/barras.png');
+    top: -89px;
+    right: -496px;
+    width: 44%;
+    position: absolute;
+    transform: rotate(170deg);
+  }
+
+}
+
+  
+#myVideo {
+  position: fixed;
+  right: -15%;
+  top: -45px;
+  min-width: 100%; 
+  min-height: 100%;
+}
+  
+  body.landing {
+      background-image: url('../img/bg-landing.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+    
+    .h-100vh { height: 100vh;}
+    
+    .bg-login-opc {
+        background-color: $azul-primary;
+        padding: 4px;
+        border-radius: 10px;
+        color: white;
+        // width: 80%;
+        margin: auto;
+        .border-interno {
+            border: solid white 3px;
+            border-radius: 10px;
+        }
+        .perfil-wrap {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        h2 {
+            font-family:'Roboto','HelveticaNeue-CondensedBold','Arial Narrow', 'Helvetica', 'sans-serif';
+        }
+        
+        @media screen and (max-width: 990px) {
+            width: 100%;
+        }
+    }
+    
+    
+    .flecha-right {
+        animation: .5s ease-out .5s 1 bounce;
+        animation-fill-mode: forwards;
+        position: absolute;
+        top: -70px;
+        left: -10px;
+        width: 40%;
+        transform: scale(0);
+        @media screen and (max-width: 767px) {
+            top: 0;
+            width: 30%;
+        }
+        
+    }
+    
+    .flecha-naranja {
+        transform: scale(0);
+        animation: .5s ease-out .7s 1 bounce;
+        animation-fill-mode: forwards;
+    }
+    .act-landing {
+        width: 130%;
+        
+        @media screen and (max-width: 990px) {
+            // width: 120%;
+        }
+        @media screen and (max-width: 767px) {
+            width: 90%;
+            margin: auto;
+        }
+        
+    }
+    
+    @keyframes anim-role {
+      0% {transform: translateY(150%);}
+      100% {transform: translateY(0%);}
+      
+    }
+    @keyframes anim-role-rotate {
+       0% {transform: rotateY(0deg);}
+      100% {transform: translateX(-100%) rotateY(-180deg);}
+      
+    }
+    
+    .flip-card {
+    background-color: transparent;
+    width: 100%;
+    height: 550px;
+    perspective: 600px;
+   // animation: .5s ease-out .3s 1 anim-role;
+    
+  }
+  
+  .flip-card-inner {
+    position: relative;
+    width: 80%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    transform-origin: center right;
+    
+  }
+  
+  .flip-card .flip-card-inner {
+   //transform: translateX(-100%) rotateY(-180deg);
+   
+   animation: anim-role-rotate .8s ease-out .5s 1 forwards;
+    //animation-fill-mode: forwards;
+    // transform: rotateY(180deg);
+  }
+
+  .wrap-flip-card {
+    animation: anim-role .8s ease-in-out 0s 1 ;
+  }
+  
+  .flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+  }
+  
+  .flip-card-front {
+    background-color:$azul-primary;
+    color: black;
+    border-radius: 12px;
+  }
+  
+  .flip-card-back {
+    background-color: $azul-primary;
+    color: white;
+    transform: rotateY(180deg);
+    border-radius: 12px;
+  }

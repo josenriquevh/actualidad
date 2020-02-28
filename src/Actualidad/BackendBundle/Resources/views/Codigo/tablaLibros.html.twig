@@ -1,0 +1,38 @@
+<input type="hidden" id="entityToOrder" name="entityToOrder" value="EaPagina">
+
+<table class="table" id="dt">
+    <thead class="sty__title">
+        <tr>
+            <th class="hd__title">{{ 'Título'|trans }}</th>
+            <th class="hd__title">{{ 'Tipo'|trans }}</th>
+            <th class="hd__title">{{ 'Cantidad de códigos'|trans }}</th>
+            <th class="hd__title">{{ 'Acciones'|trans }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for libro in libros %}
+            {% set eo = cycle(['odd', 'even'], loop.index) %}
+            <tr class="{{ eo }}">
+                <td>{{ libro.titulo }}</td>
+                <td>{{ libro.tipo }}</td>
+                <td>{{ libro.codigos }}</td>
+                <td>
+                     <a href="{{ path('_cargaMasivaView',{'pagina_id':libro.id}) }}"  title="{{ 'Generar códigos'|trans }}" class="btn btn-link btn-sm "><span class="fa fa-gears"></span></a>
+
+
+                    <a  class="listaC" title="{{ 'Lista de codigos'|trans }}"  data-toggle="modal" data-target="#codigosDet" data-libro="{{ libro.id}}" data-name="{{ libro.titulo }}" data-tipo="{{ libro.tipo }}" data-grado="{{ libro.grado }}" id="{{ 'listaC'~libro.id }}" href="#" ><span class="fa fa-file-excel-o"></span></a>
+                                
+
+                    <a href="#" title="{{ 'Descargar Excel'|trans }}" class="btn btn-link btn-sm "  id="{{ 'descargarExcel'~libro.id }}" style="display:none"><span class="fa fa-download"></span></a>
+
+                   <img class="img-loader" src="{{ asset('img/ui-anim_basic_16x16.gif') }}" id="{{ 'excelLoader'~libro.id }}" style="display:none">
+                </td>
+               
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+
+

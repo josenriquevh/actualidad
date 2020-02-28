@@ -1,0 +1,233 @@
+{% extends '::pdf.html.twig' %}
+
+{% block stylesheets %}
+    <style type="text/css">
+        .table {
+            width: 300px;
+            max-width: 300px;
+            margin-bottom: 50px;
+        }
+        .styleTab {
+            font-size: 12px;
+        }
+        .table th, .table td {
+            padding: 5px;
+            vertical-align: top;
+            border-top: 1px solid #eceeef;
+            border-top-color: rgb(236, 238, 239);
+        }
+        .card {
+            border-radius: 8px;
+            margin: 80px auto 15px auto;
+            background: #ffffff;
+            position: relative;
+            border: 0px solid rgba(0, 0, 0, 0.125);
+            width: 600px;
+        }
+        .card .card-header {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        .gradiente {
+            background-color: #bce100 !important;
+        }
+        .card-header {
+            padding: 7px 12px;
+            margin-bottom: 0;
+            background-color: #bce100;
+        }
+        .card .card-header .card-title {
+            font-size: 18px;
+            margin: 0;
+            line-height: 30px;
+            font-weight: 400;
+            color: #000;
+            vertical-align: middle;
+        }
+        .card-block {
+            padding: 5px;
+        }
+        .main {
+            width: 600px;
+            max-width: 600px;
+            margin-bottom: 50px;
+        }
+        .main-td {
+            width: 300px;
+            max-width: 300px;
+        }
+        .estado {
+            background: #d9edf7 !important;
+            font-weight: bold;
+        }
+        th.bg-warning {
+            background: #ed7d31 !important;
+        }
+        td.bg-warning {
+            background: #f8cbad !important;
+            
+        }
+        th.bg-info {
+            background: #0070c0 !important;
+        }
+        td.bg-info {
+            background: #bdd7ee !important;
+        }
+        h6 {
+            font-weight: bold !important;
+            color: #007bcd;
+            font-size: 14px;
+        }
+        .rojo {
+            background: #ff0000 !important;
+        }
+        .amarillo {
+            background: #ffff00 !important;
+        }
+        .verde_claro {
+            background: #92d050 !important;
+        }
+        .verde {
+            background: #00b050 !important;
+        }
+        .total {
+            background: #dff0d8 !important;
+        }
+        .leyenda {
+            margin-top: -35px;
+        }
+        .text-black {
+            color: #000;
+        }.
+        .text-white {
+            color: #fff !important;
+        }
+        .small {
+            font-size: 80%;
+            font-weight: normal;
+        }
+        img {
+            margin-top: 20px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header gradiente">
+            <h5 class="card-title">{{ 'Estadística del libro'|trans }}: {{ libro }}.</h5>
+        </div>
+        <div class="card-block">
+            <table class="main">
+                <tbody>
+                    <tr>
+                        <td class="main-td">
+                            <h6>{{ 'Datos del libro'|trans }}: {{ libro }}</h6>
+                            <table class="table styleTab">
+                                <tbody>
+                                    <tr>
+                                        <th style="text-align:left;" class="total">Unidades</th>
+                                        <td class="bg-warning" align="center">{{ reporte.unidades }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:left;" class="total">Temas</th>
+                                        <td class="bg-warning" align="center">{{ reporte.temas}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:left;" class="total">Actividades</th>
+                                        <td class="bg-warning" align="center">{{ reporte.actividades }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="main-td">
+                            <h6>{{ 'Estadísticas de códigos activos y sin activar del libro'|trans }}: {{ libro }}</h6>
+                            <table class="table styleTab">
+                                <thead>
+                                    <tr>
+                                        <th align="left" class="estado">{{ 'Estado'|trans }}</th>
+                                        <th class="bg-warning text-white" align="center">{{ 'Cantidad'|trans }}</th>
+                                        <th class="bg-warning text-white" align="center">%</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align:left;">{{ 'Sin Activar'|trans }}</td>
+                                        <td class="bg-warning" align="center">{{ reporte.sin_activar }}</td>
+                                        <td class="bg-warning" align="center">{{ reporte.sin_activar_pct }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left;">{{ 'Activados'|trans }}</td>
+                                        <td class="bg-warning" align="center">{{ reporte.activos }}</td>
+                                        <td class="bg-warning" align="center">{{ reporte.activos_pct }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:left;" class="total">Total</th>
+                                        <td class="bg-warning" align="center">{{ reporte.total_1 }}</td>
+                                        <td class="bg-warning" align="center">{{ reporte.total_1_pct }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="leyenda">
+                                <span class="small"><b>{{ 'Sin activar' }}:</b> {{ 'Códigos de los libros que aun no han sido activados'|trans }}.</span><br>
+                                <span class="small"><b>{{ 'Activados' }}:</b>{{ 'Códigos de los libros que ya han sido activados'|trans }}.</span>
+                            </div>
+                        </td>
+                        <td class="main-td">
+                            <br>
+                            <img src="{{ src.src1 }}" alt="Formación Smart">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="main-td">
+                            <br>
+                            <br>
+                            <h6>{{ 'Estadísticas de códigos activos'|trans }}: {{ libro }}</h6>
+                            <table class="table styleTab">
+                                
+                                    <tr>
+                                        <th  align="left" class="estado">{{ 'Estado'|trans }}</th>
+                                        <th class="bg-warning text-white" align="center">{{ 'Cantidad'|trans }}</th>
+                                        <th class="bg-warning text-white" align="center">%</th>
+                                    </tr>
+                                
+                                
+                                    <tr>
+                                        <td style="text-align:left;">{{ 'No iniciados'|trans }}</td>
+                                        <td class="bg-warning" align="center">{{ reporte.no_iniciados }}</td>
+                                        <td class="bg-info" align="center">{{ reporte.no_iniciados_pct }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left;">{{ 'En curso'|trans }}</td>
+                                        <td class="bg-warning" align="center">{{ reporte.en_curso }}</td>
+                                        <td class="bg-info" align="center">{{ reporte.en_curso_pct }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left;">{{ 'Finalizado'|trans }}</td>
+                                        <td class="bg-warning" align="center">{{ reporte.finalizado }}</td>
+                                        <td class="bg-info" align="center">{{ reporte.finalizado_pct }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:left;" class="total">Total </th>
+                                        <td class="bg-warning" align="center">{{ reporte.total_2 }}</td>
+                                        <td class="bg-info" align="center">{{ reporte.total_2_pct}}</td>
+                                    </tr>
+                               
+                            </table>
+                            <div class="leyenda">
+                                <span class="small"><b>{{ 'No iniciados' }}:</b> {{ 'Códigos de libro que si bien han sido activados en la plataforma, aún no se ha ingresado a su contenido'|trans }}.</span><br>
+                                <span class="small"><b>{{ 'En curso' }}:</b> {{ 'Códigos del libro a los que se le ha ingresado a su contenido'|trans }}.</span><br>
+                                <span class="small"><b>{{ 'Finalizado' }}:</b> {{ 'Códigos de libros que ya han sido finalizados'|trans }}.</span>
+                            </div>
+                        </td>
+                        <td class="main-td">
+                            <br><br>
+                            <img src="{{ src.src2 }}" alt="Formación Smart">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

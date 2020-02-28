@@ -1,0 +1,20 @@
+Actualidad\ComunBundle\Entity\AdminProvincia:
+    type: entity
+    table: admin_provincia
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        nombre:
+            type: string
+            nullable: true
+            length: 100
+            options:
+                fixed: false
+    lifecycleCallbacks: {  }

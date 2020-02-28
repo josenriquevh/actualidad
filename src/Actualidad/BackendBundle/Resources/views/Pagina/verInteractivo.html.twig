@@ -1,0 +1,103 @@
+{% extends '::admin.html.twig' %}
+
+{% block menu %}
+    &nbsp;
+{% endblock %}
+
+{% block body %}
+<br>
+<br>
+
+<div class="row align-items-center justify-content-between">
+    <div class="col-12 col-sm-12 page-title">
+        <h3>{{ 'Prueba del interactivo'|trans }}</h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-16">
+        <div class="card">
+            <div class="card-header gradiente">
+                <div class="card-title">
+                    <h6>{{ 'Vista previa del interactivo'|trans }}</h6>
+                </div>
+            </div>
+            <div class="card-block">
+                <div class="row">
+                    <div class="col-sm-16">
+                        <br>
+                        <div class="content__wrapper">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-sm-16" id="div-caso">
+                                        Caso de Prueba:<br>
+                                        {{ dump(caso) }}
+                                        {{ app.request.getSchemeAndHttpHost() }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-16">
+                                        {{ pagina.contenido|raw }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        // Prueba del postMessage
+        setTimeout(function() {
+            postMessage();
+        }, 5000);
+
+        function postMessage()
+        {
+            var iframe = document.getElementById('ifr');
+            if (iframe !== null)
+            {
+                iframe.contentWindow.postMessage({
+                    usuario_id: {{ caso.usuario_id }},
+                    url: "{{ url(caso.url) }}",
+                    make_ajax: {{ caso.make_ajax }},
+                    pagina_id: {{ caso.pagina_id }},
+                    dominio_origen: "{{ app.request.getSchemeAndHttpHost() }}",
+                }, "{{ servidor_recursos }}");
+            }
+            else {
+                console.log('No existe iframe con id ifr');
+            }
+        }
+
+        function receiveMessage(event)
+        {
+            // Do we trust the sender of this message?
+            if (event.origin !== "{{ servidor_recursos }}")
+                return;
+
+            var ok = event.data.ok;
+        
+            console.log('ok:'+ok);
+
+            if (ok == 1)
+            {
+                console.log('Se da por completado el interactivo, habilitar el botón de CONTINUAR.');
+            }
+            else {
+                console.log('OK en 0. No hacer nada.');
+            }
+
+        }
+
+        window.addEventListener("message", receiveMessage, false);
+
+    </script>
+{% endblock %}

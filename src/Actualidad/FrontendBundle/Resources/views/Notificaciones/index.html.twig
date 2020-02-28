@@ -1,0 +1,128 @@
+{% extends '::base.html.twig' %}
+{% block stylesheets %}
+{{ parent ()}}
+<link rel="stylesheet" href="{{ asset('front/js/plugins/jquery-upload-file/css/style.css') }}">
+<link rel="stylesheet" href="{{ asset('front/js/plugins/jquery-upload-file/css/jquery.fileupload.css') }}">
+<style>
+    .blocked {
+        background-image: linear-gradient(-180deg, #8E8C8F 4%, #8E8C8F 95%) !important;
+        color: #ffffff !important;
+        }
+    body {
+    padding-top: 0px;
+    }
+</style>
+{% endblock %}
+{% block body %}
+{{ parent() }}
+<input type="hidden" id="pagina_actual" name="pagina_actual" value="pagina1">
+<input type="hidden" id="url_paginador" name="url_paginador" value="{{ path('_ajaxPaginador') }}">
+<main id="infoPages"  >
+            
+<div class="bg-light-grey">
+    <div class="container ">
+        <div class="row  align-items-center ">
+            <div class="col-4 mt-3 text-left">
+                <a href="{{ path('_inicio', { 'rol_id': app.session.get('usuario').rol_id }) }}" class=" btn-back ml-0 ">
+                    Volver al Inicio 
+                    <svg class="fill-white icon-materia-menu">
+                        <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-go-bac') }}k"></use>
+                    </svg>
+                </a>
+            </div>
+            <div class="col-8 text-center mt-5 mb-5">
+                <h1 class="color-blue fs-5">Notificaciones</h1>
+            </div>
+            
+        </div>
+    </div>
+</div>
+    <div class="container">
+        <div class="row mt-4 justify-content-center justify-md-content-start">
+            <div class="col-3 mb-4 mb-md-0 d-none d-md-block">
+                <img style="position: relative; top:0" class="info-ilust img-fluid" src="{{ asset('front/dist/img/il-datos.svg') }}" alt="">
+            </div>
+            <div class="col-12 col-md-9 mb-5 pb-5 mt-5">
+
+                <div class="row">
+                    <div class="col-12 justify-content-end align-items-center text-right mb-4" id="delete" style="display:none;">
+                            <a href="#" class="d-flex align-items-center justify-content-end mr-5" id="delete_notificacion" >
+                                <svg class="icon-15">
+                                    <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-bin') }}"></use>
+                                </svg>
+                                <span class="color-pink ml-2">Borrar</span>
+                            </a>
+                    </div>
+                </div>
+                <form id="form-delete"  action="{{ path('_notificacionesDelete') }}" method="POST" >
+                    <div id="notificaciones_paginas">
+                        <table class="table mb-5">
+                                <thead>
+                                <tr>
+                                    <th scope="col" class="border-top-0" ></th>
+                                    <th scope="col" class="border-top-0" >Notificación</th>
+                                    <th scope="col" class="border-top-0" >Fecha</th>
+                                    
+                                </tr>
+                                </thead>
+                                <tbody >
+                                {% for notificacion in notificaciones %}
+                                <tr>
+                                    <th scope=""><input class="mb-1" type="checkbox" id="recordarme" name="recordarme[]" value="{{notificacion.id}}" ></th>
+                                    <td>{{ notificacion.descripcion }}</td>
+                                    <td>{{ notificacion.fecha }}</td>
+                                
+                                </tr>
+                                {% endfor %}
+                                
+                                </tbody>
+                        </table>
+                    </div>
+                </form>
+                <div id="loader" class="loading" style="display:none;">
+                    <img width="180px" src="{{ asset('front/dist/img/saludo.png') }}" alt="">
+                    <h1 class="color-blue">{{ 'Cargando'|trans }}...</h1>
+                    <div class="bouncing-loader lg">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+                    <div class="row justify-content-center ">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <li></li> 
+                                {% set offset = 0 %}
+                                {% if paginas %}
+                                    {% for i in 1..paginas%}   
+                                        {% set pagina = 'pagina'~i %}
+                                        {% if loop.first  %}
+                                        <li class="page-item "><a class="page-link active" href="#" id={{pagina}} data="{{offset}}">{{i}}</a></li>
+                                        {% set offset = offset+10 %}
+                                        {% else %}
+                                        <li class="page-item "><a class="page-link" href="#" id="{{pagina}}" data="{{offset}}">{{i}}</a></li>
+                                        {% set offset = offset+10 %}
+                                        {%endif%}
+                                    {% endfor%}
+                                {% endif %}
+                                <li></li>
+                            </ul>
+                        </nav>
+                    </div>
+                
+            </div>
+
+        </div>
+    </div>
+
+
+</main>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    
+    
+    
+{% endblock %}

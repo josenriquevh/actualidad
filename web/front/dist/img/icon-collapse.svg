@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="41px" height="19px" viewBox="0 0 41 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.1 (51147) - http://www.bohemiancoding.com/sketch -->
+    <title>out-button</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="header-fluid" transform="translate(-235.000000, -38.000000)">
+            <g id="out-button" transform="translate(256.000000, 47.500000) scale(-1, 1) translate(-256.000000, -47.500000) translate(236.000000, 38.000000)">
+                <path d="M7.08017188,5.17769378 C6.56603385,4.91660253 5.94061719,4.94477413 5.45507812,5.25203682 L0.705078125,8.25200812 C0.264416667,8.5303492 0,8.99834473 0,9.50004305 C0,10.0017414 0.264416667,10.4697838 0.705078125,10.748078 L5.45507812,13.7480493 C5.72023698,13.9153914 6.02641406,14 6.33333333,14 C6.58923958,14 6.84667969,13.9410318 7.08017188,13.8223923 C7.59505208,13.5616292 7.91666667,13.0533684 7.91666667,12.5000144 L7.91666667,11.0000287 L17.4166667,11.0000287 C18.2910625,11.0000287 19,10.3284101 19,9.50004305 C19,8.67167598 18.2910625,8.0000574 17.4166667,8.0000574 L7.91666667,8.0000574 L7.91666667,6.50007175 C7.91666667,5.94671767 7.59505208,5.43845691 7.08017188,5.17769378 Z" id="Shape" fill="#F9F7FA" fill-rule="nonzero"></path>
+                <path d="M39.3928571,9.5 L23.6071429,9.5" id="Line-Copy" stroke="#F9F7FA" stroke-width="3" stroke-linecap="round"></path>
+                <path d="M39.3928571,1.5 L23.6071429,1.5" id="Line-Copy-2" stroke="#F9F7FA" stroke-width="3" stroke-linecap="round"></path>
+                <path d="M39.3928571,17.5 L23.6071429,17.5" id="Line-Copy-3" stroke="#F9F7FA" stroke-width="3" stroke-linecap="round"></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,205 @@
+Actualidad\ComunBundle\Entity\EaPagina:
+    type: entity
+    table: ea_pagina
+    indexes:
+        IDX_B66D92F0521E1991:
+            columns:
+                - empresa_id
+        IDX_B66D92F064373B63:
+            columns:
+                - estatus_contenido_id
+        IDX_B66D92F043798DA7:
+            columns:
+                - estilo_id
+        IDX_B66D92F091A441CC:
+            columns:
+                - grado_id
+        IDX_B66D92F057991ECF:
+            columns:
+                - pagina_id
+        IDX_B66D92F083AF865A:
+            columns:
+                - pagina_referencia_id
+        IDX_B66D92F065FD4D63:
+            columns:
+                - prelada
+        IDX_B66D92F0B5F7A181:
+            columns:
+                - tipo_pagina_id
+        IDX_B66D92F0DB38439E:
+            columns:
+                - usuario_id
+        IDX_B66D92F0FE6D734:
+            columns:
+                - ayuda_interactivo_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        titulo:
+            type: string
+            nullable: true
+            length: 500
+            options:
+                fixed: false
+        subtitulo:
+            type: string
+            nullable: true
+            length: 500
+            options:
+                fixed: false
+        descripcion:
+            type: text
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        contenido:
+            type: text
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        foto:
+            type: string
+            nullable: true
+            length: 500
+            options:
+                fixed: false
+        pdf:
+            type: string
+            nullable: true
+            length: 500
+            options:
+                fixed: false
+        orden:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+        interactivo:
+            type: boolean
+            nullable: true
+        codigoInteractivo:
+            type: string
+            nullable: true
+            length: 50
+            options:
+                fixed: false
+            column: codigo_interactivo
+        fechaCreacion:
+            type: datetime
+            nullable: true
+            column: fecha_creacion
+        fechaModificacion:
+            type: datetime
+            nullable: true
+            column: fecha_modificacion
+    manyToOne:
+        empresa:
+            targetEntity: AdminEmpresa
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                empresa_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        estatusContenido:
+            targetEntity: EaEstatusContenido
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                estatus_contenido_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        estilo:
+            targetEntity: AdminEstilo
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                estilo_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        grado:
+            targetEntity: AdminGrado
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                grado_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        pagina:
+            targetEntity: EaPagina
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                pagina_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        paginaReferencia:
+            targetEntity: EaPagina
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                pagina_referencia_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        prelada:
+            targetEntity: EaPagina
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                prelada:
+                    referencedColumnName: id
+            orphanRemoval: false
+        tipoPagina:
+            targetEntity: EaTipoPagina
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                tipo_pagina_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        usuario:
+            targetEntity: AdminUsuario
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                usuario_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        ayudaInteractivo:
+            targetEntity: AdminAyudaInteractivo
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                ayuda_interactivo_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

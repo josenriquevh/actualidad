@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+    <link rel="stylesheet" href="css/main.css">
+    <title>Ingresar</title>
+</head>
+<body id="login" >
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class=" d-none d-md-inline-block  col-md-6 bg-white mx-auto h-100 text-center">
+                <h3 class="w-75  pb-3 mx-auto text-center color-blue ">Si olvidaste tu contraseña, no te preocupes, 
+                    indica tu nombre de usuario y 
+                    el código de algún libro para&nbsp;recuperarla. </h3>
+                <img style="width: 65%" class="img-fluid " src="img/teacher-pass.png" alt="">
+            </div>
+          <div class="m-auto col-lg-6  h100vh  bg-soc" >    
+            <div class="d-flex justify-content-between align-items-center">
+                <img style="width:20%" class="my-4 img-fluid" src="img/logo-actualidad-light.png" alt="">
+                <a href="#" class=" color-white mr-4 ">Volver</a>
+            </div>
+                <div class="row mt-xl-4 mb-3">
+                    <div class="col text-center">
+                        <h2 class=" color-white" >¿Olvidaste tu contraseña?</h2>
+
+                        <p class=" text-center w-75 mx-auto color-white" >
+                            Ingresa los siguientes datos
+                        </p>
+                    </div>
+
+                </div>
+                <form >
+                    <div class="form-row justify-content-center">
+                        <div class="form-group  col-7 mb-4">
+                            <label for="usuario">Nombre de usuario</label>
+                            <input type="text" class="form-control" id="usuario" >
+                        </div>
+                        <div class="form-group  col-7 mb-5">
+                            <label for="codLibro">Código de libro</label>
+                            <input type="text" class="form-control" id="codLibro">
+                        </div>
+
+                    </div>   
+                   
+                    <div class="row justify-content-center mb-5">
+                        <div class=" col-xl-5 col-8">
+                            <a href="#target" class="btn  btn-primary text-uppercase ">
+                                recuperar contraseña
+                            </a>
+                        </div>
+                    </div>
+                </form>
+               
+            
+
+        </div>
+            
+        </div>
+    </div>
+    
+ <!-- Modal  EXITO-->
+ <div class="modal fade" id="modalexito" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header border-bottom-0">
+        
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+          <img class="icon-55 mb-3" src="img/icon-exito-face.svg" alt="">
+          <p>
+              Haz cambiado la contraseña exitosamente!
+          </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary w-50">Continuar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal  ERROR-->
+<div class="modal fade" id="modalerror" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header border-bottom-0">
+        
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+          <img class="icon-55 mb-3" src="img/icon-error-face.svg" alt="">
+          <p>
+             Las contraseñas no coinciden, intentelo nuevamente.
+          </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary w-50">Continuar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script src="js/jquery.js" ></script>
+<script src="js/popper.js" ></script>
+<script src="js/bootstrap.js" ></script> 
+<script src="js/custom.js" ></script>
+<script>
+  //$('#modalexito').modal('show')
+  //$('#modalerror').modal('show')
+</script>
+</body>
+</html>

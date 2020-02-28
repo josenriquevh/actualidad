@@ -1,0 +1,59 @@
+Actualidad\ComunBundle\Entity\EaProfesorAlumno:
+    type: entity
+    table: ea_profesor_alumno
+    indexes:
+        IDX_14530F87E52BD977:
+            columns:
+                - profesor_id
+        IDX_14530F87FC28E5EE:
+            columns:
+                - alumno_id
+        IDX_14530F877A5A413A:
+            columns:
+                - seccion_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        fechaSeguimiento:
+            type: date
+            nullable: true
+            column: fecha_seguimiento
+    manyToOne:
+        profesor:
+            targetEntity: AdminUsuario
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                profesor_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        alumno:
+            targetEntity: AdminUsuario
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                alumno_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        seccion:
+            targetEntity: AdminSeccion
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                seccion_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

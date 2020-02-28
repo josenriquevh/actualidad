@@ -1,0 +1,162 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+<input type="hidden" name="url_codigo" id="url_codigo" value="{{ path('_ajaxAddCode') }}">
+<input type="hidden" name="url_unidades" id="url_unidades" value="{{ path('_unidades') }}">
+<input type="hidden" name="error_code_msg" id="error_code_msg" value="{{ 'Error agregando código'|trans }}">
+
+<main>
+
+    <div class="bg-hero">
+        <div class="container">
+            <div class="row pt-5 ">
+                <div class="col-12">
+                    <h1 class="color-white mb-0">{{ 'Hola'|trans ~ ' ' ~ app.session.get('usuario').nombre ~ ' ' ~ app.session.get('usuario').apellido }}</h1>
+                    <h2 class="color-white fsp-05">{{ 'Recientemente has visto estas unidades'|trans }}</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <img class="img-responsive" src="{{ asset('front/dist/img/saludo.png') }}" alt="">
+                </div>
+
+                {% if recientes|length > 0 %}
+
+                    <div class="col-9 d-flex justify-content-lg-start justify-content-end flex-wrap flex-lg-nowrap">
+                
+                        {% for reciente in recientes %}
+                            <div class="card-unid {{ reciente.css }}"> 
+                                <div class="icon-materia d-flex justify-content-between">
+                                    <svg class="icon-menu">
+                                        <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-'~reciente.css) }}"></use>
+                                    </svg>
+                                    <div class="counter fs-14">{{ reciente.orden }} / {{ reciente.total_unidades }}</div>
+                                </div>
+                                <div class="numero">
+                                    <div>{{ reciente.orden }}</div>
+                                    <span>{{ 'UNIDAD'|trans }}</span>
+                                </div>
+                                <h3 class="materia mx-auto text-center mb-0 fw-r">
+                                    {{ reciente.materia }}
+                                </h3>
+                                <div class="barra-porcentaje">
+                                    <div class="barra-progreso my-2 mx-2 w-50">
+                                        <div class="progreso" style="width: {{ reciente.avance }}%"></div>
+                                    </div>
+                                    <span class="fw-b">{{ reciente.avance|number_format }}%</span>
+                                </div>
+                                <div class="d-block text-center">
+                                    <a href="{{ path('_temas', { 'unidad_id': reciente.pagina_id, 'tema_id': 0, 'evaluacion': 0, 'continue': 1 }) }}" class="btn btn-primary text-uppercase">{{ 'Continuar'|trans }}
+                                        <svg class="icon-menu">
+                                            <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-btn-arrow') }}"></use>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                   
+                    </div>
+
+                {% else %}
+
+                    <div class="col-9 d-flex justify-content-center empty-unid align-items-center">
+                        <div class="info">
+                            {{ 'Aquí podrás ver las unidades en la que vayas avanzando'|trans }}…
+                        </div>
+                    </div>
+
+                {% endif %}
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="container pt-5 pt-lg-0">
+
+        <div class="row mt-5 mt-lg-0">
+            <div class="col-12">
+                <h1 class="color-blue ml-5">{{ 'Tu Biblioteca'|trans }}</h1>
+            </div>
+        </div>
+
+        {% if app.session.get('usuario').rol_id == rol.profesor %}
+            <div class="row mt-3">
+                <div class="filtro">
+                    <span class="color-blue-light">{{ 'Filtrar por'|trans }}</span>
+                    <div class="selectdiv">
+                        <select name="filter_grado" id="filter_grado">
+                            <option value="">{{ 'Selecciona un grado'|trans }}</option>
+                            {% for g_id, descripcion in filtro %}
+                                <option value="{{ g_id }}">{{ descripcion }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% for kgrado, grado in biblioteca %}
+            <section class="grado" id="grado-{{ grado.grado_id }}">
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <h2 class="grado-seccion ml-5"> {{ kgrado }} <span>{{ grado.descripcion }}</span> <img src="{{ asset('front/dist/img/line-actualidad.png') }}" alt=""> </h2>
+                    </div>
+                </div>
+                <div class="wrap-libros">
+                    <div class="ml-5 pl-5 d-flex flex-wrap justify-content-around">
+                        {% for libro in grado.libros %}
+                            {% set expiro = libro.codigo_vigente is same as ('') or libro.codigo_vigente ? '' : 'expiro' %}
+                            {% set completado = libro.estatus_pagina_id != 3 or expiro == 'expiro' ? '' : 'completado' %}
+                            {% set inactivo = libro.codigo_activo ? '' : 'inactivo' %}
+                            {% set img = uploads~libro.foto %}
+                            <a {% if libro.codigo_activo and expiro == '' %}href="{{ path('_unidades', { 'pagina_id': libro.id }) }}"{% endif %} class="card-libro {{ completado }} {{ expiro }} {{ inactivo }}" id="card-libro-{{ libro.id }}">
+                                <div class="cover-libro">
+                                    {% if not libro.codigo_activo %}
+                                        <div onclick="showAgregar(this)" class="btn btn-primary add-code" id="add-code-{{ libro.id }}">{{ 'Agregar código'|trans }}</div>
+                                    {% endif %}
+                                    <img class="img-fluid" src="{{ img }}" alt="">
+                                </div>
+                                {% if expiro == 'expiro' and libro.codigo_activo %}
+                                    <div class="mensaje">{{ libro.razon_vigencia }}</div>
+                                {% endif %}
+                                {% if libro.codigo_activo %}
+                                    <div class="barra-porcentaje">
+                                        <div class="barra-progreso">
+                                            <div class="progreso" style="width: {{ libro.porcentaje_avance }}%"></div>
+                                        </div>
+                                        <span class="color-blue-light fw-b">{{ libro.porcentaje_avance }}%</span>
+                                    </div>
+                                {% else %}
+                                    <form class="agregar-cod no-link" id="agregar-cod-{{ libro.id }}">
+                                        <svg class="icon-menu" onclick="hideAgregar(this)" >
+                                            <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-close') }}"></use>
+                                        </svg>
+                                        <label class="color-gray mb-1" for="codigo-{{ libro.id }}">{{ 'Agregar código'|trans }}</label>
+                                        <input type="text" id="codigo-{{ libro.id }}" name="codigo-{{ libro.id }}" class="input-code">
+                                        <div class="bouncing-loader" id="loader-code-{{ libro.id }}" style="display:none;">
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                        </div>
+                                        <span id="error-code-{{ libro.id }}" class="color-error fs-12 text-center" style="display:none;">{{ 'El código no es válido'|trans }}</span>
+                                        <input data="{{ libro.id }}" type="button" class="btn btn-primary btn-newCode" value="{{ 'Aceptar'|trans }}">
+                                    </form>
+                                {% endif %}
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+        {% endfor %}
+        
+    </div>
+
+</main>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/front/inicio.js') }}"></script>
+{% endblock %}

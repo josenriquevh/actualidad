@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+    <link rel="stylesheet" href="css/main.css">
+    <title>Actualidad Registro</title>
+</head>
+<body>
+    <header>
+        <div class="container">
+                <nav style="height:100px" class="top-bar row align-items-center">
+                    <div>
+                        <img style="height:60px" class="mb-3" src="img/logo-actualidad-light.png" alt="">
+                    </div>
+                    <div class="col-9">
+                        <div class="pasos">
+                            <div class=" d-flex  justify-content-between">
+                            <div class="d-flex flex-column align-items-center w-75 node completo ">
+                                <span class="completo circle-pasos  d-flex align-items-center justify-content-center mb-1"> 1 </span>
+                                <p class=" d-none d-md-inline-block w-50 text-center line-height-1 fs-14">Registrar libro</p>
+                            </div>
+
+                            <div class="d-flex flex-column align-items-center w-75 node ">
+                                <span class="completo circle-pasos d-flex align-items-center justify-content-center mb-1"> 2 </span>
+                                <p class=" d-none d-md-inline-block w-50 text-center line-height-1 fs-14">Crear usuario</p>
+                            </div>
+
+                            <div class="d-flex flex-column align-items-center w-75 node ">
+                                <span class=" circle-pasos d-flex align-items-center justify-content-center mb-1"> 3 </span>
+                                <p class=" d-none d-md-inline-block w-50 text-center line-height-1 fs-14">Registrar datos</p>
+                            </div>
+
+                            
+                        </div>
+                    </div>
+                </div>
+                
+            </nav>    
+        </div>    
+    </header>
+
+    <main id="infoPages"  >
+            <div class="container">
+                <div class="row mt-4 pt-3 align-items-start align-items-md-center ">
+                    <div class="col-4 col-md-3 d-flex flex-column">
+                        <img  class="img-fluid" src="img/il-login.png" alt="">
+                        <a href="#target" class=" btn-back mt-5">
+                            Salir del registro 
+                            <svg class="fill-white icon-materia-menu">
+                                <use  xlink:href="img/icons.svg#icon-go-back"></use>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="offset-md-1 col-8 col-md-7">
+                        <h2 class="color-soc">Crea una cuenta con un usuario y contraseña 
+                        </h2>
+                        <div class="form-row mt-4 align-items-center">
+                            <div class="form-group col-11 col-md-7 mb-4 ">
+                                <div>
+                                    <label for="usuario">Usuario</label>
+                                    <input type="text" class="form-control" id="usuario" data-popover-content="#toolUsuario" data-toggle="popover" data-placement="right" >
+                                </div>
+                                <div id="toolUsuario" style="display:none;">
+                                    <div class="popover-body">
+                                      Ingresa solo caracteres alfanuméricos
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-1">
+                                <svg class="fill-green icon-menu ml-1 mb-1 ">
+                                    <use xlink:href="img/icons.svg#icon-checked"></use>
+                                </svg>
+                            </div>
+                            <div class="form-group col-12 col-md-7 mb-4">
+                                <label for="email">Correo electrónico</label>
+                                <input type="email" class="form-control" data-popover-content="#toolEmail" data-toggle="popover" data-placement="right" >
+                            </div>
+                            <div id="toolEmail" style="display:none;">
+                                <div class="popover-body">
+                                  Ingresa un formato válido "ejemplo@gmail.com "
+                                </div>
+                            </div>
+
+                        </div>   
+                        <div class="form-row justify-content-center">
+                            <div class="form-group col-12 col-md-6 mb-4">
+                                <label for="usuario">Contraseña</label>
+                                <input type="password" class="form-control " id="passLoginA" data-popover-content="#toolPass" data-toggle="popover" data-placement="bottom" >
+                                <img style="position: absolute; top: 44px;right: 35px;" id="imgPassA" data-tipo="passLoginA" class="icon-menu  " onclick="showPass(this)" src="img/eye.svg" alt="">
+                            </div>
+                            <div id="toolPass" style="display:none;">
+                                <div class="popover-body">
+                                    Ingresa solo caracteres alfanuméricos entre 6 y 8 caracteres
+                                </div>
+                            </div>
+                            <div class="form-group col-12 col-md-6 mb-5">
+                                <label for="password">Repetir contraseña</label>
+                                <input type="password" class="form-control " id="passLoginB">
+                                <img style="position: absolute; top: 44px;right: 35px;" id="imgPassB" data-tipo="passLoginB" class="icon-menu  " onclick="showPass(this)" src="img/eye.svg" alt="">
+                            </div>
+
+                        </div>  
+
+                      
+                        
+                            
+                         
+                        
+                        <div class="row mt-3 justify-content-end">
+                            <div class="col-6 col-md-4">
+                                <a href="#target" class="btn  btn-primary text-uppercase ">
+                                    CONTINUAR
+                                </a>
+                            </div>
+                            
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+       
+
+    </main>
+    
+    <script src="js/jquery.js" ></script>
+    <script src="js/popper.js" ></script>
+    <script src="js/bootstrap.js" ></script> 
+    <script src="js/tooltip.js" ></script>
+    <script src="js/custom.js" ></script>
+</body>
+</html>
+    

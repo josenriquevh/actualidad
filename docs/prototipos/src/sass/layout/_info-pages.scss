@@ -1,0 +1,36 @@
+main#infoPages {
+    padding-bottom: 50px;
+    padding-top: 81px;
+}    
+
+.info-ilust {
+    position: absolute;
+    left: -100px;
+    top: 200px;
+}
+
+.hover-edit {
+    width: 165px;
+    height: 160px;
+  
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.hover-edit:hover {
+    cursor: pointer;
+    
+    img.bg{
+        opacity: 0.5;
+    }
+
+    img.icon {
+        display: block !important;
+        position: absolute;
+        top: 50px;
+        right: 40px;
+    
+    }
+
+    
+}

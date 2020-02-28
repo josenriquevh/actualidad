@@ -1,0 +1,38 @@
+// body, html {
+//     height: 100%;
+// }
+
+.bg-hero {
+    background-image: url(../img/bg-hero2.png);
+    background-position: bottom;
+    position: relative;
+    padding-top: 81px;
+    background-repeat: no-repeat;
+    height: 630px;
+}
+
+.grado-seccion {
+    display: flex;
+    align-items: center;
+    font-size: 3.5rem;
+    color: $azul-primary;
+    
+
+    span {
+        font-weight: normal;
+        margin: auto 20px;
+        font-size: 1.5rem;
+    }
+}
+
+.empty-unid {
+    background-image: url('../img/empty-unid.png');
+   background-repeat: no-repeat;
+    max-width: 100%;
+    height: auto;
+    background-position: center;
+
+    @media (max-width: 991px){
+        background-image: none;
+    }
+}

@@ -1,0 +1,21 @@
+_usuarios:
+    path:     /usuarios
+    defaults: { _controller: ActualidadBackendBundle:Usuario:index }
+
+_registroAdministrador:
+    path:     /registroAdministrador/{usuario_id}
+    defaults: { _controller: ActualidadBackendBundle:Usuario:registroAdministrador, usuario_id: 0 }
+
+_ajaxValidLogin:
+    path:     /ajaxValidLogin
+    defaults: { _controller: ActualidadBackendBundle:Usuario:ajaxValidLogin }
+    requirements:
+        _method: POST
+
+_showUsuario:
+    path:     /showUsuario/{usuario_id}
+    defaults: { _controller: ActualidadBackendBundle:Usuario:showUsuario }
+
+_pruebaExcel:
+    path:     /pruebaExcel/
+    defaults: { _controller: ActualidadBackendBundle:Usuario:prueba }

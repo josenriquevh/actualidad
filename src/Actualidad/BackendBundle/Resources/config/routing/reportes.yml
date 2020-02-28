@@ -1,0 +1,45 @@
+reportesJT:
+    resource: "@ActualidadBackendBundle/Resources/config/routing/reportesJT.yml"
+    prefix: /
+
+_estadisticasLibro:
+    path:     /estadisticasLibro
+    defaults: { _controller: ActualidadBackendBundle:Reportes:estadisticasLibro }
+
+_librosActivos:
+    path:     /librosActivos
+    defaults: { _controller: ActualidadBackendBundle:Reportes:librosActivos }
+
+_ajaxGetLibros:
+    path:     /ajaxGetLibros
+    defaults: { _controller: ActualidadBackendBundle:Reportes:ajaxGetLibros }
+    requirements:
+        _method: GET
+
+_ajaxExcelLibrosActivos:
+    path:     /ajaxExcelLibrosActivos
+    defaults: { _controller: ActualidadBackendBundle:Reportes:ajaxExcelLibrosActivos }
+    requirements:
+        _method: GET
+
+_ajaxLibros:
+    path:     /ajaxLibros
+    defaults: { _controller: ActualidadBackendBundle:Reportes:ajaxLibros }
+    requirements:
+        _method: GET
+
+_ajaxEstadisticaLibro:
+    path:     /ajaxEstadisticaLibros
+    defaults: { _controller: ActualidadBackendBundle:Reportes:ajaxEstadisticaLibro }
+    requirements:
+        _method: POST
+
+_ajaxSaveImgEstadisticaLibro:
+    path:     /ajaxSaveImgEstadisticaLibro
+    defaults: { _controller: ActualidadBackendBundle:Reportes:ajaxSaveImgEstadisticaLibro }
+    requirements:
+        _method: POST
+
+_pdfEstadisticaLibro:
+    path:     /pdfEstadisticaLibro/{empresa_id}/{pagina_id}/{desdef}/{hastaf}
+    defaults: { _controller: ActualidadBackendBundle:Reportes:pdfEstadisticaLibro, empresa_id: 0, pagina_id: 0, desdef: 0, hastaf: 0 }

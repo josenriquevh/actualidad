@@ -1,0 +1,35 @@
+Actualidad\ComunBundle\Entity\AdminColegio:
+    type: entity
+    table: admin_colegio
+    indexes:
+        IDX_6E3C5AFFE8608214:
+            columns:
+                - ciudad_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        nombre:
+            type: string
+            nullable: true
+            length: 100
+            options:
+                fixed: false
+    manyToOne:
+        ciudad:
+            targetEntity: AdminCiudad
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                ciudad_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

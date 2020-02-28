@@ -1,0 +1,9 @@
+<<<<<<< HEAD
+[18-Feb-2019 12:45:16 America/Caracas] PHP Fatal error:  Class 'Swift_DependencyContainer' not found in /home/pr3b04rd/public_html/actualidad/vendor/swiftmailer/swiftmailer/lib/dependency_maps/mime_deps.php on line 5
+=======
+[16-Feb-2019 15:06:33 America/Caracas] PHP Fatal error:  Class 'Swift_DependencyContainer' not found in /home/pr3b04rd/public_html/actualidad/vendor/swiftmailer/swiftmailer/lib/dependency_maps/cache_deps.php on line 3
+[16-Feb-2019 18:53:46 America/Caracas] PHP Fatal error:  Class 'Swift_DependencyContainer' not found in /home/pr3b04rd/public_html/actualidad/vendor/swiftmailer/swiftmailer/lib/dependency_maps/transport_deps.php on line 3
+[16-Feb-2019 19:41:06 America/Caracas] PHP Fatal error:  Class 'Swift_DependencyContainer' not found in /home/pr3b04rd/public_html/actualidad/vendor/swiftmailer/swiftmailer/lib/dependency_maps/mime_deps.php on line 5
+[17-Feb-2019 22:11:35 America/Caracas] PHP Fatal error:  Class 'Swift_DependencyContainer' not found in /home/pr3b04rd/public_html/actualidad/vendor/swiftmailer/swiftmailer/lib/dependency_maps/message_deps.php on line 3
+[18-Feb-2019 11:57:17 America/Caracas] PHP Fatal error:  Class 'Swift_DependencyContainer' not found in /home/pr3b04rd/public_html/actualidad/vendor/swiftmailer/swiftmailer/lib/dependency_maps/transport_deps.php on line 3
+>>>>>>> spring3

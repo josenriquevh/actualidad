@@ -1,0 +1,1 @@
+[18-Feb-2019 12:42:33 America/Caracas] PHP Fatal error:  Class 'Error' not found in /home/pr3b04rd/public_html/actualidad/vendor/symfony/polyfill-php70/Resources/stubs/DivisionByZeroError.php on line 4

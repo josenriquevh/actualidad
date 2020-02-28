@@ -1,0 +1,53 @@
+SYMFONY
+
+- Crear Paquete:
+php bin/console generate:bundle --namespace=Actualidad/ActualidadBundle
+
+
+- Limpiar cache:
+php bin/console cache:clear --env=dev --no-debug
+
+- Crear BD
+php bin/console doctrine:database:create
+
+- Tipos de campos en las entidades (Pag 113)
+
+- Generar una entidad en particular
+php bin/console doctrine:generate:entities Actualidad/ComunBundle/Entity/Empresa
+
+- Generar las entidades en un namespace
+php bin/console doctrine:generate:entities ActualidadComunBundle --no-backup
+
+- Crear el esquema en BD:
+php bin/console doctrine:schema:update --force
+
+- Regenerar el modelo de clases a partir de una BD existente:
+1. php bin/console doctrine:mapping:import --force ActualidadComunBundle yml --em=default	(--filter="NombreEntidad") => Si se quiere generar una sola entidad
+2. php bin/console doctrine:mapping:convert annotation ./src --em=default --force			(--filter="NombreEntidad") => Si se quiere generar una sola entidad
+3. php bin/console doctrine:generate:entities ActualidadComunBundle --no-backup				(Actualidad/ComunBundle/Entity/NombreEntidad) => Si se quiere generar una sola entidad
+
+- Ver las rutas agregadas
+php bin/console debug:router
+
+- Plantilla principal:
+app/Resources/views/base.html.twig
+
+- Para validar a nivel del servidor, agregar en el Controller:
+use Symfony\Component\Validator\Validator;
+
+- Chequear que el ambiente está configurado eficentemente en producción
+php bin/console doctrine:ensure-production-settings --env=prod
+
+- Tutorial de la Seguridad en Symfony
+http://www.maestrosdelweb.com/editorial/curso-symfony2-seguridad-de-acceso/
+
+- Variables globales en TWIG
+{{ app.request.basepath }}<br>
+{{ app.request.baseurl }}<br>
+
+- Instalar el Bundle LiuggioExcelbundle
+1. Instalar composer
+2. Ejecutar: composer require liuggio/excelbundle
+
+- Hacer dump de una tabla en particular usando INSERTS:
+pg_dump -h localhost -p 5432 -U desa -W --table="admin_rol" --data-only --column-inserts formacion > admin_rol.sql

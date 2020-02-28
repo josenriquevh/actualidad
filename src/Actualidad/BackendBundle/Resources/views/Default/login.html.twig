@@ -1,0 +1,89 @@
+{% extends '::login_bck.html.twig' %}
+
+{% block body %}
+	<div class="col-md-14 offset-md-1 col-sm-14 offset-sm-1" style="margin-top: 5em">
+	    <form action="{{ path('_loginAdmin') }}" method="POST">
+	        <div class="card" style="border: none; background: rgba(0, 0, 0, .3); max-height: 18rem;">
+	            <div class="card-header" style="background: linear-gradient(to right, #0084db 0%, #00558D 100%);">
+	                <h1 class="card-title text-left" style="font-weight: bold; color: #fff">
+                        {{ 'Panel de acceso'|trans }}
+	                </h1>
+	            </div>
+	            <div class="card-block">
+	                <div class="form-group row justify-content-between">
+                        <input type="text" placeholder="{{ 'Usuario'|trans }}" class="form-control form_login_style1 offset-md-1" id="usuario" name="usuario" style="background: #fff; width: 85%;" value=""><span class="fa fa-user"></span>
+	                </div>
+	                <div class="form-group row justify-content-between">
+                        <input type="password" placeholder="{{ 'Contraseña'|trans }}" class="form-control form_login_style2 offset-md-1" id="clave" name="clave" style="background: #fff; width: 85%;" value=""><span class="fa fa-lock"></span>
+                        <span class="error error__style">{{ error }}</span>
+	                </div>
+	                <div class="form-group row justify-content-start" style="margin-top: -15px; padding-left: 2rem; margin-bottom: 2rem">
+	                    <label class="custom-control custom-checkbox">
+	                        <input type="checkbox" class="custom-control-input" id="recordar" name="recordar" value="1" data-toggle="modal" data-target="#formModal" onclick="modal()">
+                            <span class="custom-control-indicator"></span> <span class="custom-control-description" style="color: #fff">{{ 'Recordarme'|trans }}</span> 
+	                    </label>
+	                </div>
+	            </div>
+	        </div>
+	        <button class="bttn__login" type="submit" id="iniciar_sesion">
+                <span>{{ 'Iniciar Sesión'|trans }}</span>
+	        </button>
+	    </form>
+	</div>
+	<div class="modal dark_bg fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModal" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				{% block formModal %}
+					<div class="modal-header" style="background: linear-gradient(to right, #0084db 0%, #00558D 100%); color: #fff;">
+						<h5 class="modal-title" id="formModalLabel">Aviso</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+					</div>
+					<div class="modal-body">
+						<span id="alert-error">{{ 'Ha ocurrido un error en el servidor. Contacte al administrador del sistema.'|trans }}</span>
+					</div>
+				{% endblock %}
+				<div class="row" id="div-alert" style="display:none;">
+					<div class="col-sm-2">
+						&nbsp;
+					</div>
+					<div class="col-sm-12">
+						<div class="alert alert-danger" role="alert"> 
+							<strong>{{ 'Error en el servidor'|trans }}!</strong> <span id="alert-error">{{ 'Ha ocurrido un error en el servidor. Contacte al administrador del sistema.'|trans }}</span>
+						</div>
+					</div>
+					<div class="col-sm-2">
+						&nbsp;
+					</div>
+				</div>
+				
+				<div class="modal-footer">
+					<button type="button" class="bttn__cancel" data-dismiss="modal" id="cancelar"><span class="text__cancel">{{ 'Cancelar'|trans }}</span><span class="fa fa-times"></span></button>
+					<button type="button" class="bttn__save" id="guardar"><span class="text__save">{{ 'Guardar'|trans }}</span><span class="fa fa-save"></span></button>
+					<button type="button" class="bttn__save" id="aceptar" style="display:none;" data-dismiss="modal"><span class="text__save">{{ 'Aceptar'|trans }}</span><span class="fa fa-check"></span></button>
+					<button type="button" class="bttn__save" id="procesar" style="display:none;" data-dismiss="modal"><span class="text__save">{{ 'Procesar'|trans }}</span><span class="fa fa-stack-overflow"></span></button>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script type="text/javascript">
+	function modal()
+	{
+		
+		var checkBox = document.getElementById("recordar");
+		if (checkBox.checked == true)
+		{
+			console.log('aqui');
+			$('#form').hide();
+			$('#alert-success').show();
+			$('#detail').show();
+			$('#aceptar').show();
+			$('#guardar').hide();
+			$('#cancelar').hide();
+		}
+	}   
+    </script>
+{% endblock %}

@@ -1,0 +1,136 @@
+{% extends '::admin.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/vendor/datatables/RowReorder-1.2.3/css/rowReorder.dataTables.min.css') }}" type="text/css">
+    <style type="text/css">
+        .modal-dialog {
+            max-width: 60%;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<input type="hidden" id="url_paginas" name="url_paginas" value="{{ path('_ajaxGetLibros') }}">
+<input type="hidden" id="url_excel" name="url_excel" value="{{ path('_ajaxExcelLibrosActivos') }}">
+<input type="hidden" id="resets" name="resets" value="2">
+<input type="hidden" id="error-msg-paginas" name="error-msg-paginas" value="{{ 'Error obteniendo la lista de libros'|trans }}">
+<input type="hidden" id="error-msg-unidad_id" name="error-msg-unidad_id" value="Error obteniendo la lista de unidades">
+<br>
+
+<div class="row align-items-center justify-content-between">
+    <div class="col-12 col-sm-12 page-title">
+        <h3>{{ 'Reporte libros activos'|trans }}</h3>
+    </div>
+</div>
+
+<div class="col-sm-8 col-md-8 col-lg-8 alert alert-danger" role="alert" id="div-error" style="display:none;">
+    <ul></ul>
+</div>
+<div class="col-sm-8 col-md-8 col-lg-8 alert alert-danger" role="alert" id="div-error-server" style="display:none;">
+</div>
+<div class="row">
+    <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8 offset-sm-4 offset-md-4 offset-lg-4">
+        <div class="card">
+            <div class="card-header"  style=" background: linear-gradient(to right, #d5ff00 0%, #A3C300 100%); ">
+                <h5 class="card-title">{{ 'Filtro'|trans }}</h5>
+            </div>
+            <div class="card-block">
+                <div class="row">
+                    <div class="col-md-16 col-sm-16 col-lg-16 col-xl-16">
+                        <label for="empresa_id" class="col-sm-6 col-md-6 col-lg-16 offset-sm-5 offset-md-5 offset-lg-5">{{ 'Empresa'|trans }}</label>
+                        <div class="row">
+                            <div class="col-sm-6 col-md-6 col-lg-6 offset-sm-5 offset-md-5 offset-lg-5">
+                                <select class="form_sty_sel form-control" style="border-radius: 5px" id="empresa_id" name="empresa_id">
+                                    <option value="0"></option>
+                                    {% for empresa in empresas %}
+                                        <option value="{{ empresa.id }}">{{ empresa.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                                <span class="fa fa-industry"></span>
+                                <span class="bttn_d"><img src="{{ asset('img/down-arrowbck.png') }}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-16 col-sm-16 col-lg-16 col-xl-16">
+                        <label for="grado_id" class="col-sm-6 col-md-6 col-lg-16 offset-sm-5 offset-md-5 offset-lg-5">{{ 'Grado'|trans }}</label>
+                        <div class="row">
+                            <div class="col-sm-6 col-md-6 col-lg-6 offset-sm-5 offset-md-5 offset-lg-5">
+                                <select class="form_sty_sel form-control" style="border-radius: 5px" id="grado_id" name="grado_id">
+                                    <option value="0"></option>
+                                    {% for grado in grados %}
+                                        <option value="{{ grado.id }}">{{ grado.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                                <span class="fa fa-sort-numeric-asc"></span>
+                                <span class="bttn_d"><img src="{{ asset('img/down-arrowbck.png') }}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="col-sm-16 col-md-16 text-right">
+                    <button type="button" id="search" class="bttn__saved" data-toggle="tooltip" data-placement="bottom" title="{{ 'Buscar'|trans }}"><span class="fa fa-search"></span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" id="div-paginas" style="display:none;">
+    <div class="col-sm-16">
+        <div class="card">
+            <div class="card-header gradiente">
+                <h5 class="card-title" id="panelTitle">{{ 'Libros'|trans }}</h5>
+            </div>
+            <div class="card-block">
+                <div id="listado">
+                    {{ include('ActualidadBackendBundle:Reportes:listadoLibros.html.twig', { 'paginas': paginas }) }}
+                </div>
+                <div class="load1 load-wrapper">
+                    <div class="loader">
+                        Loading...
+                    </div>  
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="col-sm-16 col-md-16 text-right">
+                    <button type="button" id="generar_excel" class="bttn__saved" data-placement="bottom" title="{{ 'Generar Excel'|trans }}"><span class="fa fa-file-excel-o"></span></button>
+                   <a id="descargar" href=""style="display:none"> <button type="button"  class="bttn__saved"  data-placement="bottom"  title="{{ 'Descargar Excel'|trans }}"><span class="fa fa-download"></span></button></a>
+                    <img class="img-loader" src="{{ asset('img/ui-anim_basic_16x16.gif') }}" id="excel_loader" style="display:none">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('assets/vendor/datatables/RowReorder-1.2.3/js/dataTables.rowReorder.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('jq/jquery-validation-1.15.0/dist/jquery.validate.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/admin/librosActivos.js') }}"></script>
+    <script type="text/javascript">
+        $("#form").validate({
+            rules: {
+                'titulo': {
+                    required: true,
+                    minlength: 3
+                }
+            },
+            messages: {
+                'titulo': {
+                    titulo: "{{ 'Este campo es requerido'|trans }}.",
+                    minlength: "{{ 'Debe ser mínimo de 3 caracteres'|trans }}."
+                }
+            }
+        });
+    </script>
+{% endblock %}

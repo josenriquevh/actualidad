@@ -1,0 +1,41 @@
+Actualidad\ComunBundle\Entity\AdminUsuarioColegio:
+    type: entity
+    table: admin_usuario_colegio
+    indexes:
+        IDX_EFF69ED6DB38439E:
+            columns:
+                - usuario_id
+        IDX_EFF69ED67FDC9E6F:
+            columns:
+                - colegio_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    manyToOne:
+        usuario:
+            targetEntity: AdminUsuario
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                usuario_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        colegio:
+            targetEntity: AdminColegio
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                colegio_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

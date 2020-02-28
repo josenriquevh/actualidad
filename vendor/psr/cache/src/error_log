@@ -1,0 +1,2 @@
+[15-Feb-2019 09:06:45 America/Caracas] PHP Fatal error:  Interface 'Psr\Cache\CacheException' not found in /home/pr3b04rd/public_html/actualidad/vendor/psr/cache/src/InvalidArgumentException.php on line 12
+[18-Feb-2019 02:57:34 America/Caracas] PHP Fatal error:  Interface 'Psr\Cache\CacheException' not found in /home/pr3b04rd/public_html/actualidad/vendor/psr/cache/src/InvalidArgumentException.php on line 12

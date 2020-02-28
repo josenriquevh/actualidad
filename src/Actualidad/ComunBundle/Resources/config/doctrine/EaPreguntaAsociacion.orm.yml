@@ -1,0 +1,41 @@
+Actualidad\ComunBundle\Entity\EaPreguntaAsociacion:
+    type: entity
+    table: ea_pregunta_asociacion
+    indexes:
+        IDX_BA0EB13E31A5801E:
+            columns:
+                - pregunta_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        preguntas:
+            type: string
+            nullable: true
+            length: 50
+            options:
+                fixed: false
+        opciones:
+            type: string
+            nullable: true
+            length: 50
+            options:
+                fixed: false
+    manyToOne:
+        pregunta:
+            targetEntity: EaPregunta
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                pregunta_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

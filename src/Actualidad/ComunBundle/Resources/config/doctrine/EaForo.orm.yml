@@ -1,0 +1,102 @@
+Actualidad\ComunBundle\Entity\EaForo:
+    type: entity
+    table: ea_foro
+    indexes:
+        IDX_A0CB7BA657991ECF:
+            columns:
+                - pagina_id
+        IDX_A0CB7BA6DB38439E:
+            columns:
+                - usuario_id
+        IDX_A0CB7BA6F5FF53F6:
+            columns:
+                - foro_id
+        IDX_A0CB7BA6E6067256:
+            columns:
+                - tipo_foro_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        tema:
+            type: string
+            nullable: true
+            length: 350
+            options:
+                fixed: false
+        mensaje:
+            type: text
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        pdf:
+            type: string
+            nullable: true
+            length: 250
+            options:
+                fixed: false
+        fechaPublicacion:
+            type: date
+            nullable: true
+            column: fecha_publicacion
+        fechaVencimiento:
+            type: date
+            nullable: true
+            column: fecha_vencimiento
+        fechaCreacion:
+            type: datetime
+            nullable: true
+            column: fecha_creacion
+        fechaModificacion:
+            type: datetime
+            nullable: true
+            column: fecha_modificacion
+    manyToOne:
+        pagina:
+            targetEntity: EaPagina
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                pagina_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        usuario:
+            targetEntity: AdminUsuario
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                usuario_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        foro:
+            targetEntity: EaForo
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                foro_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        tipoForo:
+            targetEntity: EaTipoForo
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                tipo_foro_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

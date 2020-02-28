@@ -1,0 +1,35 @@
+- Nombre de los inputs: mismo que la tabla.
+- Todo texto debe traducirse a menos que provenga de la BD.
+- Indentación con TAB configurado a 4 espacios, excepto en yml que se hace con 4 espacios.
+- Frases inician en mayúsculas, el resto queda en minúsculas.
+- Evitar agregar en el diccionario los signos de puntuación.
+- Reglas estrictas de ortografía.
+- El diccionario debe quedar alfabéticamente ordenado, y deben coincidir línea a línea ambos diccionarios.
+- Estructura de un IF:
+	if (condición)
+	{
+		instrucciones
+	}
+	else {
+		intrucciones
+	}
+- Estructura de un FOR:
+	for (inicio, condición, iteración)
+	{
+		instrucciones
+	}
+- Estructura de un array:
+	array('llave1' => 'valor1',
+		  'llave2' => 'valor2',
+		  'llave3' => 'valor3')
+- Estructura de un JSON:
+	{'variable1': valor2, 'variable2': valor2}
+- Estructura de comandos en twig:
+	{{ variable }}
+	{% instrucción %}
+- Evitar la doble indentación. Ej:
+	instrucciones
+		instrucciones
+- Todas las peticiones AJAX deben comenzar con el prefijo "ajax". Ej: ajaxResumen
+- Agregar un loader dando vueltas cuando exita un ajax que refresque su elemento
+- Agregar un loader de cortinas cuando exista un ajax que refresque un área de la pantalla

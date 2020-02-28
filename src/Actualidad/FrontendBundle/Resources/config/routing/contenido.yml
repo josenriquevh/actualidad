@@ -1,0 +1,43 @@
+_unidades:
+    path:     /unidades/{pagina_id}
+    defaults: { _controller: ActualidadFrontendBundle:Contenido:unidades, pagina_id: 0 }
+
+_intro:
+    path:     /intro/{unidad_id}
+    defaults: { _controller: ActualidadFrontendBundle:Contenido:intro }
+
+_temas:
+    path:     /temas/{unidad_id}/{tema_id}/{evaluacion}/{continue}
+    defaults: { _controller: ActualidadFrontendBundle:Contenido:temas, tema_id: 0, evaluacion: 0, continue: 0 }
+
+_evaluacion:
+    path:     /evaluacion/{unidad_id}
+    defaults: { _controller: ActualidadFrontendBundle:Contenido:evaluacion }
+
+_procesarEvaluacion:
+    path:     /procesarEvaluacion/{prueba_log_id}
+    defaults: { _controller: ActualidadFrontendBundle:Contenido:procesarEvaluacion }
+
+_ajaxResource:
+    path:     /ajaxResource
+    defaults: { _controller: ActualidadFrontendBundle:Contenido:ajaxResource }
+    requirements:
+        _method: GET
+
+_ajaxFinishResource:
+    path:     /ajaxFinishResource
+    defaults: { _controller: ActualidadFrontendBundle:Contenido:ajaxFinishResource }
+    requirements:
+        _method: POST
+
+_ajaxRefreshMenu:
+    path:     /ajaxRefreshMenu
+    defaults: { _controller: ActualidadFrontendBundle:Contenido:ajaxRefreshMenu }
+    requirements:
+        _method: GET
+
+_ajaxTryEvaluacion:
+    path:     /ajaxTryEvaluacion
+    defaults: { _controller: ActualidadFrontendBundle:Contenido:ajaxTryEvaluacion }
+    requirements:
+        _method: POST

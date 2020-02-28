@@ -1,0 +1,30 @@
+<input type="hidden" id="entityToOrder" name="entityToOrder" value="EaPagina">
+<table class="table" id="dt">
+    <thead class="sty__title">
+        <tr>
+            <th class="hd__title">Id</th>
+            <th class="hd__title">{{ 'Empresa'|trans }}</th>
+            <th class="hd__title">{{ 'Grado'|trans }}</th>
+            <th class="hd__title">{{ 'Título'|trans }}</th>
+            <th class="hd__title">{{ 'Tipo'|trans }}</th>
+            <th class="hd__title">{{ 'Ejemplares activados'|trans }}</th>
+            <th class="hd__title">{{ 'Ejemplares sin activar'|trans }}</th>
+            <th class="hd__title">{{ 'Ejemplares total'|trans }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for pagina in paginas %}
+            {% set eo = cycle(['odd', 'even'], loop.index) %}
+            <tr class="{{ eo }}">
+                <td>{{ pagina.id }}</td>
+                <td>{{ pagina.empresa }}</td>
+                <td>{{ pagina.grado }}</td>
+                <td>{{ pagina.titulo }}</td>
+                <td>{{ pagina.tipo }}</td>
+                <td>{{ pagina.ejemplares.ejemplares }}</td>
+                <td>{{ pagina.ejemplares.ejemplares_sin }}</td>
+                <td>{{ pagina.ejemplares.ejemplares + pagina.ejemplares.ejemplares_sin }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

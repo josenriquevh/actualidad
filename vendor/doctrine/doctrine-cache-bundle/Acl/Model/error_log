@@ -1,0 +1,1 @@
+[18-Feb-2019 04:39:44 America/Caracas] PHP Fatal error:  Interface 'Symfony\Component\Security\Acl\Model\AclCacheInterface' not found in /home/pr3b04rd/public_html/actualidad/vendor/doctrine/doctrine-cache-bundle/Acl/Model/AclCache.php on line 19

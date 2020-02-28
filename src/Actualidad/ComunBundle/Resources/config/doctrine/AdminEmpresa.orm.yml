@@ -1,0 +1,78 @@
+Actualidad\ComunBundle\Entity\AdminEmpresa:
+    type: entity
+    table: admin_empresa
+    indexes:
+        IDX_7CEBD8D9C604D5C6:
+            columns:
+                - pais_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        nombre:
+            type: string
+            nullable: true
+            length: 100
+            options:
+                fixed: false
+        rif:
+            type: string
+            nullable: true
+            length: 20
+            options:
+                fixed: false
+        correoPrincipal:
+            type: string
+            nullable: true
+            length: 100
+            options:
+                fixed: false
+            column: correo_principal
+        activo:
+            type: boolean
+            nullable: true
+        telefonoPrincipal:
+            type: string
+            nullable: true
+            length: 20
+            options:
+                fixed: false
+            column: telefono_principal
+        direccion:
+            type: text
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        bienvenida:
+            type: text
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        fechaCreacion:
+            type: datetime
+            nullable: true
+            column: fecha_creacion
+        fechaModificacion:
+            type: datetime
+            nullable: true
+            column: fecha_modificacion
+    manyToOne:
+        pais:
+            targetEntity: AdminPais
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                pais_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

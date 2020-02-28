@@ -1,0 +1,37 @@
+{% for libro in libros %}
+    {% if loop.first %}
+        <div class="list-unstyled project-list row">
+    {% endif %}
+    <div class="col-md-4 col-sm-4 col-lg-4 col-xl-4">
+        <div class="media flex-column ">
+            <span class="projectpic">
+                {% set img = uploads~libro.foto %}
+                <img src="{{ img }}" alt="{{ 'Portada del libro'|trans }}"> 
+                <span class="user-status bg-success "></span>
+            </span>
+            <div class="overlay ">
+                <label class="ribbon left danger"><span>{{ libro.cantidad }} {{ 'ejemplares'|trans }}</span></label>
+                <h6 class="mt-0 mb-1">{{ libro.nombre }}</h6>
+                {{ libro.tipo }}
+            </div>
+        </div>
+    </div>
+    {% if loop.index is divisibleby(4) %}
+        </div>
+        <br>
+        {% if not loop.last %}
+            <div class="list-unstyled project-list row">
+        {% endif %}
+    {% else %}
+        {% if loop.last %}
+            </div>
+        {% endif %}
+    {% endif %}
+{% else %}
+    <div class="col-md-8 col-sm-8 col-lg-8 col-xl-8 offset-md-4 offset-sm-4 offset-lg-4 offset-xl-4">
+        <div class="alert alert-info" role="alert">
+            <h4 class="alert-heading">{{ 'No existen registros'|trans }}!</h4>
+            <p>{{ 'No existen libros activos en este grado'|trans }}.</p>
+        </div>
+    </div>
+{% endfor %}

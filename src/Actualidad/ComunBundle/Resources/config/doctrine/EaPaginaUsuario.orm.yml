@@ -1,0 +1,83 @@
+Actualidad\ComunBundle\Entity\EaPaginaUsuario:
+    type: entity
+    table: ea_pagina_usuario
+    indexes:
+        IDX_FAFCC34F57991ECF:
+            columns:
+                - pagina_id
+        IDX_FAFCC34FDB38439E:
+            columns:
+                - usuario_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        codigo:
+            type: string
+            nullable: true
+            length: 20
+            options:
+                fixed: false
+        activo:
+            type: boolean
+            nullable: true
+        fechaActivacion:
+            type: date
+            nullable: true
+            column: fecha_activacion
+        fechaInicio:
+            type: date
+            nullable: true
+            column: fecha_inicio
+        fechaVencimiento:
+            type: date
+            nullable: true
+            column: fecha_vencimiento
+        renovable:
+            type: boolean
+            nullable: true
+        maxRenovaciones:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+            column: max_renovaciones
+        renovaciones:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+        token:
+            type: string
+            nullable: true
+            length: 20
+            options:
+                fixed: false
+    manyToOne:
+        pagina:
+            targetEntity: EaPagina
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                pagina_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        usuario:
+            targetEntity: AdminUsuario
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                usuario_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

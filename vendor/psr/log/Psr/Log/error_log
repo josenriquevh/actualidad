@@ -1,0 +1,2 @@
+[18-Feb-2019 00:05:11 America/Caracas] PHP Fatal error:  Interface 'Psr\Log\LoggerInterface' not found in /home/pr3b04rd/public_html/actualidad/vendor/psr/log/Psr/Log/AbstractLogger.php on line 13
+[18-Feb-2019 03:23:59 America/Caracas] PHP Fatal error:  Class 'Psr\Log\AbstractLogger' not found in /home/pr3b04rd/public_html/actualidad/vendor/psr/log/Psr/Log/NullLogger.php on line 14

@@ -1,0 +1,11 @@
+1. Función de BD: fnestadisticas_colegios.sql
+
+2. Nueva tabla: admin_estilo
+
+3. Nuevo campo foráneo: ea_pagina.estilo_id FOREIGN KEY (estilo_id) REFERENCES admin_estilo (id).
+
+4. Data de lista en admin_estilo.
+
+5. Nuevo campo: ea_pagina_log.fecha_interaccion timestamp without time zone.
+
+6. Nueva función de BD: fnunidades_recientes.sql

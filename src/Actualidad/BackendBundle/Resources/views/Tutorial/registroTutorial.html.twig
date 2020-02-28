@@ -1,0 +1,311 @@
+{% extends '::admin.html.twig'%}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap-datepicker-1.6.4-dist/css/bootstrap-datepicker.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('front/js/plugins/jquery-upload-file/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('front/js/plugins/jquery-upload-file/css/jquery.fileupload.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/loumultiselect/css/multi-select.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap-multiselect-master/dist/css/bootstrap-multiselect.css') }}" type="text/css">
+    <style>
+        <style>
+        .input-group-addon{
+            padding:0px;
+            border-radius: 50px !important;
+        }
+        .input-group .form-control {
+            z-index: 1;
+        }
+        .input-group {
+            margin-top: 35px;
+            margin-left: 20px;
+        }
+        .fileinput-button {
+            position: absolute;
+        }
+        #btn_foto, #btn_pdf {
+            padding-top: 17px;
+        }
+    </style>     
+    </style>
+{% endblock %}
+
+{% block body %}
+
+{% set uri = app.request.getbasepath %}
+<form id="form" name="form" action="{{ path('_registroTutorial', { 'tutorial_id': tutorial.id }) }}" class="container-fluid p-0" method="POST">
+<input type="hidden" id="root_site" name="root_site" value="{{ uri }}" />
+<input type="hidden" id="photo" name="photo" value="{{ asset('img/picture.png') }}">
+<input type="hidden" id="url_upload" name="url_upload" value="{{ path('_ajaxUploadFileTutorial') }}">
+<input type="hidden" id="base_upload" name="base_upload" value="tutoriales/">
+<input type="hidden" id="uploads" name="uploads" value="{{ uploads }}">
+
+<input type="hidden" id="file_input" value="">
+<input type="hidden" id="photo" name="photo" value="{{ asset('img/picture.png') }}">
+
+<br><br>
+<div class="row align-items-center justify-content-start">
+    <div class="col-sm-4 col-md-4 col-lg-4">
+        <a href="{{ path('_tutorial') }}" class="bttn__bck"><span class="fa fa-clipboard"></span><span class="text__bck">{{'Ir al listado'|trans}}</span></a>
+    </div>
+    <div class="col-sm-8 col-md-8 col-lg-8 alert alert-danger" role="alert" id="div-error" style="display:none;">
+        <ul></ul>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-16">
+        <div class="card">
+            <div class="card-header gradiente">
+                <div class="card-title">
+                    <h6>{{'Registro de tutorial'|trans}}</h6>
+                </div>
+            </div>
+            <div class="card-block">
+                <div class="container_wizard wizard-thin">
+                    <div class="stepwizard">
+                        <div class="stepwizard-row setup-panel d-flex">
+                            <div class="stepwizard-step col">
+                                <a href="#det0" class="btn bttn__fndo pass">
+                                    <span class="btn-round">1</span>
+                                    <p>{{'Datos Básicos'|trans}}</p>
+                                </a>
+                            </div>
+                            <div class="stepwizard-step col">
+                                <a href="#det1" class="btn btn-secondary pass disabled">
+                                    <span class="btn-round">2</span>
+                                    <p>{{'Archivos'|trans}}</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row setup-content" id="det0">   
+                        <div class="col-sm-16">
+                            <div class="row">
+                                <div class="col-sm-16">
+                                    <h3 class="mb-2">{{'Paso'|trans}} 1</h3>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-sm-8 col-md-8 col-lg-8">
+                                    <label for="texto" class="col-2 col-form-label">{{'Nombre'|trans}}</label>
+                                    <div class="col-14">
+                                        <input type="text" class="form-control form_sty1" name="nombre" id="nombre" value="{{ tutorial.nombre }}">
+                                        <span class="fa fa-font"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-8 col-md-8 col-lg-8">
+                                    <label for="texto" class="col-2 col-form-label">{{'Descripción'|trans}}</label>
+                                    <div class="col-14">
+                                        <input type="text" class="form-control form_sty1" name="descripcion" id="descripcion" value="{{ tutorial.descripcion }}">
+                                        <span class="fa fa-font"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="wizard-footer">
+                                <div class="col-sm-16 text-right">
+                                    <button type="button" class="bttn__nxt nextBtn"><span class="text__nxt">Siguiente</span><span class="fa fa-chevron-right"></span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row setup-content" id="det1">
+                        <div class="col-sm-16">
+                            <div class="row">
+                                <div class="col-sm-16">
+                                    <h3 class="mb-2">{{'Paso'|trans}} 2</h3>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-auto col-sm-auto col-xl-auto col-lg-auto">
+                                    {{'Imagen'|trans}}
+                                    {% set img = tutorial.imagen ? ruta~tutorial.imagen : asset('img/picture.png') %}
+                                    <div class="photo_img" id="figure"><img id="foto_img" src="{{ img }}" alt="Imagen" style="width: 400px; height: auto; margin: 0 1rem;"></div>
+                                </div>
+                                <div class="col-md-auto col-sm-auto col-xl-auto col-lg-auto">
+                                    <div class="input-group">
+                                        <input type="hidden" name="imagen" id="imagen" value="{{ tutorial.imagen }}" readonly="readonly">
+                                        <span class="">
+                                            <a href="#" class="iframe-btn uploadFileHref" data-etiqueta="imagen" id="btn_foto">
+                                                <button type="button" class="btn_addImg fileinput-button">
+                                                    <span class="fa fa-photo"></span>
+                                                    <input class="fileupload" type="file" name="files[]" multiple>
+                                                </button>
+                                            </a>
+                                        </span>
+                                        <span class="">
+                                            <button id="btn_clear" class="btn_clearImg" type="button">
+                                                <span class="fa fa-times"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-sm-8 col-lg-8 col-md-8">
+                                    <label for="imagen" class="col-sm-6 col-md-6 col-lg-6 col-form-label">PDF</label>
+                                    <div class="col-sm-16 col-md-16 col-lg-16">
+                                        <input type="text" class="form-control form_sty1" name="pdf" id="pdf" value="{{ tutorial.pdf }}" readonly="readonly" placeholder="Sólo archivos con extensión pdf.">
+                                        <span class="fa fa-file-pdf-o"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5 col-md-5 col-lg-5 justify-content-between">
+                                    <div class="input-group">
+                                        <span class="">
+                                            <a href="#" class="iframe-btn uploadFileHref" data-etiqueta="pdf" id="btn_pdf">                                          
+                                                <button type="button" class="btn_addImg fileinput-button">
+                                                    <span class="fa fa-file-pdf-o"></span>
+                                                    <input class="fileupload" type="file" name="files[]" multiple>
+                                                </button>
+                                            </a>
+                                        </span>
+                                        <span class="">
+                                            <button id="btn_clear2" class="btn_clearImg2" type="button">
+                                                <span class="fa fa-times"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-sm-8 col-lg-8 col-md-8">
+                                    <label for="imagen" class="col-sm-6 col-md-6 col-lg-6 col-form-label">Video</label>
+                                    <div class="col-sm-16 col-md-16 col-lg-16">
+                                        <input type="text" class="form-control form_sty1" name="video" id="video" value="{{ tutorial.video }}" readonly="readonly" placeholder="Sólo archivos de videos">
+                                        <span class="fa fa-video-camera"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5 col-md-5 col-lg-5 justify-content-between">
+                                    <div class="input-group">
+                                        <span class="">
+                                            <a href="#" class="iframe-btn uploadFileHref" data-etiqueta="video" id="btn_video">                                          
+                                                <button type="button" class="btn_addImg fileinput-button">
+                                                    <span class="fa fa-video-camera"></span>
+                                                    <input class="fileupload" type="file" name="files[]" multiple>
+                                                </button>
+                                            </a>
+                                        </span>
+                                        <span class="">
+                                            <button id="btn_clear3" class="btn_clearImg2" type="button">
+                                                <span class="fa fa-times"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="wizard-footer">
+                                <div class="col-sm-16 text-right">
+                                    <button type="button" class="bttn__end" id="finish"><span class="text__end">Finalizar</span><span class="fa fa-check"></span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('assets/vendor/ckeditor/ckeditor.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendor/ckeditor/config.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('jq/jquery-validation-1.15.0/dist/jquery.validate.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('jq/jquery-validation-1.15.0/dist/additional-methods.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendor/bootstrap-datepicker-1.6.4-dist/js/bootstrap-datepicker.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendor/bootstrap-datepicker-1.6.4-dist/locales/bootstrap-datepicker.es.min.js') }}" charset="UTF-8"></script> 
+    <script type="text/javascript" src="{{ asset('front/js/plugins/jquery-upload-file/js/vendor/jquery.ui.widget.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('front/js/plugins/jquery-upload-file/js/jquery.iframe-transport.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('front/js/plugins/jquery-upload-file/js/jquery.fileupload.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendor/loumultiselect/js/jquery.multi-select.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendor/bootstrap-multiselect-master/dist/js/bootstrap-multiselect.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/admin/tutorial.js') }}"></script>
+    <script type="text/javascript">
+
+        $("form :input").attr("autocomplete", "off");
+
+        $('#finish').click(function()
+        {
+           var valid = $('#form').valid();
+           if(!valid)
+           {
+                $('#div-error ul').html(error_msg);
+                $('#div-error ul').show();
+               notify($('#div-error').html());
+           }
+           else {
+            var pdf = $('#pdf').val();
+            var imagen = $('#imagen').val();
+            var video = $('#video').val();
+            var error = 0;
+            var error_msg = '';
+            if (!pdf && !imagen && !video )
+            {
+                error_msg = "<li>- {{ 'Debe agregar al menos un pdf o una imagen o un video'|trans }}.</li>";
+                error = 1;   
+            }
+            if (error == 1)
+            {
+                $('#div-error ul').html(error_msg);
+                $('#div-error ul').show();
+                notify($('#div-error').html());
+            }
+            else {
+                $('#finish').hide();
+                $('#form').submit();
+            }
+           }
+        });
+        
+        $("#form").validate({
+            errorLabelContainer: "#div-error ul",
+            wrapper: "li",
+            ignore: "",
+            rules: {
+
+                'nombre': {
+                    required: true,
+                    minlength: 3
+                },
+                'descripcion': {
+                    required: true,
+                    minlength: 3
+                },
+                'pdf': {
+                    extension: "pdf"
+                },
+                'imagen': {
+                    extension: "jpg|jpeg|bmp|svg|png|gif|tiff"
+                },
+                'video': {
+                  extension: "mov|mpeg|m4v|mp4|avi|mpg|wma|flv|webm"
+                }
+
+            },
+            messages: {               
+                'nombre': {
+                    required: "- {{'El nombre es requerido'|trans}}.",
+                    minlength: "- {{'El nombre debe ser mínimo de 3 caracteres'|trans}}."
+                },
+                'descripcion': {
+                    required: "- {{'La descripción es requerida'|trans}}.",
+                    minlength: "- {{'La descripción debe ser mínimo de 3 caracteres'|trans}}."
+                },
+                 'pdf':{
+                    extension: "- {{ 'Extensiones aceptadas para el campo PDF'|trans }}: pdf."
+                },
+                'video':{
+                    extension: "- {{ 'Extensiones aceptadas para vídeo'|trans }}: mov,mpeg,m4v,mp4,avi,mpg,wma,flv,webm."
+                },
+                'imagen':{
+                    extension: "- {{ 'Extensiones aceptadas para imagen'|trans }}: jpg,jpeg,bmp,svg,png,gif,tiff."
+                }             
+            }
+        });
+    </script>
+{% endblock %}

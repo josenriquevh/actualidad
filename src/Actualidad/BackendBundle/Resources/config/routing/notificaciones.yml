@@ -1,0 +1,59 @@
+_notificaciones:
+    path:     /notificaciones
+    defaults: { _controller: ActualidadBackendBundle:Notificaciones:index }
+
+_editNotificacion:
+    path:     /edit/{notificacion_id}
+    defaults: { _controller: ActualidadBackendBundle:Notificaciones:edit, notificacion_id: 0 }
+
+_showNotificacion:
+    path:     /show/{notificacion_id}/{save}
+    defaults: { _controller: ActualidadBackendBundle:Notificaciones:show, save: 0 }
+
+_programados:
+    path:     /programados
+    defaults: { _controller: ActualidadBackendBundle:Notificaciones:programados }
+
+_editNotificacionProgramada:
+    path:     /editNotificacionProgramada/{notificacion_id}/{notificacion_programada_id}
+    defaults: { _controller: ActualidadBackendBundle:Notificaciones:editNotificacionProgramada, notificacion_programada_id: 0 }
+
+_ajaxGrupoSeleccion:
+    path:     /ajaxGrupoSeleccion
+    defaults: { _controller: ActualidadBackendBundle:Notificaciones:ajaxGrupoSeleccion }
+    requirements:
+        _method: GET
+
+_showNotificacionProgramada:
+    path:     /showNotificacionProgramada/{notificacion_programada_id}
+    defaults: { _controller: ActualidadBackendBundle:Notificaciones:showNotificacionProgramada }
+
+_ajaxProgramados:
+    path:     /ajaxProgramados
+    defaults: { _controller: ActualidadBackendBundle:Notificaciones:ajaxProgramados }
+    requirements:
+        _method: GET
+
+_ajaxTreeGrupoProgramado:
+    path:     /ajaxTreeGrupoProgramado/{notificacion_programada_id}
+    defaults: { _controller: ActualidadBackendBundle:Notificaciones:ajaxTreeGrupoProgramado, notificacion_programada_id: 0 }
+    requirements:
+        method: GET
+
+_ajaxSelectSeccion:
+    path:     /ajaxSelectSeccion
+    defaults: { _controller: ActualidadBackendBundle:Notificaciones:ajaxSelectSeccion }
+    requirements:
+        _method: GET
+
+_ajaxSelectLibro:
+    path:     /ajaxSelectLibro
+    defaults: { _controller: ActualidadBackendBundle:Notificaciones:ajaxSelectLibro }
+    requirements:
+        _method: GET
+
+_ajaxSelectColegios:
+    path:     /ajaxSelectColegios
+    defaults: { _controller: ActualidadBackendBundle:Notificaciones:ajaxSelectColegios }
+    requirements:
+        _method: GET

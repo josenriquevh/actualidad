@@ -1,0 +1,7 @@
+1. Nueva tabla: admin_tutorial
+
+2. Función de BD: fninteraccion_unidades.sql
+
+3. Función de BD: fncodigos_ubicacion.sql
+
+4. Nuevo campo: ea_pagina_log.preguntas_correctas varchar(100).

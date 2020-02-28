@@ -1,0 +1,95 @@
+_paginas:
+    path:     /paginas
+    defaults: { _controller: ActualidadBackendBundle:Pagina:index }
+
+_newPagina:
+    path:     /new
+    defaults: { _controller: ActualidadBackendBundle:Pagina:new }
+
+_ajaxGetPage:
+    path:     /ajaxGetPage
+    defaults: { _controller: ActualidadBackendBundle:Pagina:ajaxGetPage }
+    requirements:
+        _method: GET
+
+_editPagina:
+    path:     /edit/{pagina_padre_id}/{pagina_id}
+    defaults: { _controller: ActualidadBackendBundle:Pagina:edit, pagina_padre_id: 0, pagina_id: 0 }
+
+_pagina:
+    path:     /configure/{pagina_id}
+    defaults: { _controller: ActualidadBackendBundle:Pagina:pagina }
+
+_ajaxDuplicatePage:
+    path:     /ajaxDuplicatePage
+    defaults: { _controller: ActualidadBackendBundle:Pagina:ajaxDuplicatePage }
+    requirements:
+        _method: POST
+
+_ajaxGetPaginas:
+    path:     /ajaxGetPaginas
+    defaults: { _controller: ActualidadBackendBundle:Pagina:ajaxGetPaginas }
+    requirements:
+        _method: GET
+
+_moverPagina:
+    path:     /mover/{pagina_id}
+    defaults: { _controller: ActualidadBackendBundle:Pagina:mover }
+
+_paginaMovida:
+    path:     /paginaMovida/{pagina_id}/{libro_id}
+    defaults: { _controller: ActualidadBackendBundle:Pagina:paginaMovida }
+
+_prelaciones:
+    path:     /prelaciones
+    defaults: { _controller: ActualidadBackendBundle:Pagina:prelaciones }
+
+_prelacion:
+    path:     /prelacion/{pagina_id}
+    defaults: { _controller: ActualidadBackendBundle:Pagina:prelacion }
+
+_verInteractivo:
+    path:     /verInteractivo/{pagina_id}
+    defaults: { _controller: ActualidadBackendBundle:Pagina:verInteractivo }
+
+_ajaxTreePaginas:
+    path:     /ajaxTreePaginas/{pagina_id}
+    defaults: { _controller: ActualidadBackendBundle:Pagina:ajaxTreePaginas, pagina_id: 0 }
+    requirements:
+        method: GET
+
+_ajaxPaginaReferencia:
+    path:     /ajaxPaginaReferencia
+    defaults: { _controller: ActualidadBackendBundle:Pagina:ajaxPaginaReferencia }
+    requirements:
+        _method: GET
+
+_ajaxCodigoInteractivo:
+    path:     /ajaxCodigoInteractivo
+    defaults: { _controller: ActualidadBackendBundle:Pagina:ajaxCodigoInteractivo }
+    requirements:
+        _method: POST
+
+_ajaxGetUnidadesPreladas:
+    path:     /ajaxGetUnidadesPreladas
+    defaults: { _controller: ActualidadBackendBundle:Pagina:ajaxGetUnidadesPreladas }
+    requirements:
+        _method: GET
+
+_ajaxGetUnidadesPrelar:
+    path:     /ajaxGetUnidadesPrelar
+    defaults: { _controller: ActualidadBackendBundle:Pagina:ajaxGetUnidadesPrelar }
+    requirements:
+        _method: GET
+
+_ajaxPrelar:
+    path:     /ajaxPrelar
+    defaults: { _controller: ActualidadBackendBundle:Pagina:ajaxPrelar }
+    requirements:
+        _method: POST
+
+_ajaxDeletePagina:
+    path:     /ajaxDeletePagina
+    defaults: { _controller: ActualidadBackendBundle:Pagina:ajaxDeletePagina }
+    requirements:
+        method: POST

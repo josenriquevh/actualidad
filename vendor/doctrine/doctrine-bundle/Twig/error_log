@@ -1,0 +1,2 @@
+[15-Feb-2019 09:16:24 America/Caracas] PHP Fatal error:  Class 'Twig_Extension' not found in /home/pr3b04rd/public_html/actualidad/vendor/doctrine/doctrine-bundle/Twig/DoctrineExtension.php on line 11
+[17-Feb-2019 11:01:13 America/Caracas] PHP Fatal error:  Class 'Twig_Extension' not found in /home/pr3b04rd/public_html/actualidad/vendor/doctrine/doctrine-bundle/Twig/DoctrineExtension.php on line 11

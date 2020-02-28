@@ -1,0 +1,12 @@
+1. Nuevo campo: ea_prueba.min_correctas integer
+
+2. Nuevo campo: ea_prueba.max_intentos integer
+
+3. Función de BD: fncerrar_libros.sql
+
+4. Función de BD: fnaviso_vencimiento.sql
+
+5. Nuevo registro en la tabla admin_rol:
+	INSERT INTO admin_rol (id, nombre, descripcion) VALUES (4, 'Revisor', 'Este rol permite acceder a todos los contenidos y elementos contemplados en el frontend. Su traza en los registros no debe ser tomado en cuenta en los reportes.');
+	SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('admin_rol', 'id'), 5, false);
+

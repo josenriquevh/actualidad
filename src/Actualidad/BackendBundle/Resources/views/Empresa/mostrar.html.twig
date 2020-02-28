@@ -1,0 +1,157 @@
+{% extends '::admin.html.twig'%}
+
+{% block body %}
+
+
+<input type="hidden" id="url_edit" name="url_edit" value="{{ path('_registro', { 'empresa_id': empresa.id }) }}">
+<br><br>
+<div class="row align-items-center justify-content-between">
+    <div class="col text-left">
+        <a href="{{ path('_listaEmpresas') }}" class="bttn__bck"><span class="fa fa-clipboard"></span><span class="text__bck">{{ 'Ir al listado'|trans }}</span></a>
+    </div>
+	<div class="col-sm-10 col-md-6 " style="margin-top: 3%;">
+        <div class="alert alert-success" role="alert" id="alert-success" > 
+            <strong>{{ 'Bien hecho'|trans }}!</strong> {{ 'La empresa se registro correctamente'|trans }} <span id="inserts"></span>. 
+        </div>
+    </div>
+    <div class="col text-right">
+        <button type="button" class="bttn__nr" id="edit"><span class="fa fa-pencil"></span><span class="text__nr">{{ 'Editar'|trans }}</span></button>
+    </div>
+</div>
+
+<div class="row">
+	<div class="col-sm-16">
+		<div class="card">
+			<div class="card-header gradiente">
+                <div class="card-title">
+                    <h6>{{ 'Datos de la empresa'|trans }}</h6>
+                </div>
+            </div>
+           	<div class="card-block">
+                <div class="container_wizard wizard-thin">
+                	<div class="stepwizard">
+                		<div class="stepwizard-row setup-panel d-flex">
+            				<div class="stepwizard-step col">
+                                <a href="#det0" class="btn bttn__fndo pass">
+                                    <span class="btn-round">1</span>
+                                    <p>{{ 'Datos Básicos'|trans }}</p>
+                                </a>
+                            </div>
+                            <div class="stepwizard-step col">
+                                <a href="#det1" class="btn btn-secondary pass disabled">
+                                    <span class="btn-round">2</span>
+                                    <p>{{ 'Contacto'|trans }}</small></p>
+                                </a>
+                            </div>
+                            
+                		</div>
+                	</div>
+                	<div class="row setup-content" id="det0">	
+            			<div class="col-sm-16">
+            				<br>
+                            <div class="content__wrapper">
+                                <div class="container-fluid">
+                                       <div class="row">
+                                	<div class="col-sm-16 col-md-8 col-lg-6">
+                                		<div class="form-group">
+                                            <label for="texto" class="col-2 col-form-label">{{ 'Empresa'|trans }}</label>
+                                            <div class="col-14">
+                                                <input type="text" class="form-control form_sty1" name="nombre" id="nombre" value="{{ empresa.nombre }}" readonly>
+                                                <span class="fa fa-industry"></span>
+                                            </div>	
+                                        </div>
+                                        <div class="form-group">
+                                        	<label for="texto" class="col-2 col-form-label">{{ 'País'|trans }}</label>
+                                        	<div class="col-14">
+	                                        	 <input type="text" class="form-control form_sty1" name="nombre" id="nombre" value="{{ empresa.pais.nombre }}" readonly >
+                                                <span class="fa fa-globe"></span>
+                                            </div>
+                                        </div>
+                                	</div>
+                                	<div class="col-sm-16 col-md-8 col-lg-6">
+										<div class="form-group">
+                                            <label for="texto" class="col-2 col-form-label">Rif</label>
+                                            <div class="col-14">
+                                                <input type="text" class="form-control form_sty1" name="rif" id="rif" value="{{ empresa.rif }}" readonly>
+                                                <span class="fa fa-barcode"></span>
+                                            </div>	
+                                        </div>
+                                		<div class="form-group">
+                                			<label for="texto" class="col-2 col-form-label">{{ 'Activo'|trans }}</label>
+                                			<div class="col-4">
+	                                            <div class="can-toggle demo-rebrand-2 small">
+                                                    <input id="f" id="activo" name="activo" type="checkbox" {% if empresa.activo %}checked{% endif %} disabled>
+	                                                <label for="f">
+	                                                    <div class="can-toggle__switch" data-checked="{{ 'Sí'|trans }}" data-unchecked="No"></div>
+	                                                </label>
+	                                            </div>
+                                        	</div>
+                                		</div>
+                                	</div>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="wizard-footer">
+                                <div class="col-sm-16 text-right">
+                                    <button type="button" class="bttn__nxt nextBtn"><span class="text__nxt">{{ 'Siguiente'|trans }}</span><span class="fa fa-chevron-right"></span></button>
+                                </div>
+                            </div>
+            			</div>
+            		</div>
+            		<div class="row setup-content" id="det1">
+            			<div class="col-sm-16">
+            				<br>
+                            <div class="content__wrapper">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                	<div class="col-sm-16 col-md-8 col-lg-6">
+                                		<div class="form-group">
+                                            <label for="texto" class="col-2 col-form-label">{{ 'Correo'|trans }}</label>
+                                            <div class="col-14">
+                                                <input type="text" class="form-control form_sty1" name="correo" id="correo" value="{{ empresa.correoPrincipal }}" readonly >
+                                                <span class="fa fa-envelope"></span>
+                                            </div>	
+                                        </div>
+
+                                	</div>
+                                	<div class="col-sm-16 col-md-8 col-lg-6">
+										<div class="form-group">
+                                            <label for="texto" class="col-2 col-form-label">{{ 'Teléfono'|trans }}</label>
+                                            <div class="col-14">
+                                                <input type="text" class="form-control form_sty1" name="telefono" id="telefono" value="{{ empresa.telefonoPrincipal }}" readonly >
+                                                <span class="fa fa-phone"></span>
+                                            </div>	
+                                        </div>
+                                	</div>
+                                </div>
+								<div class="row">
+                                    <div class="col-sm-16">
+                                        <div class="form-group">
+                                            <label for="direccion">{{ 'Dirección'|trans }}</label>
+                                            <textarea class="form-control" id="direccion" name="direccion" value="  {{ empresa.direccion }}" rows="1" value="" readonly>{{ empresa.direccion }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="wizard-footer">
+                                <div class="col-sm-16 text-right">
+                                    <button type="button" class="bttn__nxt nextBtn"><span class="text__nxt">{{ 'Siguiente'|trans }}</span><span class="fa fa-chevron-right"></span></button>
+                                </div>
+                            </div>
+            			</div>
+            		</div>
+                    
+                </div>
+            </div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('assets/vendor/ckeditor/ckeditor.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendor/ckeditor/config.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendor/ckfinder/ckfinder.js') }}"></script>
+{% endblock %}

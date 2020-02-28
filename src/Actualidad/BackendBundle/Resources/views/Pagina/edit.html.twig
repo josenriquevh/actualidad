@@ -1,0 +1,656 @@
+{% extends '::admin.html.twig'%}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('front/js/plugins/jquery-upload-file/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('front/js/plugins/jquery-upload-file/css/jquery.fileupload.css') }}">
+    <style>
+        .input-group-addon{
+            padding:0px;
+            border-radius: 50px !important;
+        }
+        .input-group .form-control {
+            z-index: 1;
+        }
+        .input-group {
+            margin-top: 35px;
+            margin-left: 20px;
+        }
+        .fileinput-button {
+            position: absolute;
+        }
+        #btn_foto, #btn_pdf {
+            padding-top: 17px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+{% set uri = app.request.getbasepath %}
+{{ form_start(form, { 'attr': { 'id': 'form', 'role': 'form' } }) }}
+<input type="hidden" id="root_site" name="root_site" value="{{ uri }}" />
+<input type="hidden" id="deslen" name="deslen" value="0" />
+<input type="hidden" id="deslen2" name="deslen2" value="0" />
+<input type="hidden" id="file_input" name="file_input" value="">
+<input type="hidden" id="url_upload" name="url_upload" value="{{ path('_ajaxUpload') }}">
+<input type="hidden" id="url_referencia" name="url_referencia" value="{{ path('_ajaxPaginaReferencia') }}">
+<input type="hidden" id="url_codigo" name="url_codigo" value="{{ path('_ajaxCodigoInteractivo') }}">
+<input type="hidden" id="uploads" name="uploads" value="{{ uploads }}">
+<input type="hidden" id="base_upload" name="base_upload" value="paginas/">
+<input type="hidden" id="error-msg-referencia" name="error-msg-referencia" value="{{ 'Error obteniendo el libro de referencia'|trans }}">
+<input type="hidden" id="pagina_id" name="pagina_id" value="{{ pagina.id }}">
+<input type="hidden" id="form_empresa" name="form_empresa" value="{{ pagina.empresa.id }}">
+<input type="hidden" id="ayuda_interactivo" name="ayuda_interactivo" value="{{ayuda}}">
+{% set es_interactivo = pagina.interactivo ? 1 : 0 %}
+<input type="hidden" id="es_interactivo" name="es_interactivo" value="{{ es_interactivo }}">
+<br><br>
+<input type="hidden" id="photo" name="photo" value="{{ asset('img/picture.png') }}">
+<div class="row align-items-center justify-content-start">
+    <div class="col text-left">
+        <a href="{{ path('_paginas')}}" class="bttn__bck"><span class="fa fa-clipboard"></span><span class="text__bck">{{ 'Ir al listado'|trans }}</span></a>
+    </div>
+    <div class="col-sm-8 col-md-8 col-lg-8 alert alert-danger" role="alert" id="div-error" style="display:none;">
+        <ul></ul>
+    </div>
+    <div class="col-sm-8 col-md-8 col-lg-8 alert alert-danger" role="alert" id="div-error-server" style="display:none;">
+    </div>
+</div>
+<div class="row">
+	<div class="col-sm-16">
+		<div class="card">
+			<div class="card-header gradiente">
+                <div class="card-title">
+                    {% if wizard == 1 and pagina_padre != '' %}
+                        {% set header_str = '('~cantidad~'/'~total~'). '~'Página padre'|trans~': '~pagina_padre.tipoPagina.nombre~' - '~pagina_padre.titulo~'.' %}
+                    {% else %}
+                        {% set header_str = '' %}
+                    {% endif %}
+                    <h6>{{ 'Detalles de la página'|trans }} {{ header_str }}</h6>
+                </div>
+            </div>
+           	<div class="card-block">
+                <div class="container_wizard wizard-thin">
+                	<div class="stepwizard">
+                		<div class="stepwizard-row setup-panel d-flex">
+            				<div class="stepwizard-step col">
+                                <a href="#det0" class="btn bttn__fndo pass">
+                                    <span class="btn-round">1</span>
+                                    <p>{{ 'Datos Básicos'|trans }}</p>
+                                </a>
+                            </div>
+                            <div class="stepwizard-step col">
+                                <a href="#det1" class="btn btn-secondary pass disabled">
+                                    <span class="btn-round">2</span>
+                                    <p>{{ 'Descripción'|trans }}</p>
+                                </a>
+                            </div>
+                            <div class="stepwizard-step col">
+                                <a href="#det2" class="btn btn-secondary pass disabled">
+                                    <span class="btn-round">3</span>
+                                    <p>{{ 'Contenido'|trans }}</p>
+                                </a>
+                            </div>
+                            <div class="stepwizard-step col">
+                                <a href="#det3" class="btn btn-secondary pass disabled">
+                                    <span class="btn-round">4</span>
+                                    <p>{{ 'Archivos'|trans }}</p>
+                                </a>
+                            </div>
+                            {% if not pagina.id %}
+                                <div class="stepwizard-step col">
+                                    <a href="#det4" class="btn btn-secondary pass disabled">
+                                        <span class="btn-round">5</span>
+                                        <p>{{ 'Estructura'|trans }}</p>
+                                    </a>
+                                </div>
+                            {% endif %}
+                		</div>
+                	</div>
+            		<div class="row setup-content" id="det0">	
+            			<div class="col-sm-16">
+            				<div class="row">
+                                <div class="col-sm-16">
+                                    <h3 class="mb-2">{{ 'Paso'|trans }} 1</h3>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-sm-16 col-lg-16 col-md-16">
+                                    <label for="titulo" class="col-sm-4 col-md-4 col-lg-4 col-form-label">{{ form_label(form.titulo) }}</label>
+                                    <div class="col-sm-16 col-md-16 col-lg-16">
+                                        {{ form_widget(form.titulo, { 'attr': { 'class': 'form-control form_sty1' } }) }}
+                                        <span class="fa fa-font"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                {% if not pagina.pagina %}
+                                    <div class="col-sm-10 col-lg-10 col-md-10">
+                                        <label for="titulo" class="col-sm-4 col-md-4 col-lg-4 col-form-label">{{ form_label(form.subtitulo) }}</label>
+                                        <div class="col-sm-16 col-md-16 col-lg-16">
+                                            {{ form_widget(form.subtitulo, { 'attr': { 'class': 'form-control form_sty1' } }) }}
+                                            <span class="fa fa-font"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-6 col-md-6">
+                                        <label for="empresa" class="col-sm-6 col-md-6 col-lg-6 col-form-label">{{ form_label(form.estilo) }}</label>
+                                        <div class="col-sm-10 col-md-10 col-lg-10">
+                                            {{ form_widget(form.estilo, { 'attr': { 'class': 'form-control form_sty_select' } }) }}
+                                            <span class="fa fa-css3"></span>
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <div class="col-sm-16 col-lg-16 col-md-16">
+                                        <label for="titulo" class="col-sm-4 col-md-4 col-lg-4 col-form-label">{{ form_label(form.subtitulo) }}</label>
+                                        <div class="col-sm-16 col-md-16 col-lg-16">
+                                            {{ form_widget(form.subtitulo, { 'attr': { 'class': 'form-control form_sty1' } }) }}
+                                            <span class="fa fa-font"></span>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label for="tipoPagina" class="col-sm-6 col-md-6 col-lg-6 col-form-label">{{ form_label(form.tipoPagina) }}</label>
+                                    <div class="col-sm-16 col-md-16 col-lg-16">
+                                        {{ form_widget(form.tipoPagina, { 'attr': { 'class': 'form-control form_sty_select' } }) }}
+                                        <span class="fa fa-tags"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5 col-md-5 col-lg-5">
+                                    {% if pagina.pagina %}
+                                        <div class="form-group">
+                                            <label for="activo" class="col-2 col-form-label">{{ form_label(form.interactivo) }}</label>
+                                            <div class="col-14">
+                                                <div class="can-toggle demo-rebrand-2 small">
+                                                    {{ form_widget(form.interactivo) }}
+                                                    <label for="form_interactivo">
+                                                        <div class="can-toggle__switch" data-checked="{{ 'Sí'|trans }}" data-unchecked="No"></div>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% else %}
+                                        <label for="grado" class="col-sm-4 col-md-4 col-lg-4 col-form-label">{{ form_label(form.grado) }}</label>
+                                        <div class="col-sm-14 col-md-14 col-lg-14">
+                                            {{ form_widget(form.grado, { 'attr': { 'class': 'form-control form_sty_select' } }) }}
+                                            <span class="fa fa-sort-numeric-asc"></span>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-sm-5 col-md-5 col-lg-5">
+                                    <label for="estatusContenido" class="col-sm-6 col-md-6 col-lg-6 col-form-label">{{ form_label(form.estatusContenido) }}</label>
+                                    <div class="col-sm-10 col-md-10 col-lg-10">
+                                        {{ form_widget(form.estatusContenido, { 'attr': { 'class': 'form-control form_sty_select' } }) }}
+                                        <span class="fa fa-list-ol"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            {% if pagina.pagina %}
+                                <br>
+                                <div class="row">
+                                    <div class="col-sm-16 col-lg-16 col-md-16">
+                                        <label for="codigoInteractivo" class="col-sm-4 col-md-4 col-lg-4 col-form-label">{{ form_label(form.codigoInteractivo) }}</label>
+                                        <div class="col-sm-8 col-md-8 col-lg-8">
+                                            {{ form_widget(form.codigoInteractivo, { 'attr': { 'class': 'form-control form_sty1', 'disabled': 'disabled' } }) }}
+                                            <span class="fa fa-slack"></span>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="col-sm-6 col-md-6 col-lg-6">
+                                        <label for="" class="col-sm-6 col-md-6 col-lg-6 col-form-label">Ayuda interactivo</label>
+                                        <div class="col-14">
+                                            <div class="form-group" style="margin-top: 6px !important;">
+                                                <div class="can-toggle demo-rebrand-2 small">
+                                                    <input id="ayuda" name="ayuda" type="checkbox" {% if pagina.interactivo != true %} disabled {% endif %}>
+                                                    <label for="ayuda">
+                                                        <div class="can-toggle__switch" data-checked="{{ 'Sí'|trans }}" data-unchecked="No"></div>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label for="ayudaInteractivo" class="col-sm-6 col-md-6 col-lg-6 col-form-label">{{ form_label(form.ayudaInteractivo) }}</label>
+                                    <div class="col-sm-16 col-md-16 col-lg-16">
+                                        {{ form_widget(form.ayudaInteractivo, { 'attr': { 'class': 'form-control form_sty_select', 'disabled': 'disabled' } }) }}
+                                        <span class="fa fa-list-ol"></span>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            <br>
+                            <div class="row" id="div-referencia">
+                                {% if not pagina.pagina and pagina.tipoPagina.id == libro_profesores %}
+                                    <div class="col-sm-16 col-md-16 col-lg-16">
+                                        <label for="pagina_referencia_id" class="col-sm-16 col-md-16 col-lg-16 col-form-label">{{ 'Libro de referencia a la guía del docente'|trans }}</label>
+                                        <div class="col-sm-16 col-md-16 col-lg-16">
+                                            <select class="form-control form_sty_select" name="pagina_referencia_id" id="pagina_referencia_id">
+                                                <option value=""></option>';
+                                                {% for libro in libros %}
+                                                    {% set selected = pagina.paginaReferencia ? pagina.paginaReferencia.id == libro.id ? 'selected="selected"' : '' : '' %}
+                                                    <option value="{{ libro.id }}" {{ selected }}>{{ libro.titulo }} - {{ 'Grado|trans' }} {{ libro.grado.nombre }}</option>;
+                                                {% endfor %}
+                                            </select>
+                                            <span class="fa fa-book"></span>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <br>
+                            <div class="wizard-footer">
+                                <div class="col-sm-16 text-right">
+                                    <button type="button" class="bttn__nxt nextBtn"><span class="text__nxt">{{ 'Siguiente'|trans }}</span><span class="fa fa-chevron-right"></span></button>
+                                </div>
+                            </div>
+            			</div>
+            		</div>
+            		<div class="row setup-content" id="det1">
+            			<div class="col-sm-16">
+            				<div class="row">
+                                <div class="col-sm-16">
+                                    <h3 class="mb-2">{{ 'Paso'|trans }} 2</h3>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-sm-16">
+                                	<div class="form-group">
+                                		<label for="descripcion" class="col-2 col-form-label">{{ form_label(form.descripcion) }}</label>
+                                		<div class="col-16">
+                                            {{ form_widget(form.descripcion, { 'attr': { 'class': 'ckeditor' } }) }}
+                                		</div>
+                                	</div>
+                                </div>
+                            </div>
+                            <div class="wizard-footer">
+                                <div class="col-sm-16 text-right">
+                                    <button type="button" class="bttn__nxt nextBtn"><span class="text__nxt">{{ 'Siguiente'|trans }}</span><span class="fa fa-chevron-right"></span></button>
+                                </div>
+                            </div>
+            			</div>
+            		</div>
+            		<div class="row setup-content" id="det2">
+                        <div class="col-sm-16">
+                            <div class="row">
+                                <div class="col-sm-16">
+                                    <h3 class="mb-2">{{ 'Paso'|trans }} 3</h3>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-sm-16">
+                                    <div class="form-group">
+                                        <label for="contenido" class="col-2 col-form-label">{{ form_label(form.contenido) }}</label>
+                                        <div class="col-16">
+                                            {{ form_widget(form.contenido, { 'attr': { 'class': 'ckeditor' } }) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="wizard-footer">
+                                <div class="col-sm-16 text-right">
+                                    <button type="button" class="bttn__nxt nextBtn"><span class="text__nxt">{{ 'Siguiente'|trans }}</span><span class="fa fa-chevron-right"></span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row setup-content" id="det3">   
+                        <div class="col-sm-16">
+                            <div class="row">
+                                <div class="col-sm-16">
+                                    <h3 class="mb-2">{{ 'Paso'|trans }} 4</h3>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-auto col-sm-auto col-xl-auto col-lg-auto">
+                                    {{ form_label(form.foto) }}
+                                    {% set img = pagina.foto ? uploads~pagina.foto : asset('img/picture.png') %}
+                                    <div class="photo_img" id="figure"><img id="foto_img" src="{{ img }}" alt="{{ 'Foto principal'|trans }}" style="width: 512px; height: auto; margin: 0 1rem;"></div>
+                                </div>
+                                <div class="col-md-auto col-sm-auto col-xl-auto col-lg-auto">
+                                    <div class="input-group">
+                                        {{ form_widget(form.foto, { 'attr': { 'readonly': 'readonly' } }) }}
+                                        <span class="input-group-addon">
+                                            <a class="fileinput-button btn_addImg" data="form_foto" id="btn_foto">
+                                                <span class="fa fa-photo"></span>
+                                                <input class="fileupload" type="file" name="files[]" multiple>
+                                            </a>
+                                        </span>
+                                        <span class="input-group-addon">
+                                            <button id="btn_clear" class="btn_clearImg" type="button">
+                                                <span class="fa fa-times"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-sm-8 col-lg-8 col-md-8">
+                                    <label for="pdf" class="col-sm-6 col-md-6 col-lg-6 col-form-label">{{ form_label(form.pdf) }}</label>
+                                    <div class="col-sm-16 col-md-16 col-lg-16">
+                                        {{ form_widget(form.pdf, { 'attr': { 'class': 'form-control form_sty1', 'placeholder': 'Sólo archivo en PDF', 'id':'form_pdf', 'readonly': 'readonly' } }) }}
+                                        <span class="fa fa-file-pdf-o"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 col-md-3 col-lg-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <a class="fileinput-button btn_addImg" data="form_pdf" id="btn_pdf">
+                                                <span class="fa fa-file-pdf-o"></span>
+                                                <input class="fileupload" type="file" name="files[]" multiple>
+                                            </a>
+                                        </span>
+                                        <span class="input-group-addon">
+                                            <button id="btn_clear2" class="btn_clearImg2" type="button">
+                                                <span class="fa fa-times"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="wizard-footer">
+                                <div class="col-sm-16 text-right">
+                                    {% if not pagina.id %}
+                                        <button type="button" class="bttn__nxt nextBtn"><span class="text__nxt">{{ 'Siguiente'|trans }}</span><span class="fa fa-chevron-right"></span></button>
+                                    {% else %}
+                                        <button type="button" class="bttn__end" id="finish"><span class="text__end">{{ 'Finalizar'|trans }}</span><span class="fa fa-check"></span></button>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% if not pagina.id %}
+                        <div class="row setup-content" id="det4">   
+                            <div class="col-sm-16">
+                                <div class="row">
+                                    <div class="col-sm-16">
+                                        <h3 class="mb-2">{{ 'Paso'|trans }} 5</h3>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-sm-6 col-lg-6 col-md-6">
+                                        <label for="subpaginas" class="col-sm-16 col-md-16 col-lg-16 col-form-label">{{ 'Cantidad de sub-páginas'|trans }}</label>
+                                        <div class="col-sm-8 col-md-8 col-lg-8">
+                                            <input type="text" class="form-control form_sty1" name="subpaginas" id="subpaginas" value="0">
+                                            <span class="fa fa-slack"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5 col-md-5 col-lg-5">
+                                        <label for="tipo_subpaginas" class="col-sm-16 col-md-16 col-lg-16 col-form-label">{{ 'Tipo de las sub-paginas'|trans }}</label>
+                                        <div class="col-sm-10 col-md-10 col-lg-10">
+                                            <select class="form-control form_sty_select" name="tipo_subpaginas" id="tipo_subpaginas">
+                                                {% for tipo in tipos %}
+                                                    <option value="{{ tipo.id }}">{{ tipo.nombre }}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <span class="fa fa-tags"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5 col-md-5 col-lg-5">
+                                        <label for="status_subpaginas" class="col-sm-16 col-md-16 col-lg-16 col-form-label">{{ 'Estatus de las sub-paginas'|trans }}</label>
+                                        <div class="col-sm-10 col-md-10 col-lg-10">
+                                            <select class="form-control form_sty_select" name="status_subpaginas" id="status_subpaginas">
+                                                {% for s in status %}
+                                                    <option value="{{ s.id }}">{{ s.nombre }}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <span class="fa fa-list-ol"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="wizard-footer">
+                                    <div class="col-sm-16 text-right" id="final">
+                                        <button type="button" class="bttn__end" id="finish"><span class="text__end">{{ 'Finalizar'|trans }}</span><span class="fa fa-check"></span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+		</div>
+	</div>
+</div>
+{{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('assets/vendor/ckeditor/ckeditor.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendor/ckeditor/config.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendor/ckfinder/ckfinder.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('jq/jquery-validation-1.15.0/dist/jquery.validate.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('jq/jquery-validation-1.15.0/dist/additional-methods.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('front/js/plugins/jquery-upload-file/js/vendor/jquery.ui.widget.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('front/js/plugins/jquery-upload-file/js/jquery.iframe-transport.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('front/js/plugins/jquery-upload-file/js/jquery.fileupload.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/admin/pagina.js') }}"></script>
+    <script type="text/javascript">
+        
+        $('#finish').click(function(){
+            var valid = $("#form").valid();
+            if (!valid) 
+            {
+                notify($('#div-error').html());
+            }
+            else {
+
+                var deslen2 = $('#deslen2').val();
+                var tipo_pagina_id = $('#form_tipoPagina').val();
+                var pagina_referencia_id = $('#pagina_referencia_id').val();
+                var codigo_interactivo = $.trim($('#form_codigoInteractivo').val());
+                var pagina_id = $('#pagina_id').val();
+                var foto = $('#form_foto').val();
+                var error = 0;
+                var error_msg = '';
+
+                if (deslen2 < {{ minlenght_textarea }} && tipo_pagina_id == 5)
+                {
+                    error = 1;
+                    error_msg = error_msg+"<li>- {{ 'El contenido es requerido'|trans }}.</li>";
+                }
+
+                if (tipo_pagina_id == 2 && pagina_referencia_id == '')
+                {
+                    error = 1;
+                    error_msg = error_msg+"<li>- {{ 'El libro de referencia a la guía del docente es requerido'|trans }}.</li>";
+                }
+
+                if (tipo_pagina_id == 5 && foto == '')
+                {
+                    error = 1;
+                    error_msg = error_msg+"<li>- {{ 'La foto principal es requerida'|trans }}.</li>";
+                }
+
+                if (error == 1)
+                {
+                    $('#div-error ul').html(error_msg);
+                    $('#div-error ul').show();
+                    notify($('#div-error').html());
+                }
+                else {
+
+                    if ($('#form_interactivo').is(':checked'))
+                    {
+                        if (codigo_interactivo == '')
+                        {
+                            $('#div-error ul').html("<li>- {{ 'El código del interactivo es requerido'|trans }}.</li>");
+                            $('#div-error ul').show();
+                            notify($('#div-error').html());
+                        }
+                        else {
+                            // Se valida que este código no esté repetido
+                            /*pagina_id = pagina_id == '' ? 0 : pagina_id;
+                            $.ajax({
+                                type: "POST",
+                                url: $('#url_codigo').val(),
+                                async: true,
+                                data: { pagina_id: pagina_id, codigo_interactivo: codigo_interactivo },
+                                dataType: "json",
+                                success: function(data) {
+                                    if (data.ok != 0)
+                                    {
+                                        $('#div-error ul').html("<li>- {{ 'El código del interactivo ya existe'|trans }}.</li>");
+                                        $('#div-error ul').show();
+                                        notify($('#div-error').html());
+                                    }
+                                    else {
+                                        $('#finish').hide();
+                                        $('#form').submit();
+                                    }
+                                },
+                                error: function(){
+                                    $('#div-error ul').html("<li>- {{ 'Ha ocurrido un error en la validación del código del interactivo'|trans }}.</li>");
+                                    $('#div-error ul').show();
+                                    notify($('#div-error').html());
+                                }
+                            });*/
+                            $('#finish').hide();
+                            $('#form').submit();
+                        }
+                    }
+                    else {
+                        $('#finish').hide();
+                        $('#form').submit();
+                    }
+
+                }
+
+            }
+        });
+
+        $("#form").validate({
+            errorLabelContainer: "#div-error ul",
+            wrapper: "li",
+            ignore: "",
+            rules: {
+                'form[titulo]': {
+                    required: true,
+                    minlength: 3
+                },
+                'form[tipoPagina]': {
+                    required: true
+                },
+                'form[grado]': {
+                    required: {% if pagina.pagina %}false{% else %}true{% endif %}
+                },
+                'form[foto]': {
+                  extension: "jpg|jpeg|png"
+                },
+                'form[pdf]': {
+                    extension: "pdf"
+                },
+                'pagina_referencia_id': {
+                    required: $('#form_tipoPagina').val() == 2 ? true : false
+                },
+                'form[ayudaInteractivo]':{
+                    required: {
+                        depends: function(element) {
+                            return $("#ayuda").is(":checked");
+                            }
+                    }
+                }
+            },
+            messages: {
+                'form[titulo]': {
+                    required: "- {{ 'El título es requerido'|trans }}.",
+                    minlength: "- {{ 'El título debe ser mínimo de 3 caracteres'|trans }}."
+                },
+                'form[tipoPagina]': {
+                    required: "- {{ 'El tipo es requerido'|trans }}."
+                },
+                'form[grado]': {
+                    required: "- {{ 'El grado es requerido'|trans }}."
+                },
+                'form[foto]': {
+                    extension: "- {{ 'Formatos válidos para la foto principal jpg, jpeg ó png'|trans }}."
+                },
+                'form[pdf]': {
+                    extension: "- {{ 'El material complementario debe ser sólo archivo con extensión pdf'|trans }}."
+                },
+                'pagina_referencia_id': {
+                    required: "- {{ 'El libro de referencia a la guía del docente es requerido'|trans }}."
+                }
+            }
+        });
+
+        if ($('#es_interactivo').val() == 1)
+        {
+            $('#form_codigoInteractivo').prop('disabled', false);
+        }
+        else {
+            $('#form_codigoInteractivo').prop('disabled', true);
+        }
+
+        $('#form_interactivo').click(function(){
+            if ($(this).is(':checked'))
+            {
+                $('#form_codigoInteractivo').prop('disabled', false);
+                $('#ayuda').prop('disabled', false);
+                $('#ayuda').click(function(){
+                    if ($(this).is(':checked'))
+                    {
+                        $('#form_ayudaInteractivo').prop('disabled', false);
+                    }
+                    else {
+                        $('#form_ayudaInteractivo').prop('disabled', true);
+                    }
+                });
+                if ($('#ayuda').is(':checked'))
+                {
+                    $('#form_ayudaInteractivo').prop('disabled', false);
+                }
+                else {
+                    $('#form_ayudaInteractivo').prop('disabled', true);
+                }
+            }
+            else {
+                $('#form_codigoInteractivo').prop('disabled', true);
+                $('#ayuda').prop('disabled', true);
+                $('#form_ayudaInteractivo').prop('disabled', true);
+            }
+        });
+
+        if ($('#form_interactivo').is(':checked'))
+        {
+            $('#form_codigoInteractivo').prop('disabled', false);
+            $('#ayuda').prop('disabled', false);
+            $('#ayuda').click(function(){
+                if ($(this).is(':checked'))
+                {
+                    $('#form_ayudaInteractivo').prop('disabled', false);
+                }
+                else {
+                    $('#form_ayudaInteractivo').prop('disabled', true);
+                }
+            });
+            if ($('#ayuda').is(':checked'))
+            {
+                $('#form_ayudaInteractivo').prop('disabled', false);
+            }
+            else {
+                $('#form_ayudaInteractivo').prop('disabled', true);
+            }
+        }
+        else {
+            $('#form_codigoInteractivo').prop('disabled', true);
+            $('#ayuda').prop('disabled', true);
+            $('#form_ayudaInteractivo').prop('disabled', true);
+        }
+
+        if($('#ayuda_interactivo').val() == 1)
+        {
+            $('#ayuda').prop('checked', true);
+        }
+
+        
+
+    </script>
+{% endblock %}

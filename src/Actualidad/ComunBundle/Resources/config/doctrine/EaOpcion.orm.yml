@@ -1,0 +1,62 @@
+Actualidad\ComunBundle\Entity\EaOpcion:
+    type: entity
+    table: ea_opcion
+    indexes:
+        IDX_1FAB270BE7DE889A:
+            columns:
+                - prueba_id
+        IDX_1FAB270BDB38439E:
+            columns:
+                - usuario_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        descripcion:
+            type: text
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        imagen:
+            type: string
+            nullable: true
+            length: 500
+            options:
+                fixed: false
+        fechaCreacion:
+            type: datetime
+            nullable: true
+            column: fecha_creacion
+        fechaModificacion:
+            type: datetime
+            nullable: true
+            column: fecha_modificacion
+    manyToOne:
+        prueba:
+            targetEntity: EaPrueba
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                prueba_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        usuario:
+            targetEntity: AdminUsuario
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                usuario_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

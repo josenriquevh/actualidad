@@ -1,0 +1,3 @@
+1. Nuevo tabla: admin_usuario_colegio
+
+2. Nuevo campo: ea_pagina_usuario.token varchar(20)

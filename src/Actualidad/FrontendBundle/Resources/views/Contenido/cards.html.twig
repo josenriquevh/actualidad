@@ -1,0 +1,11 @@
+{% for recurso in recursos %}
+    {% set img = recurso.foto ? uploads~recurso.foto : asset('front/dist/img/int-ej-03.png') %}
+    <div {% if recurso.status_css != 'blocked' %}onclick="showInt()"{% endif %} class="card-int {{ recurso.status_css }} {% if recurso.status_css != 'blocked' %}resource{% endif %}" data="{{ recurso.id }}" style="background-image:url({{ img }})">
+        <div class="num">{{ recurso.orden }}</div>
+        <div class="tag">{{ recurso.button_text }}</div>
+    </div>
+    {% set completado = recurso.status_css == 'hecho' ? 1 : 0 %}
+    <input type="hidden" id="ordenRecurso{{ recurso.id }}" name="ordenRecurso{{ recurso.id }}" value="{{ loop.index }}">
+    <input type="hidden" id="rOrder{{ loop.index }}" name="rOrder{{ loop.index }}" value="{{ recurso.id }}">
+    <input type="hidden" id="recursoVisto{{ recurso.id }}" name="recursoVisto{{ recurso.id }}" value="{{ completado }}">
+{% endfor %}

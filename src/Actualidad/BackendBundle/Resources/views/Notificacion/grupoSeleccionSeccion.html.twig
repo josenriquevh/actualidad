@@ -1,0 +1,112 @@
+{% if tipo_destino == '5' %}
+    <div class="col-sm-6 col-md-6 col-lg-6 div-grupo">
+        <label for="grado_id_l" class="col-sm-16 col-md-16 col-lg-16 col-form-label">{{ 'Grado'|trans }}</label>
+        <div class="col-sm-16 col-md-16 col-lg-16">
+            <select class="form_sty_sel form-control" style="border-radius: 5px" id="grado_id_l" name="grado_id_l">
+                <option value=""></option>
+                {% for grado in grados %}
+                    <option value="{{ grado.id }}" {{ grado.selected }}>{{ grado.nombre }}</option>
+                {% endfor %}
+            </select>
+            <span class="fa fa-sort-numeric-asc"></span>
+            <span class="bttn_d"><img src="{{ asset('img/down-arrowbck.png') }}"></span>
+        </div>
+    </div>
+    <br>
+    <div class="col-sm-10 col-md-10 col-lg-10 div-grupo">
+        <label for="provincia_id" class="col-sm-16 col-md-16 col-lg-16 col-form-label">{{ 'Libro'|trans }}</label>
+        <div class="col-sm-16 col-md-16 col-lg-16">
+            <select class="form_sty_sel form-control" style="border-radius: 5px" id="entidades" name="entidades">
+                <option value=""></option>
+                {% for libro in libros %}
+                    <option value="{{ libro.id }}" {{ libro.selected }}>{{ libro.nombre }}</option>
+                {% endfor %}
+            </select>
+            <span class="fa fa-book"></span>
+            <span class="bttn_d"><img src="{{ asset('img/down-arrowbck.png') }}"></span>
+            <img id="loader-entidades" class="img-loader" src="{{ asset('img/ui-anim_basic_16x16.gif') }}" style="display:none;">
+        </div>
+    </div>
+{% else %}
+    <div class="col-sm-6 col-md-6 col-lg-6 div-grupo">
+        <label for="grado_id" class="col-sm-16 col-md-16 col-lg-16 col-form-label">{{ 'Grado'|trans }}</label>
+        <div class="col-sm-16 col-md-16 col-lg-16">
+            <select class="form_sty_sel form-control " style="border-radius: 5px" id="grado_id" name="grado_id">
+                <option value=""></option>
+                {% for grado in grados %}
+                    <option value="{{ grado.id }}" {{ grado.selected }}>{{ grado.nombre }}</option>
+                {% endfor %}
+            </select>
+            <span class="fa fa-sort-numeric-asc"></span>
+            <span class="bttn_d"><img src="{{ asset('img/down-arrowbck.png') }}"></span>
+        </div>
+    </div>
+    <div class="col-sm-10 col-md-10 col-lg-10 div-grupo">
+        <label for="provincia_id" class="col-sm-16 col-md-16 col-lg-16 col-form-label">{{ 'Provincia'|trans }}</label>
+        <div class="col-sm-16 col-md-16 col-lg-16">
+            <select class="form_sty_sel form-control " style="border-radius: 5px" id="provincia_id" name="provincia_id" data="ciudad_id" entity="AdminCiudad" reference="provincia" orderBy="nombre">
+                <option value=""></option>
+                {% for provincia in provincias %}
+                    <option value="{{ provincia.id }}" {{ provincia.selected }}>{{ provincia.nombre }}</option>
+                {% endfor %}
+            </select>
+            <span class="fa fa-institution"></span>
+            <span class="bttn_d"><img src="{{ asset('img/down-arrowbck.png') }}"></span>
+        </div>
+    </div>
+    <br>
+    <div class="col-sm-6 col-md-6 col-lg-6 div-grupo" id="ciudad_id_s">
+        <label for="ciudad_id" class="col-sm-16 col-md-16 col-lg-16 col-form-label">{{ 'Ciudad'|trans }}</label>
+        <div class="col-sm-16 col-md-16 col-lg-16">
+            <select class="form_sty_sel form-control reset1" style="border-radius: 5px" id="ciudad_id" name="ciudad_id" data="colegio_id" entity="AdminColegio" reference="ciudad" orderBy="nombre" reset="1">
+                <option value=""></option>
+                {% for ciudad in ciudades %}
+                    <option value="{{ ciudad.id }}" {{ ciudad.selected }}>{{ ciudad.nombre }}</option>
+                {% endfor %}
+            </select>
+            <span class="fa fa-institution"></span>
+            <span class="bttn_d"><img src="{{ asset('img/down-arrowbck.png') }}"></span>
+            <img id="loader-ciudad_id" class="img-loader" src="{{ asset('img/ui-anim_basic_16x16.gif') }}" style="display:none;">
+        </div>
+    </div>
+    <br>
+    <div class="col-sm-10 col-md-10 col-lg-10 div-grupo">
+        <label for="colegio_id" class="col-sm-16 col-md-16 col-lg-16 col-form-label">{{ 'Colegio'|trans }}</label>
+        <div class="col-sm-16 col-md-16 col-lg-16" id="colegiob">
+            <select class="form_sty_sel form-control reset2  chosen-select"  style="border-radius: 5px ;" id="colegio_id" name="colegio_id" reset="2">
+                <option value=""></option>
+                {% for colegio in colegios %}
+                    <option value="{{ colegio.id }}" {{ colegio.selected }}>{{ colegio.nombre }}</option>
+                {% endfor %}
+            </select>
+            <span class="fa fa-institution"></span>
+            <span class="bttn_d"><img src="{{ asset('img/down-arrowbck.png') }}"></span>
+            <img id="loader-colegio_id" class="img-loader" src="{{ asset('img/ui-anim_basic_16x16.gif') }}" style="display:none;">
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-6 col-lg-6 div-grupo">
+        <label for="seccion_id" class="col-sm-16 col-md-16 col-lg-16 col-form-label">{{ 'Sección'|trans }}</label>
+        <div class="col-sm-16 col-md-16 col-lg-16">
+            <select class="form_sty_sel form-control reset3" style="border-radius: 5px" id="entidades" name="entidades">
+                <option value=""></option>
+                {% for seccion in secciones %}
+                    <option value="{{ seccion.id }}" {{ seccion.selected }}>{{ seccion.nombre }}</option>
+                {% endfor %}
+            </select>
+            <span class="fa fa-institution"></span>
+            <span class="bttn_d"><img src="{{ asset('img/down-arrowbck.png') }}"></span>
+            <img id="loader-entidades" class="img-loader" src="{{ asset('img/ui-anim_basic_16x16.gif') }}" style="display:none;">
+        </div>
+    </div>
+{% endif %}
+
+<div class="col-sm-12" id="change" style="display:none;">
+    <div class="load1 load-wrapper">
+        <div class="loader">
+            Loading...
+        </div>  
+    </div>
+    <div class="alert alert-danger" role="alert" id="div-entidades-alert" style="display:none;"> 
+        <strong>{{ 'Error en el servidor'|trans }}!</strong> {{ 'Error al obtener el grupo de selección'|trans }}.</span>
+    </div>
+</div>

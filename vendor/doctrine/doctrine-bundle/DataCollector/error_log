@@ -1,0 +1,2 @@
+[15-Feb-2019 09:19:35 America/Caracas] PHP Fatal error:  Class 'Symfony\Bridge\Doctrine\DataCollector\DoctrineDataCollector' not found in /home/pr3b04rd/public_html/actualidad/vendor/doctrine/doctrine-bundle/DataCollector/DoctrineDataCollector.php on line 20
+[17-Feb-2019 22:22:59 America/Caracas] PHP Fatal error:  Class 'Symfony\Bridge\Doctrine\DataCollector\DoctrineDataCollector' not found in /home/pr3b04rd/public_html/actualidad/vendor/doctrine/doctrine-bundle/DataCollector/DoctrineDataCollector.php on line 20

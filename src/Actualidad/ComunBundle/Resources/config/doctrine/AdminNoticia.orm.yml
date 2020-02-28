@@ -1,0 +1,94 @@
+Actualidad\ComunBundle\Entity\AdminNoticia:
+    type: entity
+    table: admin_noticia
+    indexes:
+        IDX_F51CDD1F8146238:
+            columns:
+                - tipo_noticia_id
+        IDX_F51CDD1FDB38439E:
+            columns:
+                - usuario_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        titulo:
+            type: string
+            nullable: true
+            length: 500
+            options:
+                fixed: false
+        resumen:
+            type: text
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        contenido:
+            type: text
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        fechaPublicacion:
+            type: date
+            nullable: true
+            column: fecha_publicacion
+        fechaVencimiento:
+            type: date
+            nullable: true
+            column: fecha_vencimiento
+        autor:
+            type: string
+            nullable: true
+            length: 250
+            options:
+                fixed: false
+        pdf:
+            type: string
+            nullable: true
+            length: 250
+            options:
+                fixed: false
+        imagen:
+            type: string
+            nullable: true
+            length: 250
+            options:
+                fixed: false
+        fechaCreacion:
+            type: datetime
+            nullable: true
+            column: fecha_creacion
+        fechaModificacion:
+            type: datetime
+            nullable: true
+            column: fecha_modificacion
+    manyToOne:
+        tipoNoticia:
+            targetEntity: AdminTipoNoticia
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                tipo_noticia_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        usuario:
+            targetEntity: AdminUsuario
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                usuario_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

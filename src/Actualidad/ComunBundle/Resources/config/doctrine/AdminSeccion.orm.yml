@@ -1,0 +1,48 @@
+Actualidad\ComunBundle\Entity\AdminSeccion:
+    type: entity
+    table: admin_seccion
+    indexes:
+        IDX_248197407FDC9E6F:
+            columns:
+                - colegio_id
+        IDX_2481974091A441CC:
+            columns:
+                - grado_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        nombre:
+            type: string
+            nullable: true
+            length: 10
+            options:
+                fixed: false
+    manyToOne:
+        colegio:
+            targetEntity: AdminColegio
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                colegio_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        grado:
+            targetEntity: AdminGrado
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                grado_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

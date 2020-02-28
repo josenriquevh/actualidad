@@ -1,0 +1,118 @@
+Actualidad\ComunBundle\Entity\EaPregunta:
+    type: entity
+    table: ea_pregunta
+    indexes:
+        IDX_120854E1E7DE889A:
+            columns:
+                - prueba_id
+        IDX_120854E1481AEE6:
+            columns:
+                - tipo_pregunta_id
+        IDX_120854E1F4868001:
+            columns:
+                - tipo_elemento_id
+        IDX_120854E131A5801E:
+            columns:
+                - pregunta_id
+        IDX_120854E1DB38439E:
+            columns:
+                - usuario_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        enunciado:
+            type: string
+            nullable: true
+            length: 500
+            options:
+                fixed: false
+        imagen:
+            type: string
+            nullable: true
+            length: 500
+            options:
+                fixed: false
+        valor:
+            type: decimal
+            nullable: true
+            precision: 10
+            scale: 2
+        orden:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+        fechaCreacion:
+            type: datetime
+            nullable: true
+            column: fecha_creacion
+        fechaModificacion:
+            type: datetime
+            nullable: true
+            column: fecha_modificacion
+        codigoInteractivo:
+            type: string
+            nullable: true
+            length: 50
+            options:
+                fixed: false
+            column: codigo_interactivo
+    manyToOne:
+        prueba:
+            targetEntity: EaPrueba
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                prueba_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        tipoPregunta:
+            targetEntity: EaTipoPregunta
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                tipo_pregunta_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        tipoElemento:
+            targetEntity: EaTipoElemento
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                tipo_elemento_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        pregunta:
+            targetEntity: EaPregunta
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                pregunta_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        usuario:
+            targetEntity: AdminUsuario
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                usuario_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

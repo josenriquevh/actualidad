@@ -1,0 +1,35 @@
+Actualidad\ComunBundle\Entity\AdminCiudad:
+    type: entity
+    table: admin_ciudad
+    indexes:
+        IDX_D34E34674E7121AF:
+            columns:
+                - provincia_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        nombre:
+            type: string
+            nullable: true
+            length: 100
+            options:
+                fixed: false
+    manyToOne:
+        provincia:
+            targetEntity: AdminProvincia
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                provincia_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

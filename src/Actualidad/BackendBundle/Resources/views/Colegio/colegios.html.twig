@@ -1,0 +1,31 @@
+<input type="hidden" id="entityToOrder" name="entityToOrder" value="EaPagina">
+<table class="table" id="dt">
+    <thead class="sty__title">
+        <tr>
+            <th class="hd__title">{{'Colegio'|trans}}</th>
+            <th class="hd__title">{{'Provincia'|trans}}</th>
+            <th class="hd__title">{{'Ciudad'|trans}}</th>
+            <th class="hd__title">{{'Docentes activos'|trans}}</th>
+            <th class="hd__title">{{'Alumnos activos'|trans}}</th>
+            <th class="hd__title">{{'Libros activos'|trans}}</th>
+            <th class="hd__title">{{'Acciones'|trans}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for colegio in colegios %}
+            {% set eo = cycle(['odd', 'even'], loop.index) %}
+            <tr class="{{ eo }}">
+                <td>{{ colegio.colegio }}</td>
+                <td>{{ colegio.provincia }}</td>
+                <td>{{ colegio.ciudad }}</td>
+                <td>{{ colegio.profesores }}</td>
+                <td>{{ colegio.alumnos }}</td>
+                <td>{{ colegio.libros }}</td>
+                <td class="center">
+                    <a href="#" title="{{ 'Editar'|trans }}" class="btn btn-link btn-sm edit" data-toggle="modal" data-target="#formModal" data="{{ colegio.id }}"><span class="fa fa-pencil"></span></a>
+                    <a href="#" title="Eliminar" class="btn btn-link btn-sm {% if colegio.delete_disabled == '' %}delete{% endif %} {{ colegio.delete_disabled }}" data="{{ colegio.id }}"><span class="fa fa-trash"></span></a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

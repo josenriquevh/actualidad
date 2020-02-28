@@ -1,0 +1,364 @@
+{% extends '::admin.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('jq/datetimepicker/bootstrap-datetimepicker.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap-datepicker-1.6.4-dist/css/bootstrap-datepicker.css') }}" type="text/css">
+    <style type="text/css">
+        .table td, .table th {
+            vertical-align: middle !important;
+            text-align: center;
+            border-top: 1px solid #000000 !important;
+        }
+        .estado {
+            background-color: #d9edf7 !important;
+            font-weight: bold;
+        }
+        th.bg-warning {
+            background-color: #ed7d31 !important;
+        }
+        td.bg-warning {
+            background-color: #f8cbad !important;
+        }
+        th.bg-info {
+            background-color: #0070c0 !important;
+        }
+        td.bg-info {
+            background-color: #bdd7ee !important;
+        }
+        h6 {
+            font-weight: bold !important;
+        }
+        .rojo {
+            background-color: #ff0000 !important;
+        }
+        .amarillo {
+            background-color: #ffff00 !important;
+        }
+        .verde_claro {
+            background-color: #92d050 !important;
+        }
+        .verde {
+            background-color: #00b050 !important;
+        }
+        .total {
+            background-color: #dff0d8 !important;
+        }
+        .leyenda {
+            margin-top: -15px;
+        }
+        .text-black {
+            color: #000;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+<input type="hidden" id="url_libros" name="url_libros" value="{{ path('_ajaxLibros') }}">
+<input type="hidden" id="url_excel" name="url_excel" value="{{ path('_ajaxExcelLibrosActivos') }}">
+<input type="hidden" name="error-reporte" id="error-reporte" value="{{ 'Error en el servidor'|trans }}">
+<br>
+
+<div class="row align-items-center justify-content-between">
+    <div class="col-12 col-sm-12 page-title">
+        <h3>{{ 'Reporte de estadística por libro'|trans }}</h3>
+    </div>
+</div>
+
+<div class="col-sm-8 col-md-8 col-lg-8 alert alert-danger" role="alert" id="div-error" style="display:none;">
+    <ul></ul>
+</div>
+<div class="col-sm-8 col-md-8 col-lg-8 alert alert-danger" role="alert" id="div-error-server" style="display:none;">
+</div>
+<div class="row">
+    <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8 offset-sm-4 offset-md-4 offset-lg-4">
+        <div class="card">
+            <div class="card-header"  style=" background: linear-gradient(to right, #d5ff00 0%, #A3C300 100%); ">
+                <h5 class="card-title">{{ 'Filtro'|trans }}</h5>
+            </div>
+            <form id="form" action="{{ path('_ajaxEstadisticaLibro') }}" method="POST">
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-md-16 col-sm-16 col-lg-16 col-xl-16">
+                            <label for="empresa_id" class="col-sm-6 col-md-6 col-lg-16 offset-sm-5 offset-md-5 offset-lg-5">{{ 'Empresa'|trans }}</label>
+                            <div class="row">
+                                <div class="col-sm-6 col-md-6 col-lg-6 offset-sm-5 offset-md-5 offset-lg-5">
+                                    <select class="form_sty_sel form-control" style="border-radius: 5px" id="empresa_id" name="empresa_id">
+                                        <option value=""></option>
+                                        {% for empresa in empresas %}
+                                            <option value="{{ empresa.id }}">{{ empresa.nombre }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <span class="fa fa-industry"></span>
+                                    <span class="bttn_d"><img src="{{ asset('img/down-arrowbck.png') }}"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-16 col-sm-16 col-lg-16 col-xl-16">
+                            <label for="grado_id" class="col-sm-6 col-md-6 col-lg-16 offset-sm-5 offset-md-5 offset-lg-5">{{ 'Grado'|trans }}</label>
+                            <div class="row">
+                                <div class="col-sm-6 col-md-6 col-lg-6 offset-sm-5 offset-md-5 offset-lg-5">
+                                    <select class="form_sty_sel form-control" style="border-radius: 5px" id="grado_id" name="grado_id">
+                                        <option value=""></option>
+                                        {% for grado in grados %}
+                                            <option value="{{ grado.id }}">{{ grado.nombre }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <span class="fa fa-sort-numeric-asc"></span>
+                                    <span class="bttn_d"><img src="{{ asset('img/down-arrowbck.png') }}"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-16 col-sm-16 col-lg-16 col-xl-16">
+                            <label for="pagina_id" class="col-sm-6 col-md-6 col-lg-16 offset-sm-5 offset-md-5 offset-lg-5">{{ 'Libro'|trans }}</label>
+                            <div class="row">
+                                <div class="col-sm-6 col-md-6 col-lg-6 offset-sm-5 offset-md-5 offset-lg-5" id="libros_list">
+                                    <select class="form_sty_sel form-control" style="border-radius: 5px" id="pagina_id" name="pagina_id">
+                                        <option value=""></option>
+                                    </select>
+                                    <span class="fa fa-book"></span>
+                                    <span class="bttn_d"><img src="{{ asset('img/down-arrowbck.png') }}"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-8 col-md-8 col-lg-8" >
+                            <label for="desde" class="col-sm-16 col-md-16 col-lg-16 col-form-label">{{ 'Fecha desde'|trans }}</label>
+                            <div class="col-sm-16 col-md-16 col-lg-16" >
+                                <input type="text" class="form-control form_sty1 date_picker" id="fecha_desde" name="fecha_desde" placeholder="DD/MM/YYYY" value="{# fecha_desde #}" >
+                                <span class="fa fa-calendar"></span>
+                             </div>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-lg-8" >
+                            <label for="hasta" class="col-sm-16 col-md-16 col-lg-16 col-form-label">{{ 'Fecha de hasta'|trans }}</label>
+                            <div class="col-sm-16 col-md-16 col-lg-16" >
+                                <input type="text" class="form-control form_sty1 date_picker" id="fecha_hasta" name="fecha_hasta" placeholder="DD/MM/YYYY"  >
+                                <span class="fa fa-calendar"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="card-footer">
+                <div class="col-sm-16 col-md-16 text-right">
+                    <button type="button" id="search" class="bttn__saved" data-toggle="tooltip" data-placement="bottom" title="{{ 'Buscar'|trans }}"><span class="fa fa-search"></span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{# Sección de resultados del reporte #}
+<input type="hidden" id="url_img" name="url_img" value="{{ path ('_ajaxSaveImgEstadisticaLibro') }}">
+<input type="hidden" id="url_pdf" name="url_pdf" value="{{ path ('_pdfEstadisticaLibro') }}">
+<input type="hidden" id="week_beforef" name="week_beforef" value="">
+<input type="hidden" id="nowf" name="nowf" value="">
+<div class="row" id="reporte" style="display: none;" >
+    <div class="col-sm-16">
+        <div class="card">
+            <div class="card-header gradiente">
+                <h5 class="card-title">Estadística libro.</h5>
+            </div>
+            <div class="card-block">
+                <div id="resultado" style="display: none;" >
+                    <div class="row justify-content-center reporte" >
+                        <div class="col-8 col-lg-8 col-xl-8 col-md-8 col-sm-8">
+                            <h6>{{ 'Datos del Libro'|trans }} <span id="label_empresa"></span></h6>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align:left;">{{ 'Unidades'|trans }}</td>
+                                        <td class="bg-warning" id="unidades"></td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left;">{{ 'Temas'|trans }}</td>
+                                        <td class="bg-warning" id="temas"></td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:left;">Actividades</th>
+                                        <td class="bg-warning" id="actividades"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="row justify-content-center reporte" >
+                        <div class="col-8 col-lg-8 col-xl-8 col-md-8 col-sm-8">
+                            <h6>{{ 'Estadísticas de códigos activos y sin activar del libro'|trans }} </h6>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2" align="left" class="estado">{{ 'Estado'|trans }}</th>
+                                        <th class="week_before bg-warning text-white" colspan="2">&nbsp;</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-warning text-white">{{ 'Cantidad'|trans }}</th>
+                                        <th class="bg-warning text-white">%</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align:left;">{{ 'Sin activar'|trans }}</td>
+                                        <td class="bg-warning week_before_inactivos" id="sin_activar"></td>
+                                        <td id="sin_activar_pct" class="bg-warning"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left;">{{ 'Activados'|trans }}</td>
+                                        <td class="bg-warning week_before_activos" id="activos"></td>
+                                        <td id="activos_pct" class="bg-warning"></td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:left;" class="total">Total</th>
+                                        <td class="bg-warning week_before_total1" id="total_1"></td>
+                                        <td id="total_1_pct" class="bg-warning"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="leyenda">
+                                <small><b>{{ 'Sin activar' }}:</b> {{ 'Códigos de los libros que aún no han sido activados'|trans }}.</small><br>
+                                <small><b>{{ 'Activados' }}:</b> {{ 'Códigos de los libros que ya han sido activados'|trans }}.</small>
+                            </div>
+                        </div>
+                        <div class="col-8 col-lg-8 col-xl-8 col-md-8 col-sm-8">
+                            <div class="canvasCont" id="canvasCont1">
+                                <canvas class="barChart" id="chart1"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="row justify-content-center reporte">
+                        <div class="col-8 col-lg-8 col-xl-8 col-md-8 col-sm-8">
+                            <h6>{{ 'Estadísticas de códigos activos'|trans }} <span class="label_programa"></span></h6>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2" align="left" class="estado">{{ 'Estado'|trans }}</th>
+                                        <th class="week_before bg-warning text-white" colspan="2">&nbsp;</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-warning text-white">{{ 'Cantidad'|trans }}</th>
+                                        <th class="bg-warning text-white">%</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align:left;">{{ 'No iniciado'|trans }}</td>
+                                        <td class="bg-warning week_before_inactivos" id="no_iniciados"></td>
+                                        <td id="no_iniciados_pct" class="bg-warning"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left;">{{ 'En curso'|trans }}</td>
+                                        <td class="bg-warning week_before_activos" id="en_curso"></td>
+                                        <td id="en_curso_pct" class="bg-warning"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left;">{{ 'Finalizado'|trans }}</td>
+                                        <td class="bg-warning week_before_activos" id="finalizado"></td>
+                                        <td id="finalizado_pct" class="bg-warning"></td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:left;" class="total">Total</th>
+                                        <td class="bg-warning week_before_total1" id="total_2"></td>
+                                        <td id="total_2_pct" class="bg-warning"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="leyenda">
+                                <small><b>{{ 'No iniciados' }}:</b> {{ 'Códigos de libro que si bien han sido activados en la plataforma, aún no se ha ingresado a su contenido'|trans }}.</small><br>
+                                <small><b>{{ 'En curso' }}:</b> {{ 'Códigos del libro a los que se le ha ingresado a su contenido'|trans }}.</small><br>
+                                <small><b>{{ 'Finalizado' }}:</b> {{ 'Códigos de libros que ya han sido finalizados'|trans }}.</small>
+                            </div>
+                        </div>
+                         <div class="col-8 col-lg-8 col-xl-8 col-md-8 col-sm-8">
+                            <div class="canvasCont" id="canvasCont2">
+                                <canvas class="barChart" id="chart2"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="card-footer">
+                        <div class="col-sm-16 col-md-16 text-right">
+                            <button id="pdf" type="button" class="bttn__saved generable" data-toggle="tooltip" data-placement="bottom" title="{{ 'Generar'|trans }} PDF"><span class="fa fa-file-pdf-o"></span></button>
+                            <a id="pdf-link" class="descargable" href="#" target="_blank" style="display:none;"><button type="button" class="bttn__saved" data-toggle="tooltip" data-placement="bottom" title="{{ 'Descargar'|trans }} PDF"><span class="fa fa-download"></span></button></a>
+                            <img id="pdf-loader" class="img-loader descargable" src="{{ asset('img/ui-anim_basic_16x16.gif') }}" style="display:none;">
+                        </div>
+                    </div>
+                </div>
+                <div class="load1 load-wrapper" id="load_r">
+                    <div class="loader">
+                        Loading...
+                    </div>  
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('jq/jquery-validation-1.15.0/dist/jquery.validate.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendor/chart.js/Chart.bundle.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendor/chart.js/Chart.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendor/chart.js/utils.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendor/chart.js/Chart.PieceLabel.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('jq/datetimepicker/bootstrap-datetimepicker.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('jq/datetimepicker/bootstrap-datetimepicker.es.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendor/bootstrap-datepicker-1.6.4-dist/js/bootstrap-datepicker.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendor/bootstrap-datepicker-1.6.4-dist/locales/bootstrap-datepicker.es.min.js') }}" charset="UTF-8"></script>
+    <script type="text/javascript" src="{{ asset('js/admin/estadisticasLibros.js') }}"></script>
+    <script type="text/javascript">
+        $("#form").validate({
+            errorLabelContainer: "#div-error ul",
+            wrapper: "li",
+            ignore: "",
+            rules: {
+                'empresa_id': {
+                    required: true
+                },
+                'grado_id': {
+                    required: true
+                },
+                'pagina_id': {
+                    required: true
+                },
+                'fecha_desde': {
+                    required: true
+                },
+                'fecha_hasta': {
+                    required: true
+                }
+            },
+            messages: {
+                'empresa_id': {
+                    required: "- {{ 'La empresa es requerida'|trans }}."
+                },
+                'grado_id': {
+                    required: "- {{ 'El grado es requerido'|trans }}."
+                },
+                'pagina_id': {
+                    required: "- {{ 'El libro es requerido'|trans }}."
+                },
+                'fecha_desde': {
+                    required: "- {{ 'La fecha de inicio es requerida'|trans }}."
+                },
+                'fecha_hasta': {
+                    required: "- {{ 'La fecha de fin es requerida'|trans }}."
+                }
+            }
+        });
+    </script>
+{% endblock %}

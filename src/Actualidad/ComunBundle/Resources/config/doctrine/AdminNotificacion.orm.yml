@@ -1,0 +1,41 @@
+Actualidad\ComunBundle\Entity\AdminNotificacion:
+    type: entity
+    table: admin_notificacion
+    indexes:
+        IDX_BDBBB01DB38439E:
+            columns:
+                - usuario_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        asunto:
+            type: string
+            nullable: true
+            length: 500
+            options:
+                fixed: false
+        mensaje:
+            type: text
+            nullable: true
+            length: null
+            options:
+                fixed: false
+    manyToOne:
+        usuario:
+            targetEntity: AdminUsuario
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                usuario_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

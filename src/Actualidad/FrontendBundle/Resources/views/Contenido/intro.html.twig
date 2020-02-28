@@ -1,0 +1,233 @@
+{% extends '::base.html.twig' %}
+
+{% block body_label %}
+<body {% if app.session.get('usuario').rol_id == rol.profesor %}id="profesor"{% endif %} class="no-scroll">
+{% endblock %}
+
+{% block header %}
+    <div class="container-fluid">
+        <nav class="top-bar">
+            <svg onclick="toggleMenuNav()" style="width:54px; height:25px" id="closeMenuNav" class="pointer rotate-180 d-inline-block d-lg-none">
+                <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-collapse') }}"></use>
+            </svg>
+            <div>
+                <img style="height:70px" src="{{ asset('front/dist/img/logo-actualidad-light.png') }}" alt="">
+            </div>
+            <div class="menu d-none d-lg-flex">
+                <a href="{{ path('_inicio', { 'rol_id': app.session.get('usuario').rol_id }) }}">
+                    <svg class="icon-menu">
+                        <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-home') }}"></use>
+                    </svg>
+                    <span>{{ 'Inicio'|trans }}</span>
+                </a>
+                {% if app.session.get('usuario').rol_id == rol.profesor %}
+                    <a href="#">
+                        <svg class="icon-menu">
+                            <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-monitor') }}"></use>
+                        </svg>
+                        <span>{{ 'Monitoreo'|trans }}</span>
+                    </a>
+                    <a href="#">
+                        <svg class="icon-menu ">
+                            <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-novedades') }}"></use>
+                        </svg>
+                        <span>{{ 'Novedades'|trans }}</span>
+                    </a>
+                {% endif %}
+                {{ include('ActualidadFrontendBundle:Notificaciones:notificaciones.html.twig') }}
+                <a href="{{ path('_actualizacionUsuario', { 'rol_id': app.session.get('usuario').rol_id }) }}" class="py-1">
+                    <div class="avatar-xs">
+                        {% set img = app.session.get('usuario').foto is defined ? app.session.get('usuario').foto != '' ? uploads~app.session.get('usuario').foto : asset('front/dist/img/user.svg') : asset('front/dist/img/user.svg') %}
+                        <img style="width:60%;" src="{{ img }}" alt="">
+                    </div>
+                    <span class="mt-0">{{ app.session.get('usuario').nombre }} {{ app.session.get('usuario').apellido }}</span>
+                </a>
+                <a href="{{ path('_logout', { 'ruta': '_index' }) }}">
+                    <svg class="icon-menu rotate-180 ">
+                        <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-salir') }}"></use>
+                    </svg>
+                    <span>{{ 'Salir'|trans }}</span>
+                </a>
+            </div>
+            <div class="menu-responsive d-block d-lg-none">
+                <div class="d-inline-block d-lg-none" id="menu_hamb" onclick="showMenu()">
+                    <div class="main-item menu-hamb">
+                        <span class="line line01"></span>
+                        <span class="line line02"></span>
+                        <span class="line line03"></span>
+                    </div>
+                </div>
+                <div id="menuMobileItems">
+                    <div class="menu d-flex flex-column">
+                        <a href="{{ path('_inicio', { 'rol_id': app.session.get('usuario').rol_id }) }}">
+                            <svg class="icon-menu ">
+                                <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-home') }}"></use>
+                            </svg>
+                            <span>{{ 'Inicio'|trans }}</span>
+                        </a>
+                        {% if app.session.get('usuario').rol_id == rol.profesor %}
+                            <a href="#">
+                                <svg class="icon-menu ">
+                                    <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-monitor') }}"></use>
+                                </svg>
+                                <span>{{ 'Monitoreo'|trans }}</span>
+                            </a>
+                            <a href="#">
+                                <svg class="icon-menu ">
+                                    <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-novedades') }}"></use>
+                                </svg>
+                                <span>{{ 'Novedades'|trans }}</span>
+                            </a>
+                        {% endif %}
+                        <a href="#">
+                            <svg class="icon-menu">
+                                <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-notificacion') }}"></use>
+                            </svg>
+                            <span>{{ 'Notificaciones'|trans }}</span>
+                        </a>
+                        <a href="#" class="py-1">
+                            <div class="avatar-xs">
+                                <img style="width:60%;" src="{{ img }}" alt="">
+                            </div>
+                            <span class="mt-0">{{ app.session.get('usuario').nombre }} {{ app.session.get('usuario').apellido }}</span>
+                        </a>
+                        <a href="{{ path('_logout', { 'ruta': '_index' }) }}">
+                            <svg class="icon-menu rotate-180 ">
+                                <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-salir') }}"></use>
+                            </svg>
+                            <span>{{ 'Salir'|trans }}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>    
+    </div>
+{% endblock %}
+
+{% block body %}
+{{ parent() }}
+<input type="hidden" id="url_temas" name="url_temas" value="{{ path('_temas', { 'unidad_id': unidad.id }) }}">
+
+<main id="temas">
+
+    <aside class="bg-{{ libro.css }}">
+        <nav>
+            <div class="d-flex justify-content-center align-items-center">
+                <svg class="fill-white icon-materia-menu mr-3">
+                    <use  xlink:href="{{ asset('front/dist/img/icons.svg#icon-'~libro.css) }}"></use>
+                </svg>
+                <p class="mb-0">{{ libro.titulo }}</p>
+            </div>
+            <div class="info-unidad">
+                <h5 class="mb-0">{{ 'UNIDAD'|trans }}</h5>
+                <h2 class="fs-6 mt-0">{{ unidad.orden }}</h2>
+                <div class="titulo-unidad text-left mb-2">
+                    {{ unidad.titulo }} 
+                </div>
+            </div>
+            <a href="{{ path('_unidades', { 'pagina_id': libro.id }) }}" class="btn-back mt-5">
+                {{ 'Volver a Unidades'|trans }}
+                <svg class="fill-white icon-materia-menu">
+                    <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-go-back') }}"></use>
+                </svg>
+            </a>
+        </nav>
+    </aside>
+    
+    <div class="content w-100 p-4">
+        <div class="wrapper-iframe">
+            {% if skip_intro %}
+                <div class="saltar-intro position-absolute d-flex align-items-center">
+                    <a class="link fs-2" href="{{ path('_temas', { 'unidad_id': unidad.id }) }}">{{ 'Saltar intro'|trans }}
+                        <svg class="icon-close ml-2">
+                            <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-close') }}"></use>
+                        </svg>
+                    </a>
+                </div>
+            {% endif %}
+            {{ unidad.contenido|raw }}
+        </div>
+    </div>
+
+</main>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+
+        {% if unidad.interactivo %}
+            timer = setInterval(function(){
+                postMessage();
+            }, 5000);
+        {% else %}
+            observeVideo();
+        {% endif %}
+
+        function postMessage()
+        {
+            var iframe = document.getElementById('ifr');
+            if (iframe !== null)
+            {
+                console.log('Llamada al postmessage');
+                iframe.contentWindow.postMessage({
+                    usuario_id: {{ app.session.get('usuario').id }},
+                    url: "{{ url('_ajaxServicioInteractivo') }}",
+                    make_ajax: {{ make_ajax }},
+                    pagina_id: {{ unidad.id }},
+                    dominio_origen: "{{ app.request.getSchemeAndHttpHost() }}",
+                }, "{{ servidor_recursos }}");
+            }
+            else {
+                console.log('No existe iframe con id ifr');
+            }
+        }
+
+        function receiveMessage(event)
+        {
+            // Do we trust the sender of this message?
+            if (event.origin !== "{{ servidor_recursos }}")
+                return;
+
+            var ok = event.data.ok;
+        
+            console.log('ok:'+ok);
+
+            if (ok == 1)
+            {
+                console.log('Se da por completado el interactivo, habilitar el botón de CONTINUAR.');
+                //$('#next').removeClass('blocked');
+                // Se va directo a la siguiente página
+                window.location.replace($('#url_temas').val());
+            }
+            else {
+                console.log('OK en 0. No hacer nada.');
+            }
+
+        }
+
+        window.addEventListener("message", receiveMessage, false);
+
+        function observeVideo()
+        {
+            var video = document.getElementById('ifr');
+            if (video !== null)
+            {
+                video.addEventListener("ended", finishResource);
+            }
+            else {
+                alert('No existe video con id ifr');
+            }
+        }
+
+        function finishResource()
+        {
+            console.log('Se reprodujo el video, habilitar el botón de CONTINUAR.');
+            //$('#next').removeClass('blocked');
+            // Se va directo a la siguiente página
+            window.location.replace($('#url_temas').val());
+        }
+
+    </script>
+{% endblock %}

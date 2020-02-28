@@ -1,0 +1,15 @@
+_notificacionesFront:
+    path:     /notificaciones
+    defaults: { _controller: ActualidadFrontendBundle:Notificaciones:notificacionesFront }
+
+_ajaxPaginador:
+    path:     /ajaxPaginador
+    defaults: { _controller: ActualidadFrontendBundle:Notificaciones:ajaxPaginador }
+    requirements:
+        _method: GET
+
+_notificacionesDelete:
+    path:     /notificacionesDelete
+    defaults: { _controller: ActualidadFrontendBundle:Notificaciones:notificacionesDelete }
+    requirements:
+        _method: POST

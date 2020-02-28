@@ -1,0 +1,25 @@
+_colegios:
+    path:     /listado/{colegio_id}
+    defaults: { _controller: ActualidadBackendBundle:Colegio:index, colegio_id: 0 }
+
+_ajaxGetColegios:
+    path:     /ajaxGetColegios
+    defaults: { _controller: ActualidadBackendBundle:Colegio:ajaxGetColegios }
+    requirements:
+        _method: GET
+
+_ajaxUpdateColegio:
+    path:     /ajaxUpdateColegio
+    defaults: { _controller: ActualidadBackendBundle:Colegio:ajaxUpdateColegio }
+    requirements:
+        method: POST
+
+_ajaxEditColegio:
+    path:     /ajaxEditColegio
+    defaults: { _controller: ActualidadBackendBundle:Colegio:ajaxEditColegio }
+    requirements:
+        method: GET
+
+_cargaColegio:
+    path:     /cargaColegio/{file}
+    defaults: { _controller: ActualidadBackendBundle:Colegio:CargaColegio }

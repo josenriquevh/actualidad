@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="52px" height="38px" viewBox="0 0 52 38" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.1 (51147) - http://www.bohemiancoding.com/sketch -->
+    <title>Group</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#A7E582" offset="0%"></stop>
+            <stop stop-color="#6EC64B" offset="100%"></stop>
+        </linearGradient>
+        <path d="M14.000048,22 L1,22 C0.44771525,22 6.76353751e-17,21.5522847 0,21 L0,11 C-6.76353751e-17,10.4477153 0.44771525,10 1,10 L14.4241452,10 C14.7271235,4.82429704 15.0813594,0.549882885 15.0813594,0.0768224275 C15.0813594,-1.16296341 44,12.9847192 44,14.999091 C44,17.0134627 17.5144181,31.1768389 15.0813594,29.9213596 C14.2765731,29.5060828 14.0041874,26.2358906 14.000048,22 Z" id="path-2"></path>
+        <filter x="-13.6%" y="-16.7%" width="127.3%" height="140.0%" filterUnits="objectBoundingBox" id="filter-3">
+            <feMorphology radius="1" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+            <feOffset dx="0" dy="1" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0.450308248   0 0 0 0 0.450308248   0 0 0 0 0.450308248  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Temas-interactivo" transform="translate(-361.000000, -150.000000)">
+            <g id="Group" transform="translate(387.000000, 168.000000) scale(1, -1) rotate(181.000000) translate(-387.000000, -168.000000) translate(365.000000, 153.000000)">
+                <g id="Combined-Shape">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-2"></use>
+                    <use stroke="#FFFFFF" stroke-width="2" fill="url(#linearGradient-1)" fill-rule="evenodd" xlink:href="#path-2"></use>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

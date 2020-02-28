@@ -1,0 +1,21 @@
+<table class="table mb-5">
+        <thead>
+        <tr>
+            <th scope="col" class="border-top-0" ></th>
+            <th scope="col" class="border-top-0" >Notificación</th>
+            <th scope="col" class="border-top-0" >Fecha</th>
+            
+        </tr>
+        </thead>
+        <tbody >
+        {% for notificacion in notificaciones %}
+        <tr>
+            <th scope=""><input class="mb-1" type="checkbox" id="recordarme" name="recordarme[]" value="{{notificacion.id}}" ></th>
+            <td>{{ notificacion.descripcion }}</td>
+            <td>{{ notificacion.fecha }}</td>
+        
+        </tr>
+        {% endfor %}
+        
+        </tbody>
+</table>

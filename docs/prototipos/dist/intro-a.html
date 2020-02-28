@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+    <link rel="stylesheet" href="css/main.css">
+    <title>Actualidad Unidades</title>
+</head>
+<body class="no-scroll">
+    <header>
+        <div class="container-fluid">
+            <nav class="top-bar">
+                <svg  onclick="toggleMenuNav()" style="width:54px; height:25px" id="closeMenuNav" class="pointer rotate-180 d-inline-block d-lg-none ">
+                    <use xlink:href="img/icons.svg#icon-collapse"></use>
+                </svg>
+                <div>
+                    <img style="height:70px" src="img/logo-actualidad-light.png" alt="">
+                </div>
+
+                <div class="menu d-none d-lg-flex">
+                    <a href="#target">
+                        <svg class="icon-menu ">
+                            <use xlink:href="img/icons.svg#icon-home"></use>
+                        </svg>
+                        <span>Inicio</span>
+                    </a>
+                    <a href="target">
+                        <svg class="icon-menu ">
+                            <use xlink:href="img/icons.svg#icon-monitor"></use>
+                        </svg>
+                        <span>Monitoreo</span>
+                    </a>
+                    <a href="target">
+                        <svg class="icon-menu ">
+                            <use xlink:href="img/icons.svg#icon-novedades"></use>
+                        </svg>
+                        <span>Novedades</span>
+                    </a>
+                    <a href="target">
+                        <svg class="icon-menu ">
+                            <use xlink:href="img/icons.svg#icon-notificacion"></use>
+                        </svg>
+                        <span>Notificaciones</span>
+                    </a>
+                    <a href="target" class="py-1">
+                        <div class="avatar-xs">
+                            <img style="width:60%;" src="img/user.svg" alt="">
+                        </div>
+                        <span class="mt-0">María Alejandra</span>
+                    </a>
+                    <a href="target">
+                        <svg class="icon-menu rotate-180 ">
+                            <use xlink:href="img/icons.svg#icon-salir"></use>
+                        </svg>
+                        <span>Salir</span>
+                    </a>
+                </div>
+                <div class="menu-responsive d-block d-lg-none">
+                    <div class="d-inline-block d-lg-none" id="menu_hamb" onclick="showMenu()">
+                        <div class="main-item menu-hamb">
+                            <span class="line line01"></span>
+                            <span class="line line02"></span>
+                            <span class="line line03"></span>
+                        </div>
+                    </div>
+                    <div id="menuMobileItems">
+                        <div class="menu d-flex flex-column">
+                            <a href="#target">
+                                <svg class="icon-menu ">
+                                    <use xlink:href="img/icons.svg#icon-home"></use>
+                                </svg>
+                                <span>Inicio</span>
+                            </a>
+                            <a href="target">
+                                <svg class="icon-menu ">
+                                    <use xlink:href="img/icons.svg#icon-monitor"></use>
+                                </svg>
+                                <span>Monitoreo</span>
+                            </a>
+                            <a href="target">
+                                <svg class="icon-menu ">
+                                    <use xlink:href="img/icons.svg#icon-novedades"></use>
+                                </svg>
+                                <span>Novedades</span>
+                            </a>
+                            <a href="target">
+                                <svg class="icon-menu ">
+                                    <use xlink:href="img/icons.svg#icon-notificacion"></use>
+                                </svg>
+                                <span>Notificaciones</span>
+                            </a>
+                            <a href="target" class="py-1">
+                                <div class="avatar-xs">
+                                    <img style="width:60%;" src="img/user.svg" alt="">
+                                </div>
+                                <span class="mt-0">María Alejandra</span>
+                            </a>
+                            <a href="target">
+                                <svg class="icon-menu rotate-180 ">
+                                    <use xlink:href="img/icons.svg#icon-salir"></use>
+                                </svg>
+                                <span>Salir</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>    
+        </div>    
+    </header>
+
+    <main id="temas">
+    
+        <aside class="bg-nat">
+            <nav>
+                <div class="d-flex justify-content-center align-items-center ">
+                    <svg class="fill-white icon-materia-menu mr-3">
+                        <use  xlink:href="img/icons.svg#icon-nat"></use>
+                    </svg>
+                    <p class="mb-0" >Ciencias Naturales</p>
+                </div>
+
+                <div class="info-unidad">
+                    <h5 class="mb-0">UNIDAD</h5>
+                    <h2 class="fs-6 mt-0">3</h2>
+                    <div class="titulo-unidad text-left mb-2">
+                        La materia, luz y calor 
+                    </div>
+                </div>
+                <a href="#target" class=" btn-back mt-5">
+                    Volver al Inicio 
+                    <svg class="fill-white icon-materia-menu">
+                        <use  xlink:href="img/icons.svg#icon-go-back"></use>
+                    </svg>
+                </a>
+            </nav>
+        </aside>
+        
+        <div class="content w-100 p-4">
+
+            <!-- <div class="controls mb-3">
+                <div class="d-block text-center">
+                    <a href="#target" class="btn w-100 btn-primary text-uppercase mr-5  ">continuar
+                        <svg class="icon-menu ">
+                            <use xlink:href="img/icons.svg#icon-btn-arrow"></use>
+                        </svg>
+                    </a>
+                </div>
+                <a href="#target" class="link ">
+                        Saltar intro
+                    <svg class="icon-close ml-2 " onclick="hideInt()">
+                        <use xlink:href="img/icons.svg#icon-close"></use>
+                    </svg>
+                </a>
+            </div> -->
+            <div class="wrapper-iframe">
+                <div class="saltar-intro position-absolute d-flex align-items-center">
+                        <a class="link fs-2" href="target">Saltar intro</a> 
+                        <svg class="icon-close ml-2 ">
+                             <use xlink:href="img/icons.svg#icon-close"></use>
+                         </svg>
+                </div>
+
+                <iframe class="int-intro" src="https://recursos2puntocero.com/recursos/EA/INT/L1U2/U02intro01/intro01/" frameborder="0"></iframe>
+                
+                
+            </div>
+
+           
+        </div>
+        
+    </main>
+    
+    <footer>
+    </footer>
+
+    <script src="js/custom.js" ></script>
+</body>
+</html>
+    

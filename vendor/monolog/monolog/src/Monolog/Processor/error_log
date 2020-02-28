@@ -1,0 +1,1 @@
+[17-Feb-2019 22:21:03 America/Caracas] PHP Fatal error:  Class 'Monolog\Processor\MemoryProcessor' not found in /home/pr3b04rd/public_html/actualidad/vendor/monolog/monolog/src/Monolog/Processor/MemoryUsageProcessor.php on line 21

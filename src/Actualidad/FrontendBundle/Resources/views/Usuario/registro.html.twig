@@ -1,0 +1,365 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Actualidad Digital - Registro{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('jq/jquery-ui.css') }}">
+    <style type="text/css">
+        .blocked {
+            background-image: linear-gradient(-180deg, #8E8C8F 4%, #8E8C8F 95%) !important;
+            color: #ffffff !important;
+        }
+        .resize-img {
+            width: 136px;
+            height: 156px;
+        }
+        .form-group {
+            margin-bottom: 10px;
+        }
+        .form-group label.error {
+            position: absolute;
+            color: red;
+            
+        }
+        #infoPages label.error{
+            color: red;
+        }
+    </style>
+{% endblock %}
+
+{% block body_label %}
+    <body>
+{% endblock %}
+
+{% block header %}
+
+<div class="container-fluid">
+    <nav style="height:100px" class="top-bar row align-items-center">
+        <div>
+            <img style="height:60px" class="mb-3" src="{{ asset('front/dist/img/logo-actualidad-light.png') }}" alt="">
+        </div>
+            <div class="col-9">
+                <div class="pasos">
+                    <div class=" d-flex  justify-content-between">
+                    <div class="d-flex flex-column align-items-center w-75 node" id="step1">
+                        <span class="circle-pasos completo d-flex align-items-center justify-content-center mb-1" id="span-step1"> 1 </span>
+                        <p class="d-none d-md-inline-block w-50 text-center line-height-1 fs-14">{{ 'Registrar libro'|trans }}</p>
+                    </div>
+                    <div class="d-flex flex-column align-items-center w-75 node" id="step2">
+                        <span class="circle-pasos d-flex align-items-center justify-content-center mb-1" id="span-step2"> 2 </span>
+                        <p class="d-none d-md-inline-block w-50 text-center line-height-1 fs-14">{{ 'Crear usuario'|trans }}</p>
+                    </div>
+                    <div class="d-flex flex-column align-items-center w-75 node" id="step3">
+                        <span class="circle-pasos d-flex align-items-center justify-content-center mb-1" id="span-step3"> 3 </span>
+                        <p class="d-none d-md-inline-block w-50 text-center line-height-1 fs-14">{{ 'Registrar datos'|trans }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+
+{% endblock %}
+
+{% block body %}
+
+<input type="hidden" name="url_codigo" id="url_codigo" value="{{ path('_ajaxAddCodeUser') }}">
+<input type="hidden" id="url_username" name="url_username" value="{{ path('_ajaxValidLogin') }}">
+<input type="hidden" id="url_select_seccion" name="url_select_seccion" value="{{ path('_ajaxGetSelectSeccion') }}">
+<input type="hidden" id="tipo_pagina_id" name="tipo_pagina_id" value="{{ tipo_pagina_id }}">
+<input type="hidden" id="errorMsg-code" name="errorMsg-code" value="{{ 'Error agregando código'|trans }}">
+<input type="hidden" id="errorMsg-username" name="errorMsg-username" value="{{ 'Error validando el usuario'|trans }}">
+<input type="hidden" id="eye_unblocked" name="eye_unblocked" value="{{ asset('front/dist/img/eye.svg') }}">
+<input type="hidden" id="eye_blocked" name="eye_blocked" value="{{ asset('front/dist/img/eye-blocked.svg') }}">
+<input type="hidden" id="resets" name="resets" value="3">
+
+<input type="hidden" id="error-msg-ciudad" name="error-msg-ciudad" value="{{ 'Error obteniendo la lista de ciudades'|trans }}">
+<input type="hidden" id="error-msg-colegio" name="error-msg-colegio" value="{{ 'Error obteniendo la lista de colegios'|trans }}">
+<input type="hidden" id="error-msg-seccion" name="error-msg-seccion" value="{{ 'Error obteniendo la lista de secciones'|trans }}">
+<div class="col-sm-8 col-md-8 col-lg-8 alert alert-danger" role="alert" id="div-error-server" style="display:none;"></div>
+
+{# Formulario que se enviará al POST. Sólo campos escondidos. #}
+<form id="form-send" name="form-send" action="{{ path('_registroUsuario', { 'rol_id': rol_id }) }}" method="POST" autocomplete="off">
+    <input type="hidden" id="pu_ids" name="pu_ids" value="">
+    <input type="hidden" id="grado_id" name="grado_id" value="0">
+    <input type="hidden" id="login" name="login" value="">
+    <input type="hidden" id="correo" name="correo" value="">
+    <input type="hidden" id="clave" name="clave" value="">
+    <input type="hidden" id="nombre" name="nombre" value="">
+    <input type="hidden" id="apellido" name="apellido" value="">
+    <input type="hidden" id="provincia_id" name="provincia_id" value="">
+    <input type="hidden" id="ciudad_id" name="ciudad_id" value="">
+    <input type="hidden" id="colegio_id" name="colegio_id" value="">
+    <input type="hidden" id="seccion_id" name="seccion_id" value="">
+</form>
+
+<main id="infoPages">
+
+    <div class="container">
+        <div class="row mt-4 pt-3 align-items-start align-items-md-center">
+            <div class="col-4 col-md-3 d-flex flex-column teacher">
+                <img class="img-fluid" src="{{ asset('front/dist/img/il-login.png') }}" alt="">
+                <a href="{{ path('_exitRegistro', { 'rol_id': rol_id }) }}" class=" btn-back mt-5">
+                    {{ 'Salir del registro'|trans }}
+                    <svg class="fill-white icon-materia-menu">
+                        <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-go-back') }}"></use>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="offset-md-1 col-8 col-md-7" id="div-step1">
+                <h2 class="color-soc">{{ 'Para comenzar el registro, debes ingresar el código de uno o más libros del mismo grado.'|trans }}</h2>
+                <div class="row align-items-center mt-5">
+                    <div class="col-12 col-md-8 text-center">
+                        <label class="color-gray mb-1" for="codLibro">{{ 'Ingresa el código'|trans }}</label>
+                        <input class="input-cod" type="text" id="codLibro" name="codLibro" value="">
+                        <div class="bouncing-loader" id="loader-code" style="display:none;">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                        <span class="color-error text-center" id="codLibro-error"></span>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <input type="button" class="btn btn-primary blocked" value="{{ 'AGREGAR'|trans }}" id="btn-newCode">
+                    </div>
+                </div>
+                <div class="row mt-4 flex-wrap" id="div-codes">
+                    {# Tapas de los libros agregados #}
+                </div>
+                <div class="row mt-3 justify-content-end">
+                    <div class="col-6 col-md-4">
+                        <a href="#target" class="btn btn-primary text-uppercase blocked" id="button-step1">{{ 'Continuar'|trans }}</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="offset-md-1 col-8 col-md-7" id="div-step2" style="display:none;">
+                <h2 class="color-soc">{{ 'Crea una cuenta con un usuario y contraseña'|trans }}</h2>
+                <form id="form-step2" autocomplete="cutthesillyness">
+                    <div class="form-row mt-4 align-items-center">
+                        <div class="form-group col-11 col-md-7 mb-5 " style="position: relative;">
+                            <div>
+                                <label for="usuario">{{ 'Usuario'|trans }}</label>
+                                <input type="text" class="form-control" id="usuario" name="usuario" value="" data-popover-content="#toolUsuario" data-toggle="popover" data-placement="right" autocomplete="off">
+                                <input type="hidden" id="usernameChecked" name="usernameChecked" value="">
+                                <label id="usernameCheckedError"  for="usernameChecked" style="display: none; position: absolute; color: red;"> *Usuario ya esta siendo usado.</label>
+                                <span class="color-error text-center" id="username-error"></span>
+                            </div>
+                            <div id="toolUsuario" style="display:none;">
+                                <div class="popover-body" id="inner-popover-usuario">
+                                    {{ 'Crea tu usuario entre 6 y 20 caracteres. Puede ser cualquier combinación de letras y/o números.'|trans }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <svg class="fill-green icon-menu ml-1 mb-1" id="username-checked" style="display:none;">
+                                <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-checked') }}"></use>
+                            </svg>
+                            <img id="username-wrong" src="{{ asset('front/dist/img/input-error.svg') }}" style="display:none; width: 30px; margin-top: -25px;">
+                        </div>
+                        <div class="form-group col-12 col-md-7 mb-5">
+                            <label for="email">{{ 'Correo electrónico'|trans }}</label>
+                            <input type="email" class="form-control" id="email" name="email" value="" data-popover-content="#toolEmail" data-toggle="popover" data-placement="right">
+                        </div>
+                        <div id="toolEmail" style="display:none;">
+                            <div class="popover-body" id="inner-popover-email">
+                                {{ 'Ingresa un formato válido de correo'|trans }} "ejemplo@dominio.com"
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row justify-content-center">
+                        <div class="form-group col-12 col-md-6 mb-5">
+                            <label for="passLoginA">{{ 'Contraseña'|trans }}</label>
+                            <input type="password" class="form-control" id="passLoginA" name="passLoginA" value="" data-popover-content="#toolPassA" data-toggle="popover" data-placement="bottom">
+                            <img style="position: absolute; top: 44px;right: 35px; cursor: pointer;" data-tipo="passLoginA" class="icon-menu eye" id="imgPassA" src="{{ asset('front/dist/img/eye.svg') }}" alt="">
+                        </div>
+                        <div id="toolPassA" style="display:none;">
+                            <div class="popover-body" id="inner-popover-passLoginA">
+                                {{ 'Crea tu contraseña entre 6 y 8 caracteres. Puede ser cualquier combinación de letras y/o números.'|trans }}
+                            </div>
+                        </div>
+                        <div class="form-group col-12 col-md-6 mb-5">
+                            <label for="passLoginB">{{ 'Repetir contraseña'|trans }}</label>
+                            <input type="password" class="form-control" id="passLoginB" name="passLoginB" value="">
+                            <img style="position: absolute; top: 44px;right: 35px; cursor: pointer;" data-tipo="passLoginB" class="icon-menu eye" id="imgPassB" src="{{ asset('front/dist/img/eye.svg') }}" alt="">
+                        </div>
+                    </div>
+                    <div class="row mt-3 justify-content-end">
+                        <div class="col-6 col-md-4">
+                            <a href="#target" class="btn btn-primary text-uppercase blocked" id="button-step2">{{ 'Continuar'|trans }}</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="offset-md-1 col-8 col-md-7" id="div-step3" style="display:none;">
+                <h2 class="color-soc">{{ 'Por último, registra los siguientes datos'|trans }}</h2>
+                <form id="form-step3">
+                    <div class="form-row justify-content-center">
+                        <div class="form-group col-12 col-md-6 mb-4">
+                            <label for="first_name">{{ 'Nombre'|trans }} <span class="ml-2 fs-14 color-gray" >(requerido)</span></label>
+                            <input type="text" class="form-control" id="first_name" name="first_name" value="">
+                        </div>
+                        <div class="form-group col-12 col-md-6 mb-4">
+                            <label for="last_name">{{ 'Apellido'|trans }} <span class="ml-2 fs-14 color-gray" >(requerido)</span></label>
+                            <input type="text" class="form-control" id="last_name" name="last_name" value="">
+                        </div>
+                    </div>
+                    <div class="form-row justify-content-center">
+                        <div class="form-group col-12 col-md-6 mb-4">
+                            <label for="provincia">{{ 'Provincia'|trans }}</label>
+                            <div class="selectdiv">
+                                <select id="provincia" name="provincia" data="ciudad" entity="AdminCiudad" reference="provincia" orderBy="nombre">
+                                    <option value="" selected>{{ 'Seleccione'|trans }}</option>
+                                    {% for provincia in provincias %}
+                                        <option value="{{ provincia.id }}">{{ provincia.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-12 col-md-6 mb-4">
+                            <label for="ciudad">{{ 'Ciudad'|trans }}</label>
+                            <div class="selectdiv input-disabled" id="selectdiv-ciudad">
+                                <select id="ciudad" name="ciudad" class="input-disabled reset1" reset="1" data="colegio" entity="AdminColegio" reference="ciudad" orderBy="nombre">
+                                    <option value="" selected>{{'Seleccione'|trans }}</option>
+                                </select>
+                                <img id="loader-ciudad" class="img-loader" src="{{ asset('img/ui-anim_basic_16x16.gif') }}" style="display:none;">
+                                <span class="color-error text-center" id="ciudad-error"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-12 mb-4">
+                            <label for="colegio">{{ 'Colegio'|trans }}</label>
+                            <div class="selectdiv input-disabled" id="selectdiv-colegio">
+                                <select id="colegio" name="colegio" class="input-disabled reset2 w-100 mw-100 " reset="2" data="seccion" entity="AdminSeccion" reference="colegio" orderBy="nombre" >
+                                    <option value="" selected>{{ 'Seleccione'|trans }}</option>
+                                </select>
+                                <img id="loader-colegio" class="img-loader" src="{{ asset('img/ui-anim_basic_16x16.gif') }}" style="display:none;">
+                                <span class="color-error text-center" id="colegio-error"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row justify-content-start">
+                        <div class="form-group col-6 col-md-3 ">
+                            <label for="grado">{{ 'Grado'|trans }}</label>
+                            <div class="selectdiv input-disabled">
+                                <select id="grado" name="grado" class="input-disabled">
+                                    {% for grado in grados %}
+                                        <option value="{{ grado.id }}">{{ grado.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-6 col-md-3 ">
+                            <label for="seccion">{{ 'Sección'|trans }}</label>
+                            <div class="selectdiv input-disabled" id="selectdiv-seccion">
+                                <select id="seccion" name="seccion" class="input-disabled reset3" reset="3">
+                                </select>
+                                <img id="loader-seccion" class="img-loader" src="{{ asset('img/ui-anim_basic_16x16.gif') }}" style="display:none;">
+                                <span class="color-error text-center" id="seccion-error"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-end">
+                        <div class="col-6 col-md-4">
+                            <a href="#target" class="btn  btn-primary text-uppercase blocked" id="button-step3">{{ 'Continuar'|trans }}</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="loader" class="loading" style="display:none;">
+        <img width="180px" src="{{ asset('front/dist/img/saludo.png') }}" alt="">
+        <h1 class="color-blue">{{ 'Cargando'|trans }}...</h1>
+        <div class="bouncing-loader lg">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+</main>
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('jq/jquery-ui.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('jq/jquery-validation-1.15.0/dist/jquery.validate.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/front/registro.js') }}"></script>
+    <script type="text/javascript">
+        jQuery.validator.addMethod("alphanumeric", function(value, element) {
+            return this.optional(element) || /^[\w.]+$/i.test(value);
+        }, "{{ 'Sólo se permiten letras, números y guiones bajos'|trans }}");
+
+        $("#form-step2").validate({
+            ignore: "",
+            //errorPlacement: function(error, element) {
+                /*var name = element.attr('name');
+                var selector = 'inner-popover-'+name;
+                //$('#'+selector).removeClass('popover-body');
+                $('#'+selector).addClass('popover-body-error');
+                $('#'+selector).html(error.html());
+                if(error)
+                {
+                    $("[data-toggle='popover']").popover('show');
+                }
+                
+            },*/
+            rules: {
+                'usuario': {
+                    required: true,
+                    minlength: 6,
+                    maxlength: 20,
+                    alphanumeric: true
+                },
+                'email': {
+                    email: true,
+                    required: true
+                },
+                'passLoginA': {
+                    required: true,
+                    minlength: 6,
+                    maxlength: 8,
+                    alphanumeric: true
+                },
+                'passLoginB': {
+                    equalTo: "#passLoginA"
+                }
+            },
+            messages: {
+                'usuario': {
+                    required: " * {{ 'El usuario es requerido'|trans }}",
+                    minlength: " * {{ 'El usuario debe ser mínimo de 6 caracteres'|trans }}",
+                    maxlength: " * {{ 'El usuario debe ser máximo de 20 caracteres'|trans }}",
+                    alphanumeric: " * {{ 'No se aceptan caracteres especiales, ejemplo'|trans }} !@#$%&"
+                },
+                'passLoginA': {
+                    required: " * {{ 'La contraseña es requerida'|trans }}",
+                    minlength: " * {{ 'La contraseña debe ser mínimo de 6 caracteres'|trans }}",
+                    maxlength: " * {{ 'La contraseña debe ser máximo de 8 caracteres'|trans }}",
+                    alphanumeric: " * {{ 'No se aceptan caracteres especiales, ejemplo'|trans }} !@#$%&"
+                },
+                'passLoginB': {
+                    equalTo: " * {{ 'Debes coincidir con la contraseña'|trans }}"
+                },
+                'email': {
+                    email: " * {{ 'Debes ingresar un formato válido, ejemplo'|trans }}: ejemplo@gmail.com.",
+                    required: " * {{ 'El correo es requerido'|trans }}"
+                }
+            },
+            onfocusout: function(element) {
+                $(element).valid();
+            },
+        });
+    </script>
+{% endblock %}

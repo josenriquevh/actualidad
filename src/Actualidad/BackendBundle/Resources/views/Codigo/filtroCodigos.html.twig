@@ -1,0 +1,103 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 offset-sm-2 offset-md-2 offset-lg-2">
+        <div class="card">
+            <div class="card-header"  style=" background: linear-gradient(to right, #d5ff00 0%, #A3C300 100%); ">
+                <h5 class="card-title">{{ 'Filtro'|trans }}</h5>
+            </div>
+            <div class="card-block" id="filtroExcel">
+                <form id="formList" name="formList" action="{{ path( '_ajaxGenerarExcelCodigos')}}" method="POST">
+                    <input type="hidden" name="libro_id" id="libro_id" value="">
+                    <div class="row">
+                        <div class="col-sm-16 col-md-16 col-lg-16">
+                            <div class="form-group">
+                                <label for="titulo_libro" class="col-sm-10 col-md-10 col-lg-10 col-form-label">{{ 'Título'|trans }}</label>
+                                <div class="col-sm-16 col-md-16 col-lg-16">
+                                    <input type="text" class="form-control form_sty1" name="titulo_libro" id="titulo_libro" value="" readonly> 
+                                    <span class="fa fa-font" ></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <BR>
+                    <div class="row">
+                        <div class="col-sm-8 col-md-8 col-lg-8">
+                            <div class="form-group">
+                                <label for="tipo_libro" class="col-sm-10 col-md-10 col-lg-10 col-form-label">{{ 'Tipo'|trans }}</label>
+                                <div class="col-sm-16 col-md-16 col-lg-16">
+                                    <input type="text" class="form-control form_sty1" name="tipo_libro" id="tipo_libro" value="" readonly=""> 
+                                    <span class="fa fa-tag" ></span>  
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-lg-8">
+                            <div class="form-group">
+                                <label for="grado_libro" class="col-sm-10 col-md-10 col-lg-10 col-form-label">{{ 'Grado'|trans }}</label>
+                                 <div class="col-sm-16 col-md-16 col-lg-16">
+                                    <input type="text" class="form-control form_sty1" name="grado_libro" id="grado_libro" value="" readonly> 
+                                    <span class="fa fa-sort-numeric-asc" ></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <BR>
+                    <div class="row">
+                        <div class="col-md-16 col-sm-16 col-lg-16 col-xl-16">
+                            <label for="grado_id" class="col-sm-6 col-md-6 col-lg-6 ">{{ 'Status'|trans }}</label>
+                            <div class="row">
+                                <div class="col-sm-16 col-md-16 col-lg-16 o">
+                                    <select class="form_sty_sel form-control" style="border-radius: 5px" id="status" name="status">
+										<option value=""></option>
+                                        <option value="1">Activos</option>
+                                        <option value="0">Inactivos</option>           
+                                    </select>
+                                    <span class="fa fa-industry"></span>
+                                    <span class="bttn_d"><img src="{{ asset('img/down-arrowbck.png') }}"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <BR>
+                    <BR>
+                     <label  class="col-sm-6 col-md-6 col-lg-16">{{ 'Fecha de inicio para activación'|trans }}</label>
+                    <div class="row">
+                        <div class="col-sm-8 col-md-8 col-lg-8" >
+                            <label for="fecha_in" class="col-sm-16 col-md-16 col-lg-16 col-form-label">{{ 'Desde'|trans }}</label>
+                            <div class="col-sm-16 col-md-16 col-lg-16" >
+                                <input type="text" class="form-control form_sty1 date_picker" id="fecha_in" name="fecha_in" placeholder="DD/MM/YYYY"  >
+                                <span class="fa fa-calendar"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-lg-8" >
+                            <label for="fecha_out" class="col-sm-16 col-md-16 col-lg-16 col-form-label">{{ 'Hasta'|trans }}</label>
+                            <div class="col-sm-16 col-md-16 col-lg-16" >
+								<input type="text" class="form-control form_sty1 date_picker" id="fecha_out" name="fecha_out" placeholder="DD/MM/YYYY"  >
+								<span class="fa fa-calendar"></span>
+                            </div>
+                        </div>
+                       
+                    </div>
+					<BR>
+					<div class="card-footer">
+                        <div class="col-sm-16 col-md-16 text-right" id="btn-descarga" style="display:none;" >
+                            <button type="button" id="descargarExcel" class="bttn__saved" data-toggle="tooltip" data-href="" data-placement="bottom" title="{{ 'Descargar Excel'|trans }}"> 
+                            <span class="fa fa-download"></span></button>
+                        </div>
+                        <div class="col-sm-16 col-md-16 text-right" id="generar-excel"  >
+                            <button type="button" id="generar-excel-btn" class="bttn__saved" data-toggle="tooltip" data-placement="bottom" title="{{ 'Generar Excel'|trans }}"><span class="fa fa-file-excel-o"></span></button>
+                        </div>
+                        <div class="col-sm-16 col-md-16 text-right" id="img-loader" style="display:none">
+                                                <img class="img-loader" src="{{ asset('img/ui-anim_basic_16x16.gif') }}" style="">
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-16 col-md-16 ">
+                                <div class="alert alert-success" role="alert" id="alert-success" style="margin-top: 1%;display: none"> 
+                                    <strong>{{ 'Bien hecho'|trans }}!</strong> {{ 'Se ha generado un archivo Excel con'|trans }}: <span id="inserts">175</span>&nbsp;{{ 'registros'|trans }}. 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

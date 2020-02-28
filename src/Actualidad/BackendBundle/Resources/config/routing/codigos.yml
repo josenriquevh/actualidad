@@ -1,0 +1,43 @@
+_codigos:
+    path:     /listado/{empresa_id}/{grado_id}
+    defaults: { _controller: ActualidadBackendBundle:Codigo:index, empresa_id: 0, grado_id: 0 }
+
+_ajaxListaConfigurarCodigos:
+    path:   /ajaxListaConfigurarCodigos
+    defaults: { _controller:  ActualidadBackendBundle:Codigo:ajaxListaConfigurarCodigos }
+
+
+_listaCodigosView:
+    path: /listaCodigosView/{pagina_id}
+    defaults: { _controller: ActualidadBackendBundle:Codigo:listaCodigosView }
+
+
+_generarExcelView:
+    path: /generarExcelView
+    defaults: { _controller: ActualidadBackendBundle:Codigo:generarExcelView }
+
+
+_cargaMasivaView:
+    path: /cargaMasivaView/{pagina_id}
+    defaults: { _controller: ActualidadBackendBundle:Codigo:cargaMasivaView }
+
+_ajaxCargaMasivaGenerar:
+    path: /ajaxCargaMasivaGenerar
+    defaults: { _controller: ActualidadBackendBundle:Codigo:ajaxCargaMasivaGenerar }
+
+_ajaxGenerarExcelCodigos:
+    path: /ajaxGenerarExcelCodigos
+    defaults: { _controller: ActualidadBackendBundle:Codigo:ajaxGenerarExcelCodigos }
+
+_generarCodigosView:
+    path: /generarCodigosView/{pagina_id}
+    defaults: { _controller: ActualidadBackendBundle:Codigo:generarCodigosView }
+
+_ajaxGenerarExcelCarga:
+    path: /ajaxGenerarExcelCarga
+    defaults: { _controller: ActualidadBackendBundle:Codigo:generalExcelCarga }
+
+
+
+
+

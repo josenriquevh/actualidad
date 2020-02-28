@@ -1,0 +1,97 @@
+{% extends '::pdf.html.twig' %}
+
+{% block stylesheets %}
+    <style type="text/css">
+        .table {
+            width: 300px;
+            max-width: 300px;
+            margin-bottom: 50px;
+        }
+        .styleTab {
+            font-size: 12px;
+        }
+        .table th, .table td {
+            padding: 5px;
+            vertical-align: top;
+            border-top: 1px solid #eceeef;
+            border-top-color: rgb(236, 238, 239);
+        }
+        .card {
+            border-radius: 8px;
+            margin: 80px auto 15px auto;
+            background: #ffffff;
+            position: relative;
+            border: 0px solid rgba(0, 0, 0, 0.125);
+            width: 600px;
+        }
+        .card .card-header {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        .gradiente {
+            background-color: #bce100 !important;
+        }
+        .card-header {
+            padding: 7px 12px;
+            margin-bottom: 0;
+            background-color: #bce100;
+        }
+        .card .card-header .card-title {
+            font-size: 18px;
+            margin: 0;
+            line-height: 30px;
+            font-weight: 400;
+            color: #000;
+            vertical-align: middle;
+        }
+        .card-block {
+            padding: 5px;
+        }
+        .main {
+            width: 900px;
+            max-width: 900px;
+            margin-bottom: 50px;
+
+        }
+        .main-td {
+            width: 600px;
+            max-width: 600px;
+            color: #000000;
+            background: #d9edf7;
+        }
+        
+        h6 {
+            font-weight: bold !important;
+            color: #000000;
+            font-size: 14px;
+
+        }
+   </style>
+{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header gradiente">
+            <h5 class="card-title">{{ titulo }}.</h5>
+        </div>
+        <div class="card-block">
+            <table class="main" style="margin-top: 50px;">
+                <tbody>
+                    {% if total %}
+                        <tr>
+                            <td style="background: #d9edf7;text-align: center">
+                               {{ total }}
+                            </td>
+                        </tr>
+                    {% endif %}
+                    <tr>
+                        <td >
+                           <img src="{{ grafico }}" width="700" height="450">
+                            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+{% endblock %}

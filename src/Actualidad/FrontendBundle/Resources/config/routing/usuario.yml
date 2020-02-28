@@ -1,0 +1,19 @@
+_registroUsuario:
+    path:     /registro/{rol_id}
+    defaults: { _controller: ActualidadFrontendBundle:Usuario:registro }
+
+_exitRegistro:
+    path:     /exitRegistro/{rol_id}
+    defaults: { _controller: ActualidadFrontendBundle:Usuario:exitRegistro }
+
+_ajaxAddCodeUser:
+    path:     /ajaxAddCodeUser
+    defaults: { _controller: ActualidadFrontendBundle:Usuario:ajaxAddCodeUser }
+    requirements:
+        _method: POST
+
+_ajaxGetSelectSeccion:
+    path:     /ajaxGetSelectSeccion
+    defaults: { _controller: ActualidadFrontendBundle:Usuario:ajaxGetSelectSeccion }
+    requirements:
+        _method: GET

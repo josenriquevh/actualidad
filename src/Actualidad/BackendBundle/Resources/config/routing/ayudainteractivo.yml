@@ -1,0 +1,30 @@
+_ayudaInteractivo:
+    path:     /listado
+    defaults: { _controller: ActualidadBackendBundle:AyudaInteractivo:index }
+
+_ajaxUpdateAyudaInteractivo:
+    path:     /ajaxUpdateAyudaInteractivo
+    defaults: { _controller: ActualidadBackendBundle:AyudaInteractivo:ajaxUpdateAyudaInteractivo }
+    requirements:
+        method: POST
+
+_ajaxEditAyudaInteractivo:
+    path:     /ajaxEditAyudaInteractivo
+    defaults: { _controller: ActualidadBackendBundle:AyudaInteractivo:ajaxEditAyudaInteractivo }
+    requirements:
+        method: GET
+
+
+_ajaxRefreshTable:
+    path: /_ajaxRefreshTable
+    defaults: { _controller: ActualidadBackendBundle:AyudaInteractivo:ajaxRefreshTable}
+
+
+_ajaxDeleteAyudaInteractivo:
+    path: /_ajaxDeleteAyudaInteractivo
+    defaults: { _controller: ActualidadBackendBundle:AyudaInteractivo:ajaxDeleteAyudaInteractivo}
+
+
+_ajaxUploadFileAyudaInteractivo:
+    path: /_ajaxUploadFileAyudaInteractivo
+    defaults: { _controller: ActualidadBackendBundle:AyudaInteractivo:ajaxUploadFileAyudaInteractivo}

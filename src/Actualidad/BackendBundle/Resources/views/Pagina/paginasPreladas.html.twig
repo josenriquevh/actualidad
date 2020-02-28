@@ -1,0 +1,67 @@
+<table class="table" id="dt">
+    <thead class="sty__title">
+        <tr>
+            <th class="hd__title">{{ 'Orden'|trans }}</th>
+            <th class="hd__title">{{ 'Título'|trans }}</th>
+            <th class="hd__title">{{ 'Sub-páginas'|trans }}</th>
+            <th class="hd__title">{{ 'Prelar'|trans }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for pagina in paginas %}
+            {% set eo = cycle(['odd', 'even'], loop.index) %}
+            <tr class="{{ eo }}">
+                <td class="columorden">{{ pagina.orden }}</td>
+                <td id="td-titulo-{{ pagina.id }}">
+                    {{ pagina.titulo }}
+                    {% if pagina.prelada %}
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small class="text-muted">{{ pagina.prelada }}</small>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if pagina.subpaginas.tiene > 0 %}
+                        <div class="tree">
+                            <ul data-jstree='{ "opened" : true }'>
+                                {{ pagina.subpaginas.return|raw }}
+                            </ul>
+                        </div>
+                    {% else %}
+                        {{ 'No tiene sub-páginas'|trans }}
+                    {% endif %}
+                </td>
+                <td class="center">
+                    {% if loop.index != 1 %}
+                        <a id="a-{{ pagina.id }}" href="#prelacion{{ pagina.id }}" title="{{ 'Establecer prelación'|trans }}" class="btn btn-link btn-sm prelacion" data="{{ pagina.id }}"><span class="fa fa-stumbleupon"></span></a>
+                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" id="loader-{{ pagina.id }}" style="display:none;">
+                            <div class="load-wrapper2">
+                                <div class="sk-circle">
+                                    <div class="sk-circle1 sk-child"></div>
+                                    <div class="sk-circle2 sk-child"></div>
+                                    <div class="sk-circle3 sk-child"></div>
+                                    <div class="sk-circle4 sk-child"></div>
+                                    <div class="sk-circle5 sk-child"></div>
+                                    <div class="sk-circle6 sk-child"></div>
+                                    <div class="sk-circle7 sk-child"></div>
+                                    <div class="sk-circle8 sk-child"></div>
+                                    <div class="sk-circle9 sk-child"></div>
+                                    <div class="sk-circle10 sk-child"></div>
+                                    <div class="sk-circle11 sk-child"></div>
+                                    <div class="sk-circle12 sk-child"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row select-{{ pagina.id }}" style="display:none;">
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <select class="form-control" id="select-{{ pagina.id }}" name="select-{{ pagina.id }}">
+                                </select>
+                            </div>
+                            <div class="col-sm-3 col-md-3 col-lg-3 div-chk">
+                                &nbsp;&nbsp;&nbsp;<a href="#check{{ pagina.id }}" id="chk-{{ pagina.id }}" class="chk" data="{{ pagina.id }}" title="{{ 'Guardar cambios'|trans }}"><i class="fa fa-check"></i></a>
+                            </div>
+                        </div>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

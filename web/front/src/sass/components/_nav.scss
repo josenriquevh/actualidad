@@ -1,0 +1,124 @@
+nav.top-bar{
+    height: 80px;   
+    padding: 1rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    color: white;
+
+    // background-color: rgba($color: #00fffb, $alpha: .5);
+
+    .menu { 
+        display: flex; 
+        padding-top: 10px;
+    
+        a {
+            padding: 1rem 1.1rem;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            
+            .icon-menu {
+                fill: white;
+                transition: .3s;
+            }
+            span {
+                margin-top: 5px;
+                font-size: 0.9rem;
+            }
+
+            &:hover .icon-menu {
+                fill: $naranja-light;
+            }
+            &:hover span {
+                color: $naranja-light;
+                
+            }
+
+            &.active {
+                color: $naranja-light;
+
+                .icon-menu {
+                    fill: $naranja-light;
+                }
+            }
+          
+        }
+    
+    }
+
+}
+
+
+#menu_hamb {
+    display: inline-block;
+    margin: 0px 0px 0px 0px;
+    position: relative;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.main-item {
+    width: 12px;
+    height: 10px;
+}
+
+.line {
+    position: absolute;
+    height: 5px;
+    width: 100%;
+    background: white;
+    border-radius: 10px;
+    transition: all ease 0.3s;
+}
+ .line01 {
+    top: 19%;
+}
+.line02 {
+    top: 49%;
+}
+.line03 {
+    top: 79%;
+}
+
+.menu-hamb.close-hamb .line01 {
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    top: 49%;
+}
+
+.menu-hamb.close-hamb .line02,  .menu-hamb.close-hamb .line03 {
+	
+   -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    top: 49%;
+}
+
+#menuMobileItems {
+    position: fixed;
+    height: 60vh;
+    width: 340px;
+    background-color: $azul-primary;
+    top: 80px;
+    right: -100%;
+    z-index: 100;
+    -webkit-transition: all 1000ms cubic-bezier(0.860, 0.000, 0.070, 1.000); 
+   -moz-transition: all 1000ms cubic-bezier(0.860, 0.000, 0.070, 1.000); 
+     -o-transition: all 1000ms cubic-bezier(0.860, 0.000, 0.070, 1.000); 
+        transition: all 1000ms cubic-bezier(0.860, 0.000, 0.070, 1.000);
+        border-bottom-left-radius: 12px;
+        box-shadow: -10px 6px 17px 0px #737c86;
+
+    &.translate {
+        right: 0%;
+    }
+}
+
+.menuShow {
+    transform: translateZ(100deg);
+}
+

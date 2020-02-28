@@ -1,0 +1,11 @@
+_listaEmpresas:
+    path: /listaEmpresas
+    defaults: { _controller: ActualidadBackendBundle:Empresa:index }
+
+_registro:
+    path:     /registro/{empresa_id}
+    defaults: { _controller: ActualidadBackendBundle:Empresa:registro, empresa_id: 0 }
+
+_showEmpresa:
+    path:     /mostrar/{empresa_id}
+    defaults: { _controller: ActualidadBackendBundle:Empresa:mostrar }

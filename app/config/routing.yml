@@ -1,0 +1,11 @@
+actualidad_frontend:
+    resource: "@ActualidadFrontendBundle/Resources/config/routing.yml"
+    prefix:   /
+
+actualidad_backend:
+    resource: "@ActualidadBackendBundle/Resources/config/routing.yml"
+    prefix:   /admin
+
+actualidad_comun:
+    resource: "@ActualidadComunBundle/Resources/config/routing.yml"
+    prefix:   /comun

@@ -1,0 +1,196 @@
+{% extends '::admin.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/vendor/jstree/dist/themes/default/style.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap-datepicker-1.6.4-dist/css/bootstrap-datepicker.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/datatables/RowReorder-1.2.3/css/rowReorder.dataTables.min.css') }}" type="text/css">
+    <style type="text/css">
+        .modal-dialog {
+            max-width: 60%;
+        }
+
+        .leyenda {
+            font-size: 14px;
+            color: #EEA412;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+<input type="hidden" id="url-post-excel" name="url-post-excel" value="{{ path( '_ajaxGenerarExcelCodigos') }}">
+
+<input type="hidden" id="error-msg-excel" name="error-msg-excel" value="{{ 'Error al descargar la lista de códigos'|trans }}.">
+<input type="hidden" id="error-msg-libros" name="error-msg-libros" value="{{ 'Error obteniendo la lista de libros'|trans }}">
+<input type="hidden" id="error-msg" name="error-msg" value="{{ 'Error en el servidor'|trans }}">
+<input type="hidden" id="error-msg-server" name="error-msg-server" value="{{ 'Error en el servidor'|trans }}">
+<input type="hidden" id="warning-msg-codigos" name="warning-msg-codigos" value="{{ 'El libro seleccionado no posee códigos para el periodo indicado'|trans }}">
+
+<input type="hidden" id="encabezado" name="encabezado" value="{{ 'Cargando'|trans }}">
+
+
+
+<br>
+
+<div class="row align-items-center justify-content-between">
+    <div class="col-12 col-sm-12 page-title">
+        <h3>{{ 'Configuración de códigos'|trans }}</h3>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8 offset-sm-4 offset-md-4 offset-lg-4">
+        <div class="card">
+            <div class="card-header"  style=" background: linear-gradient(to right, #d5ff00 0%, #A3C300 100%); ">
+                <h5 class="card-title">{{ 'Filtro'|trans }}</h5>
+            </div>
+            <div class="card-block" id="filtro">
+                <form id="form" name="form" action="{{ path( '_ajaxListaConfigurarCodigos')}}" method="POST">
+                <div class="row">
+                    <div class="col-md-16 col-sm-16 col-lg-16 col-xl-16">
+                        <label for="grado_id" class="col-sm-6 col-md-6 col-lg-16 offset-sm-5 offset-md-5 offset-lg-5">{{ 'Empresa'|trans }}</label>
+                        <div class="row">
+                            
+                            <div class="col-sm-6 col-md-6 col-lg-6 offset-sm-5 offset-md-5 offset-lg-5">
+                                <select class="form_sty_sel form-control" style="border-radius: 5px" id="empresa_id" name="empresa_id">
+                                    <option value=""></option>
+                                    {% for empresa in empresas %}
+                                        <option value="{{ empresa.id }}" {% if empresa.id == empresa_selected %}{{'selected'}}{% endif %}>{{ empresa.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                                <span class="fa fa-industry"></span>
+                                <span class="bttn_d"><img src="{{ asset('img/down-arrowbck.png') }}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <BR>
+                <div class="row">
+                    <div class="col-md-16 col-sm-16 col-lg-16 col-xl-16">
+                        <label for="grado_id" class="col-sm-6 col-md-6 col-lg-16 offset-sm-5 offset-md-5 offset-lg-5">{{ 'Grado'|trans }} </label>
+                        <div class="row">
+                            <div class="col-sm-6 col-md-6 col-lg-6 offset-sm-5 offset-md-5 offset-lg-5">
+                                <select class="form_sty_sel form-control" style="border-radius: 5px" id="grado_id" name="grado_id">
+                                    <option value=""></option>
+                                    {% for grado in grados %}
+                                        <option value="{{ grado.id }}" {% if grado.id == grado_selected %}{{'selected'}}{% endif %}>{{ grado.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                                <span class="fa fa-sort-numeric-asc"></span>
+                                <span class="bttn_d"><img src="{{ asset('img/down-arrowbck.png') }}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <BR>
+            <div class="card-footer">
+                    <div class="col-sm-16 col-md-16 text-right">
+                        <button type="button" id="search" class="bttn__saved" data-toggle="tooltip" data-placement="bottom" title="{{ 'Buscar'|trans }}"><span class="fa fa-search"></span></button>
+                    </div>
+            </div>
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-sm-8 col-md-8 col-lg-8 offset-sm-4 offset-md-4 offset-lg-4 alert alert-danger" role="alert" id="div-error" style="display:none">
+    <ul></ul>
+</div>
+<div class="col-sm-8 col-md-8 col-lg-8 offset-sm-4 offset-md-4 offset-lg-4 alert alert-danger" role="alert" id="div-error-server" style="display:none">
+</div>
+<div class="col-sm-8 col-md-8 col-lg-8 offset-sm-4 offset-md-4 offset-lg-4 alert alert-warning" role="alert" id="div-warning-msg" style="display:none">
+</div>
+
+
+<div class="row" id="div-paginas" style="display: none">
+    <div class="col-sm-16">
+        <div class="card">
+            <div class="card-header gradiente">
+                <h5 class="card-title" id="panelTitle">{{ 'Cargando'|trans }}</h5>
+            </div>
+            <div class="card-block">
+                <div id="listado">
+                  
+                </div>
+                <div class="load1 load-wrapper" >
+                    <div class="loader">
+                        Loading...
+                    </div>  
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block formModal %}
+ 
+
+    
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('assets/vendor/bootstrap-datepicker-1.6.4-dist/js/bootstrap-datepicker.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendor/bootstrap-datepicker-1.6.4-dist/locales/bootstrap-datepicker.es.min.js') }}" charset="UTF-8"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendor/jstree/dist/jstree.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendor/datatables/RowReorder-1.2.3/js/dataTables.rowReorder.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('jq/jquery-validation-1.15.0/dist/jquery.validate.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/admin/codigos.js') }}"></script>
+    <script type="text/javascript">
+        $("#form").validate({
+            errorLabelContainer: "#div-error ul",
+            wrapper: "li",
+            ignore: "",
+            rules: {
+                'empresa_id': {
+                    required: true
+                },
+                'grado_id':{
+                    required: true 
+                }
+            },
+             messages: {
+                'empresa_id': {
+                    required: "- {{ 'La empresa es requerida'|trans }}."
+                },
+                'grado_id': {
+                    required: "- {{ 'El grado es requerido'|trans }}."
+                }
+            }
+        });
+
+         $("#formList").validate({
+            errorLabelContainer: "#div-error ul",
+            wrapper: "li",
+            ignore: "",
+            rules: {
+                'status': {
+                    required: true
+                },
+                'fecha_in':{
+                    required: true 
+                },
+                 'fecha_out':{
+                    required: true 
+                }
+            },
+             messages: {
+                'status': {
+                    required: "- {{ 'Debe indicar un status'|trans }}."
+                },
+                'fecha_in': {
+                    required: "- {{ 'La fecha de inicio es requerida'|trans }}."
+                },
+                 'fecha_out': {
+                    required: "- {{ 'La fecha de fin es requerida'|trans }}."
+                },
+            }
+        });
+    </script>
+{% endblock %}
+
+

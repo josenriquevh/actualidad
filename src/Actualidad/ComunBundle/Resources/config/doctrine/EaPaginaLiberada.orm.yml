@@ -1,0 +1,59 @@
+Actualidad\ComunBundle\Entity\EaPaginaLiberada:
+    type: entity
+    table: ea_pagina_liberada
+    indexes:
+        IDX_A8C0EB9157991ECF:
+            columns:
+                - pagina_id
+        IDX_A8C0EB917A5A413A:
+            columns:
+                - seccion_id
+        IDX_A8C0EB91DB38439E:
+            columns:
+                - usuario_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        fechaVencimiento:
+            type: date
+            nullable: true
+            column: fecha_vencimiento
+    manyToOne:
+        pagina:
+            targetEntity: EaPagina
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                pagina_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        seccion:
+            targetEntity: AdminSeccion
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                seccion_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        usuario:
+            targetEntity: AdminUsuario
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                usuario_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

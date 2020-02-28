@@ -1,0 +1,263 @@
+{% extends '::admin.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+
+<br><br>
+
+<input type="hidden" id="error-msg-files" name="error-msg-files" value="{{ 'Ha ocurrido un error al cargar los archivos, verifique su conexión a internet o contacte al administrador del sistema'|trans }}">
+<input type="hidden" name="url_libros_foro" id="url_libros_foro" value=" {{ path('_ajaxLibrosForo') }}">
+<input type="hidden" name="url_unidades_foro" id="url_unidades_foro" value=" {{ path('_ajaxUnidadesForo') }}">
+<input type="hidden" name="url_comentarios_foro" id="url_comentarios_foro" value=" {{ path('_ajaxListaComentarios') }}">
+<input type="hidden" id="url_files_foroList" name="url_files_foroList" value="{{ path('_ajaxFilesForoList') }}">
+<input type="hidden" id="error-msg-libros" name="error-msg-libros" value="{{ 'Error obteniendo la lista de libros'|trans }}">
+<input type="hidden" id="alert-msg-Ldisponibles" name="alert-msg-Ldisponibles" value="{{ 'No existen libros registrados, para la empresa y el grado seleccionado'|trans }}.">
+<input type="hidden" id="alert-msg-Udisponibles" name="alert-msg-Udisponibles" value="{{ 'No existen unidades registradas, para el libro seleccionado'|trans }}.">
+<input type="hidden" id="error-msg" name="error-msg" value="{{ 'Error en el servidor'|trans }}">
+<input type="hidden" id="error-msg-server" name="error-msg-server" value="{{ 'Error en el servidor'|trans }}">
+
+
+<br>
+<div class="col-sm-2 col-md-2 text-left" id="img-loader-files" style="display: none">
+    <img class="img-loader" src="{{ asset('img/ui-anim_basic_16x16.gif') }}" >
+</div>
+<div class="row">
+    <div class="col-sm-16 col-md-16 col-lg-16 col-xl-16">
+        <div class="card">
+            <div class="card-header"  style=" background: linear-gradient(to right, #d5ff00 0%, #A3C300 100%); ">
+                <h5 class="card-title">{{ 'Filtrar comentarios del foro'|trans  }}</h5>
+            </div>
+            
+                <div class="card-block">
+                    <form id="formFiltro"  action="{{ path('_ajaxListaTemas') }}" method="POST">
+                    <label for="select_empresa_id" class="col-sm-7 col-md-7 col-lg-7 offset-sm-4 offset-md-4 offset-lg-4">{{'Empresa'|trans }}</label>
+                    <div class="row">
+                        <div class="col-sm-7 col-md-7 col-lg-7 offset-sm-4 offset-md-4 offset-lg-4">
+                            <select class="form_sty_sel form-control selDepend" style="border-radius: 5px" id="empresa_id" name="empresa_id" data-depend="grado_id">
+                                <option value=""></option>
+                                {% for empresa in empresas %}
+                                    <option value="{{ empresa.id }}">{{ empresa.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                            <span class="fa fa-industry"></span>
+                            <span class="bttn_d"><img src="{{asset ('img/down-arrowbck.png')}}"></span>
+                        </div>
+                    </div>
+                    <br>
+                    <label for="grado_id" class="col-sm-7 col-md-7 col-lg-7 offset-sm-4 offset-md-4 offset-lg-4">{{'Grado'|trans }}</label>
+                    <div class="row">
+                        <div class="col-sm-7 col-md-7 col-lg-7 offset-sm-4 offset-md-4 offset-lg-4">
+                            <select class="form_sty_sel form-control selDepend" style="border-radius: 5px" id="grado_id" name="grado_id" data-depend="empresa_id">
+                                <option value=""></option>
+                                {% for grado in grados %}
+                                    <option value="{{ grado.id }}">{{ grado.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                            <span class="fa fa-industry"></span>
+                            <span class="bttn_d"><img src="{{asset ('img/down-arrowbck.png')}}"></span>
+                        </div>
+                    </div>
+                    <br>
+                    <label for="libro_id" class="col-sm-7 col-md-7 col-lg-7 offset-sm-4 offset-md-4 offset-lg-4">{{'Libro'|trans }}</label>
+                    <div class="row" >
+                        <div class="col-sm-7 col-md-7 col-lg-7 offset-sm-4 offset-md-4 offset-lg-4">
+                            <select class="form_sty_sel form-control" style="border-radius: 5px" id="libro_id" name="libro_id">
+                            </select>
+                            <span class="fa fa-industry"></span>
+                            <span class="bttn_d"><img src="{{asset ('img/down-arrowbck.png')}}"></span>
+                        </div>
+                         <div class="col-sm-2 col-md-2 text-left" id="img-loader-libro" style="display: none">
+                                <img class="img-loader" src="{{ asset('img/ui-anim_basic_16x16.gif') }}" style="">
+                        </div>
+                    </div>
+                    <br>
+                    <label for="unidad_id" class="col-sm-7 col-md-7 col-lg-7 offset-sm-4 offset-md-4 offset-lg-4">{{'Unidad'|trans }}</label>
+                    <div class="row" >
+                        <div class="col-sm-7 col-md-7 col-lg-7 offset-sm-4 offset-md-4 offset-lg-4">
+                            <select class="form_sty_sel form-control" style="border-radius: 5px" id="unidad_id" name="unidad_id">
+                            </select>
+                            <span class="fa fa-industry"></span>
+                            <span class="bttn_d"><img src="{{asset ('img/down-arrowbck.png')}}"></span>
+                        </div>
+                         <div class="col-sm-2 col-md-2 text-left" id="img-loader-unidad" style="display: none">
+                                <img class="img-loader" src="{{ asset('img/ui-anim_basic_16x16.gif') }}" style="">
+                        </div>
+                    </div>
+                    <br>
+                     <label for="tipo_foro_id" class="col-sm-7 col-md-7 col-lg-7 offset-sm-4 offset-md-4 offset-lg-4">{{'Tipo foro'|trans }}</label>
+                    <div class="row">
+                        <div class="col-sm-7 col-md-7 col-lg-7 offset-sm-4 offset-md-4 offset-lg-4">
+                            <select class="form_sty_sel form-control" style="border-radius: 5px" id="tipo_foro_id" name="tipo_foro_id">
+                                <option value=""></option>
+                                 {% for tipo in tipoForo %}
+                                    <option value="{{ tipo.id }}">{{ tipo.nombre }}</option>
+                                 {% endfor %}
+                                
+                            </select>
+                            <span class="fa fa-industry"></span>
+                            <span class="bttn_d"><img src="{{asset ('img/down-arrowbck.png')}}"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-8 col-md-8 col-lg-8 alert alert-danger" role="alert" id="div-error-files" style="display:none;">
+                    </div>
+                    
+                    <br>
+                    <div class="card-footer">
+                    <div class="col-sm-16 col-md-16 text-right">
+                        <button type="button" id="search" class="bttn__saved" data-toggle="tooltip" data-placement="bottom" title="{{ 'Buscar'|trans }}"><span class="fa fa-search"></span></button>
+                    </div>
+                    </div>
+                </form>
+            </div>
+            
+        </div>
+    </div>
+</div>
+<div class="col-sm-8 col-md-8 col-lg-8 offset-sm-4 offset-md-4 offset-lg-4 alert alert-danger" role="alert" id="div-error" style="display:none" >
+    <ul></ul>
+</div>
+<div class="col-sm-8 col-md-8 col-lg-8 offset-sm-4 offset-md-4 offset-lg-4 alert alert-danger" role="alert" id="div-error-server" style="display:none">
+</div>
+
+<div class="row" id="temasComentarios">
+    <div class="col-md-8 col-sm-8 col-lg-8 col-xl-8" id="listaRespuestas">
+        <div class="card">
+            <div class="card-header gradiente">
+                <h5 class="card-title">{{ 'Listado de temas'|trans }}</h5>
+            </div>
+            <div class="card-block">
+                <div class="row" id="div-active-alert" style="display:none;">
+                    <div class="col-sm-2">
+                        &nbsp;
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="alert alert-danger" role="alert"> 
+                            <strong>{{ 'Error en el servidor'|trans }}!</strong> <span id="active-error">{{ 'Ha ocurrido un error en el servidor. Contacte al administrador del sistema.'|trans }}.</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        &nbsp;
+                    </div>
+                </div>
+                <div id="list_comentarios" >
+                    {{ include('ActualidadBackendBundle:Foro:tablaTemas.html.twig',{'temas':temas}) }}
+                </div>
+                <div class="load1 load-wrapper" id="load1">
+                    <div class="loader">
+                        Loading...
+                    </div>  
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8 col-sm-8 col-lg-8 col-xl-8" >
+        <div class="card" id="history_programation">
+            <div class="card-header gradiente">
+               <h5 class="card-title" >{{ 'Respuestas comentario seleccionado'|trans }}</h5></a>
+            </div>
+            <div class="card-block">
+                <div id="tbody_history_programation">
+                    <table class="table" id="dtSub">
+                        <thead class="sty__title">
+                            <tr>
+                                <th>{{ 'Mensaje'|trans }}</th>
+                                <th>{{ 'Participante'|trans }}</th>
+                                <th>{{ 'Fecha'|trans }}</th>
+                                <th>{{ 'Acciones'|trans }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="load1 load-wrapper" id="load2">
+                    <div class="loader">
+                        Loading...
+                    </div>  
+                </div>
+
+                <div id="loading" style="width:24px;display:none">
+                    <img src="{{ asset('fancybox/fancybox_loading.gif') }}">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block formModal %}
+
+{% endblock %}
+{% block filesModal %}
+<div class="modal-header" style="background: linear-gradient(to right, #0084db 0%, #00558D 100%); color: #fff;">
+    <h5 class="modal-title" id="ModalLongTitle"> </h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true" style="color: #fff;">&times;</span>
+    </button>
+</div>
+<div class="modal-body" id ="listOfFiles">
+    
+    
+</div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('jq/jquery-validation-1.15.0/dist/jquery.validate.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/admin/foro.js') }}"></script>
+    <script type="text/javascript">
+        $("#formFiltro").validate({
+            errorLabelContainer: "#div-error ul",
+            wrapper: "li",
+            ignore: "",
+            rules: {
+                'empresa_id': {
+                    required: true
+                },
+                'grado_id':{
+                    required: true 
+                },
+                'libro_id':{
+                    required: true 
+                },
+                'tipo_foro_id':{
+                    required: true 
+                },
+                'unidad_id':{
+                    required: true 
+                }
+            },
+             messages: {
+                'empresa_id': {
+                    required: "- {{ 'La empresa es requerida'|trans }}."
+                },
+                'grado_id': {
+                    required: "- {{ 'El grado es requerido'|trans }}."
+                },
+                'libro_id': {
+                    required: "- {{ 'El libro es requerido'|trans }}."
+                },
+                'tipo_foro_id': {
+                    required: "- {{ 'El tipo de foro es requerido'|trans }}."
+                },
+                'unidad_id': {
+                    required: "- {{ 'La unidad es requerida'|trans }}."
+                }
+
+            }
+        });
+
+
+        function title(usuario)
+        {
+            $('#ModalLongTitle').html("{{'Lista de archivos'|trans}}"+" : "+usuario );
+            
+            return 0;
+        }
+
+        </script>
+{% endblock %}

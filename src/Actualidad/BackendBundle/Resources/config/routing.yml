@@ -1,0 +1,104 @@
+_inicioAdmin:
+    path:     /
+    defaults: { _controller: ActualidadBackendBundle:Default:index }
+
+_loginAdmin:
+    path:     /login
+    defaults: { _controller: ActualidadBackendBundle:Default:login }
+
+_ajaxDelete:
+    path:     /ajaxDelete
+    defaults: { _controller: ActualidadBackendBundle:Default:ajaxDelete }
+    requirements:
+        method: POST
+
+_ajaxActive:
+    path:     /ajaxActive
+    defaults: { _controller: ActualidadBackendBundle:Default:ajaxActive }
+    requirements:
+        _method: POST
+
+_ajaxOrder:
+    path:     /ajaxOrder
+    defaults: { _controller: ActualidadBackendBundle:Default:ajaxOrder }
+    requirements:
+        _method: POST
+
+_ajaxGetSelect:
+    path:     /ajaxGetSelect
+    defaults: { _controller: ActualidadBackendBundle:Default:ajaxGetSelect }
+    requirements:
+        _method: GET
+
+_ajaxGetSelectPagina:
+    path:     /ajaxGetSelectPagina
+    defaults: { _controller: ActualidadBackendBundle:Default:ajaxGetSelectPagina }
+    requirements:
+        _method: GET
+
+_ajaxEstadisticasColegios:
+    path:     /ajaxEstadisticasColegios
+    defaults: { _controller: ActualidadBackendBundle:Default:ajaxEstadisticasColegios }
+    requirements:
+        _method: GET
+
+_ajaxEstadisticasLibros:
+    path:     /ajaxEstadisticasLibros
+    defaults: { _controller: ActualidadBackendBundle:Default:ajaxEstadisticasLibros }
+    requirements:
+        _method: GET
+
+colegios:
+    resource: "@ActualidadBackendBundle/Resources/config/routing/colegios.yml"
+    prefix: /colegios
+
+paginas:
+    resource: "@ActualidadBackendBundle/Resources/config/routing/paginas.yml"
+    prefix: /paginas
+
+usuarios:
+    resource: "@ActualidadBackendBundle/Resources/config/routing/usuarios.yml"
+    prefix: /usuarios
+
+noticias:
+    resource: "@ActualidadBackendBundle/Resources/config/routing/noticias.yml"
+    prefix: /noticias
+
+tiposPagina:
+    resource: "@ActualidadBackendBundle/Resources/config/routing/tiposPagina.yml"
+    prefix: /tiposPagina
+
+evaluaciones:
+    resource: "@ActualidadBackendBundle/Resources/config/routing/evaluaciones.yml"
+    prefix: /evaluacion
+
+codigos:
+    resource: "@ActualidadBackendBundle/Resources/config/routing/codigos.yml"
+    prefix: /codigos
+
+empresas:
+    resource: "@ActualidadBackendBundle/Resources/config/routing/empresas.yml"
+
+reportes:
+    resource: "@ActualidadBackendBundle/Resources/config/routing/reportes.yml"
+    prefix: /reportes
+
+notificaciones:
+    resource: "@ActualidadBackendBundle/Resources/config/routing/notificaciones.yml"
+    prefix: /notificaciones
+
+foro:
+    resource: "@ActualidadBackendBundle/Resources/config/routing/foro.yml"
+    prefix: /foro
+
+tutorial:
+    resource: "@ActualidadBackendBundle/Resources/config/routing/tutorial.yml"
+    prefix: /tutorial
+
+ayudainteractivo:
+    resource: "@ActualidadBackendBundle/Resources/config/routing/ayudainteractivo.yml"
+    prefix: /ayudainteractivo
+
+certificado:
+    resource: "@ActualidadBackendBundle/Resources/config/routing/certificado.yml"
+    prefix: /certificado

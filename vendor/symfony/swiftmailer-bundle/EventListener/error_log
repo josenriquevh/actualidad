@@ -1,0 +1,1 @@
+[17-Feb-2019 07:59:32 America/Caracas] PHP Fatal error:  Interface 'Symfony\Component\EventDispatcher\EventSubscriberInterface' not found in /home/pr3b04rd/public_html/actualidad/vendor/symfony/swiftmailer-bundle/EventListener/EmailSenderListener.php on line 28

@@ -1,0 +1,314 @@
+{% extends '::admin.html.twig'%}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('front/js/plugins/jquery-upload-file/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('front/js/plugins/jquery-upload-file/css/jquery.fileupload.css') }}">
+    <style>
+        .input-group-addon{
+            padding:0px;
+            border-radius: 50px !important;
+        }
+        .input-group .form-control {
+            z-index: 1;
+        }
+        .input-group {
+            margin-top: 35px;
+            margin-left: 20px;
+        }
+        .fileinput-button {
+            position: absolute;
+        }
+        .btn_foto, #btn_pdf {
+            padding-top: 17px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+{% set uri = app.request.getbasepath %}
+<input type="hidden" id="root_site" name="root_site" value="{{ uri }}" />
+
+
+<br><br>
+<div class="row align-items-center justify-content-start">
+    <div class="col-sm-4 col-md-4 col-lg-4">
+        <a href="{{ path('_certificados', { 'app_id': app.session.get('app_id') })}}" class="bttn__bck"><span class="fa fa-clipboard"></span><span class="text__bck">{{ 'Ir al listado'|trans }}</span></a>
+    </div>
+    <div class="col-sm-8 col-md-8 col-lg-8 alert alert-danger" role="alert" id="div-error" style="display:none;">
+        <ul></ul>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-16">
+        <div class="card">
+            <div class="card-header gradiente">
+                <div class="card-title">
+                    <h6>{{ 'Detalle del certificado'|trans }}</h6>
+                </div>
+            </div>
+            <div class="card-block">
+                <div class="container_wizard wizard-thin">
+                    <div class="stepwizard">
+                        <div class="stepwizard-row setup-panel d-flex">
+                            <div class="stepwizard-step col">
+                                <a href="#det0" class="btn bttn__fndo pass">
+                                    <span class="btn-round">1</span>
+                                    <p>{{ 'Datos Básicos'|trans }}</p>
+                                </a>
+                            </div>
+                            <div class="stepwizard-step col">
+                                <a href="#det1" class="btn btn-secondary pass disabled">
+                                    <span class="btn-round">2</span>
+                                    <p>{{ 'Archivo'|trans }}</p>
+                                </a>
+                            </div>
+                            <div class="stepwizard-step col">
+                                <a href="#det2" class="btn btn-secondary pass disabled">
+                                    <span class="btn-round">3</span>
+                                    <p>{{ 'Diseño'|trans }}</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <form id="form_certificado" name="form_certificado" action="{{ path('_registroCertificado', { 'certificado_id': certificado.id }) }}" class="container-fluid p-0" method="POST">
+                            <input type="hidden" id="certificado_id" name="certificado_id" value="{{ certificado.id }}" />
+                            <input type="hidden" id="url_libros" name="url_libros" value="{{ path('_ajaxLibrosCertificado') }}">
+                            <input type="hidden" id="file_input" name="file_input" value="">
+                            <input type="hidden" id="url_upload" name="url_upload" value="{{ path('_ajaxUpload') }}">
+                            <input type="hidden" id="uploads" name="uploads" value="{{ uploads }}">
+                            <input type="hidden" id="base_upload" name="base_upload" value="certificados/">
+                            <input type="hidden" id="imagen_default" name="imagen_default" value="/actualidad/web/img/picture.png">
+                        <div class="row setup-content" id="det0">   
+                            <div class="col-sm-16">
+                                <div class="row">
+                                    <div class="col-sm-16">
+                                        <h3 class="mb-2">{{ 'Paso'|trans }} 1</h3>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-sm-8 col-md-8 col-lg-8">
+                                        <label for="texto" class="col-2 col-form-label">{{ 'Empresa'|trans }}</label>
+                                        <div class="col-14">
+                                            <select class="form-control form_sty_select" name="empresa_id" id="empresa_id">
+                                                <option value=""></option>
+                                                {% for empresa in empresas %}
+                                                    {% set selected = certificado.id ? certificado.empresa.id == empresa.id ? 'selected="selected"' : '' : '' %}
+                                                    <option value="{{ empresa.id }}" {{ selected }} >{{ empresa.nombre|trim }}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <span class="fa fa-industry"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8 col-md-8 col-lg-8">
+                                        <label for="texto" class="col-8 col-form-label">{{ 'Tipo Certificado'|trans }}</label>
+                                        <div class="col-14">
+                                            <select class="form-control form_sty_select" name="tipo_certificado_id" id="tipo_certificado_id">
+                                                <option value=""></option>
+                                                {% for tipoCertificado in tipoCertificados %}
+                                                    {% set selected = certificado.id ? certificado.tipoCertificado.id == tipoCertificado.id ? 'selected="selected"' : '' : '' %}
+                                                    <option value="{{ tipoCertificado.id }}" {{ selected }} >{{ tipoCertificado.nombre|trim }}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <span class="fa fa-industry"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-sm-8 col-md-8 col-lg-8">
+                                        <label for="texto" class="col-8 col-form-label">{{ 'Grado'|trans }}</label>
+                                        <div class="col-14">
+                                            <select class="form-control form_sty_select" name="grado_id" id="grado_id">
+                                                <option value=""></option>
+                                                {% for grado in grados %}
+                                                    {% set selected = certificado.id ? certificado.grado.id == grado.id ? 'selected="selected"' : '' : '' %}
+                                                    <option value="{{ grado.id }}" {{ selected }} >{{ grado.nombre|trim }}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <span class="fa fa-industry"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8 col-md-8 col-lg-8 tipo_entidad" >
+                                        
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="wizard-footer">
+                                    <div class="col-sm-16 text-right">
+                                        <button type="button" class="bttn__nxt nextBtn"><span class="text__nxt">{{ 'Siguiente'|trans }}</span><span class="fa fa-chevron-right"></span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row setup-content" id="det1">
+                            <div class="col-sm-16">
+                                <div class="row">
+                                    <div class="col-sm-16">
+                                        <h3 class="mb-2">{{ 'Paso'|trans }} 2</h3>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-auto col-sm-auto col-xl-auto col-lg-auto">
+                                        {% set img = certificado.imagen ? uploads~certificado.imagen : asset('img/picture.png') %}
+                                        <div class="photo_img" id="figure"><img id="foto_img" src="{{ img }}" alt="{{ 'Foto principal'|trans }}" style="width: 512px; height: auto; margin: 0 1rem;"></div>
+                                    </div>
+                                    <div class="col-md-auto col-sm-auto col-xl-auto col-lg-auto">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="hidden" name="form_foto" id="form_foto" value="{{ certificado.imagen }}" >
+                                                <a class="fileinput-button btn_addImg btn_foto" data="form_foto" id="btn_foto">
+                                                    <span class="fa fa-photo"></span>
+                                                    <input class="fileupload" type="file" name="files[]" multiple>
+                                                </a>
+                                            </span>
+                                            <span class="input-group-addon">
+                                                <button id="btn_clear" class="btn_clearImg" type="button">
+                                                    <span class="fa fa-times"></span>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="wizard-footer">
+                                    <div class="col-sm-16 text-right">
+                                        <button type="button" class="bttn__nxt nextBtn"><span class="text__nxt">{{ 'Siguiente'|trans }}</span><span class="fa fa-chevron-right"></span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row setup-content" id="det2">
+                            <div class="col-sm-16">
+                                <div class="row">
+                                    <div class="col-sm-16">
+                                        <h3 class="mb-2">{{ 'Paso'|trans }} 3</h3>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-sm-8 col-md-8 col-lg-8">
+                                        <label for="texto" class="col-2 col-form-label">{{ 'Encabezado'|trans }}</label>
+                                        <div class="col-14">
+                                            <textarea type="text" class="form-control form_sty1" name="encabezado" id="encabezado">{{ certificado.encabezado }}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8 col-md-8 col-lg-8">
+                                        <label for="texto" class="col-2 col-form-label">{{ 'Descripción'|trans }}</label>
+                                        <div class="col-14">
+                                            <textarea type="text" class="form-control form_sty1" name="descripcion" id="descripcion">{{ certificado.descripcion }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <br>
+                                <div class="wizard-footer">
+                                    <div class="col-sm-16 text-right">
+                                        <button type="button" class="bttn__end" id="finish"><span class="text__end">{{ 'Finalizar'|trans }}</span><span class="fa fa-check"></span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('jq/jquery-validation-1.15.0/dist/jquery.validate.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('jq/jquery-validation-1.15.0/dist/additional-methods.min.js') }}"></script>   
+    <script type="text/javascript" src="{{ asset('front/js/plugins/jquery-upload-file/js/vendor/jquery.ui.widget.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('front/js/plugins/jquery-upload-file/js/jquery.iframe-transport.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('front/js/plugins/jquery-upload-file/js/jquery.fileupload.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/admin/certificado.js') }}"></script>  
+    <script type="text/javascript">
+
+        $("form :input").attr("autocomplete", "off");
+
+        $("#btn_clear").on("click",function(event) {
+            $("#imagen").val("");
+            $("#form_foto").val("");
+            $("#figure").html('<img id="foto_img" src="'+$('#imagen_default').val()+'" alt="Foto principal" style="width: 512px; height: auto; margin: 0 1rem;">');
+        });
+
+        $('#finish').click(function()
+        {
+           var valid = $('#form_certificado').valid();
+           if(!valid)
+           {
+               notify($('#div-error').html());
+           }else
+           {
+                $('#finish').attr("disabled", "disabled");
+                $('#form_certificado').submit();
+            }
+        });
+        
+        $("#form_certificado").validate({
+            errorLabelContainer: "#div-error ul",
+            wrapper: "li",
+            ignore: "",
+            rules: {
+                'empresa_id': {
+                    required: true
+                },
+                'entidad': {
+                    required: true
+                },                
+                'tipo_certificado_id': {
+                    required: true
+                },
+                'grado_id': {
+                    required: true
+                },             
+                'form_foto': {
+                    required: true,
+                    extension: "jpg|png"
+                },
+                'encabezado': {
+                    required: true,
+                    minlength: 3
+                },
+                'descripcion': {
+                    required: true,
+                    minlength: 3
+                }
+            },
+            messages: {
+                'empresa_id': {
+                    required: "- {{ 'La empresa es requerida'|trans }}."
+                },
+                'entidad': {
+                    required: "- {{ 'La entidad es requerida'|trans }}."
+                },                
+                'tipo_certificado_id': {
+                    required: "- {{ 'El tipo de certificado es requerido'|trans }}."
+                },
+                'grado_id': {
+                    required: "- {{ 'El grado es requerido'|trans }}."
+                },   
+                'form_foto': {
+                    required: "- {{ 'La imagen es requerida'|trans }}.",
+                    extension: "- {{ 'Sólo archivos con extensión .jpg o .png'|trans }}"
+                },
+                'encabezado': {
+                    required: "- {{ 'El encabezado es requerido'|trans }}.",
+                    minlength: "- {{ 'El encabezado debe ser mínimo de 3 caracteres'|trans }}."
+                },
+                'descripcion': {
+                    required: "- {{ 'La descripción es requerida'|trans }}.",
+                    minlength: "- {{ 'La descripción debe ser mínimo de 3 caracteres'|trans }}."
+                }
+            }
+        });
+    </script>
+
+{% endblock %}

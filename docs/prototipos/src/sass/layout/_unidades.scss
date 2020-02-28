@@ -1,0 +1,116 @@
+
+
+#unidades-nat {
+
+    .bg-hero-unid {
+        background-position: bottom;
+        background-size: cover;
+        position: relative;
+        padding-top: 81px;
+        background-repeat: no-repeat;
+        height: 380px;
+        background-image: url(../img/bg-unid-nat.png);
+    }
+}
+#unidades-mat {
+
+    .bg-hero-unid {
+        background-position: bottom;
+        background-size: cover;
+        position: relative;
+        padding-top: 81px;
+        background-repeat: no-repeat;
+        height: 380px;
+        background-image: url(../img/bg-unid-mat.png);
+    }
+}
+#unidades-len {
+
+    .bg-hero-unid {
+        background-position: bottom;
+        background-size: cover;
+        position: relative;
+        padding-top: 81px;
+        background-repeat: no-repeat;
+        height: 380px;
+        background-image: url(../img/bg-unid-len.png);
+    }
+}
+#unidades-soc {
+
+    .bg-hero-unid {
+        background-position: bottom;
+        background-size: cover;
+        position: relative;
+        padding-top: 81px;
+        background-repeat: no-repeat;
+        height: 380px;
+        background-image: url(../img/bg-unid-soc.png);
+    }
+}
+
+
+.checked:before {
+    content: url('../img/icon-checked.svg');
+    position: absolute;
+    left: -30px;
+} 
+
+.icon-head-unid { width: 8%; height: 70px;}
+
+.all-unid{margin-top: 20%;}
+
+.prof-float {
+    position: absolute;
+    right: 0;
+    top: 25%;
+
+    @media(max-width:991px) {
+        right: 80px;
+    }
+}
+
+
+.saltar-intro {
+    top: 20px;
+    right:30px;
+    z-index: 3;
+}
+
+.wrapper-iframe {
+    position: relative;
+    overflow: hidden;
+    padding-top: 75vh;
+    box-shadow: 3px 5px 10px 0px #68686885;
+    
+    border-radius: 10px;
+    // padding-top: 49.25%;
+    // border-radius: 10px;
+     width: 85%;
+    // left: 50%;
+    // top: 40vh;
+    // box-shadow: 3px 5px 10px 0px #383839;
+    // transform: translate(-50%, -50%);
+    margin: auto;
+
+    // @media(max-width:1024px) {
+    //     padding-top: 79.25%;
+    // }    
+    iframe.int-intro {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 85vh;
+        border: 0;
+        // width: 80%;
+        // height: 600px;
+        // @media(max-width:769px) {
+        //     height: 60vh;
+        // }
+    }
+}
+
+
+
+

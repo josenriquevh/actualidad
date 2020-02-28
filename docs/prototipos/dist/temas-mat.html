@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+    <link rel="stylesheet" href="css/main.css">
+    <title>Actualidad Unidades</title>
+</head>
+<body>
+    <header>
+        <div class="container-fluid">
+            <nav class="top-bar">
+                <svg  onclick="toggleMenuNav()" style="width:54px; height:25px" id="closeMenuNav" class="pointer rotate-180 d-inline-block d-lg-none ">
+                    <use xlink:href="img/icons.svg#icon-collapse"></use>
+                </svg>
+
+                <div>
+                    <img style="height:70px" src="img/logo-actualidad-light.png" alt="">
+                </div>
+
+                <div class="menu d-none d-lg-flex">
+                    <a href="#target">
+                        <svg class="icon-menu ">
+                            <use xlink:href="img/icons.svg#icon-home"></use>
+                        </svg>
+                        <span>Inicio</span>
+                    </a>
+                    <a href="target">
+                        <svg class="icon-menu ">
+                            <use xlink:href="img/icons.svg#icon-monitor"></use>
+                        </svg>
+                        <span>Monitoreo</span>
+                    </a>
+                    <a href="target">
+                        <svg class="icon-menu ">
+                            <use xlink:href="img/icons.svg#icon-novedades"></use>
+                        </svg>
+                        <span>Novedades</span>
+                    </a>
+                    <a href="target">
+                        <svg class="icon-menu ">
+                            <use xlink:href="img/icons.svg#icon-notificacion"></use>
+                        </svg>
+                        <span>Notificaciones</span>
+                    </a>
+                    <a href="target" class="py-1">
+                        <div class="avatar-xs">
+                            <img style="width:60%;" src="img/user.svg" alt="">
+                        </div>
+                        <span class="mt-0">María Alejandra</span>
+                    </a>
+                    <a href="target">
+                        <svg class="icon-menu rotate-180 ">
+                            <use xlink:href="img/icons.svg#icon-salir"></use>
+                        </svg>
+                        <span>Salir</span>
+                    </a>
+                </div>
+                <div class="menu-responsive d-block d-lg-none">
+                    <div class="d-inline-block d-lg-none" id="menu_hamb" onclick="showMenu()">
+                        <div class="main-item menu-hamb">
+                            <span class="line line01"></span>
+                            <span class="line line02"></span>
+                            <span class="line line03"></span>
+                        </div>
+                    </div>
+                    <div id="menuMobileItems">
+                        <div class="menu d-flex flex-column">
+                            <a href="#target">
+                                <svg class="icon-menu ">
+                                    <use xlink:href="img/icons.svg#icon-home"></use>
+                                </svg>
+                                <span>Inicio</span>
+                            </a>
+                            <a href="target">
+                                <svg class="icon-menu ">
+                                    <use xlink:href="img/icons.svg#icon-monitor"></use>
+                                </svg>
+                                <span>Monitoreo</span>
+                            </a>
+                            <a href="target">
+                                <svg class="icon-menu ">
+                                    <use xlink:href="img/icons.svg#icon-novedades"></use>
+                                </svg>
+                                <span>Novedades</span>
+                            </a>
+                            <a href="target">
+                                <svg class="icon-menu ">
+                                    <use xlink:href="img/icons.svg#icon-notificacion"></use>
+                                </svg>
+                                <span>Notificaciones</span>
+                            </a>
+                            <a href="target" class="py-1">
+                                <div class="avatar-xs">
+                                    <img style="width:60%;" src="img/user.svg" alt="">
+                                </div>
+                                <span class="mt-0">María Alejandra</span>
+                            </a>
+                            <a href="target">
+                                <svg class="icon-menu rotate-180 ">
+                                    <use xlink:href="img/icons.svg#icon-salir"></use>
+                                </svg>
+                                <span>Salir</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>    
+        </div>    
+    </header>
+
+    <main id="temas">
+    
+        <aside class="bg-len temas" data-simplebar>
+            <nav>
+                <div class="info-wrapper">
+                    <div class="d-flex justify-content-center align-items-center ">
+                        <svg class="fill-white icon-materia-menu mr-3">
+                            <use  xlink:href="img/icons.svg#icon-nat"></use>
+                        </svg>
+                        <p class="mb-0" >Ciencias Naturales</p>
+                    </div>
+                    
+                    <div class="info-unidad">
+                        <h5 class="mb-0">UNIDAD</h5>
+                        <h2 class="fs-6 mt-0">3</h2>
+                        <div class="titulo-unidad text-left mb-2">
+                            La materia, luz y calor 
+                        </div>
+                    </div>
+                </div>
+
+                <ul class="temas-nav">
+                    <li class="vista">
+                        <a href="#target">
+                            <h4 class="text-uppercase " >tema 1</h4>
+                            <h4>Los seres vivos</h4>
+                        </a>
+                    </li>
+                    <li class="activa">
+                        <a href="#target">
+                            <h4 class="text-uppercase " >tema 2</h4>
+                            <h4>El origen y función de los alimentos</h4>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <h4 class="text-uppercase " >tema 3</h4>
+                            <h4>La materia, luz y calor</h4>
+                        </a>
+                    </li>
+                    <li class="unlocked">
+                        <a href="#target">
+                            <h4 class="text-uppercase " >tema 4</h4>
+                            <h4>Interacción y movimiento entre los cuerpos y otras líneas adicionales </h4>
+                        </a>
+                    </li>
+                    <li class="locked">
+                        <a href="#">
+                            <h4 class="text-uppercase " >tema 5</h4>
+                            <h4>La tierra y sus componentes</h4>
+                        </a>
+                    </li>
+                    <li class="forbidden">
+                        <a href="#">
+                            <h4 class="text-uppercase " >compruebo mis aprendizajes</h4>
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- <a href="#target" class="btn  btn-primary mt-5 ">
+                    <svg class="icon-menu rotate-180 ">
+                        <use xlink:href="img/icons.svg#icon-btn-arrow"></use>
+                    </svg>
+                   Volver a Unidades
+                </a> -->
+
+
+            </nav>
+        </aside>
+        
+        <div class="bg-header-tema">
+            <h2>UNIDAD: <span>La materia, luz y calor</span></h2>
+            <h2>TEMA: <span class="fw-l w-50">El origen y función de los alimentos </span></h2>
+            <div style="top:110px;" class="saltar-intro position-absolute d-flex align-items-center">
+                
+                <a href="#target" class=" btn-back ">
+                    Volver a Unidades 
+                    <svg class="fill-white icon-materia-menu">
+                        <use xlink:href="img/icons.svg#icon-go-back"></use>
+                    </svg>
+                </a>
+            </div>
+        </div>
+        <div class="content position-relative w-100 p-4">
+            <div class="cards-int  pl-0 pl-lg-5 mx-auto w-75  justify-content-start " >
+
+                <div onclick="showInt()" class="card-int hecho" style="background-image:url(img/int-ej-01.png)">
+                    <div class="num">01</div>
+                    <div class="tag">Hecho</div>
+                </div>
+                <div class="card-int active" style="background-image:url(img/int-ej-02.png)">
+                    <div class="num">02</div>
+                    <div class="tag">Iniciar</div>
+                </div>
+                <div class="card-int blocked" style="background-image:url(img/int-ej-03.png)">
+                    <div class="num">03</div>
+                    <div class="tag">Iniciar</div>
+                </div>
+                <div class="card-int blocked" style="background-image:url(img/int-ej-02.png)">
+                    <div class="num">04</div>
+                    <div class="tag">Iniciar</div>
+                </div>
+                <div class="card-int blocked" style="background-image:url(img/int-ej-01.png)">
+                    <div class="num">05</div>
+                    <div class="tag">Iniciar</div>
+                </div>
+            </div>
+
+        </div>
+        
+        <div id="interactivo" class="interactivo">
+            <!-- <div class="controls">
+                <div class="d-flex align-items-center">
+                    <img src="img/icon-back.svg" alt=""onclick="prevInt()">
+                    <span id="countInt" class="color-blue-light fs-4 ml-3 " >1/5</span>
+                </div>
+            <div class="d-block text-center">
+                <a href="#target" class="btn w-100 btn-primary text-uppercase mr-5 " onclick="nextInt()">continuar
+                        <svg class="icon-menu ">
+                            <use xlink:href="img/icons.svg#icon-btn-arrow"></use>
+                        </svg>
+                    </a>
+                </div>
+                <svg class="icon-close ml-5 " onclick="hideInt()">
+                    <use xlink:href="img/icons.svg#icon-close"></use>
+                </svg>
+            </div> -->
+
+            <div class="controles position-relative w-100">
+                <div class="ctrl-cerrar text-right">
+                    <svg class="icon-close mr-5" onclick="hideInt()">
+                        <use xlink:href="img/icons.svg#icon-close"></use>
+                    </svg>
+                </div>
+                <div class="crtl-lateral">
+                    <div class="d-flex flex-column align-items-center">
+                        <img src="img/icon-back.svg" alt="" onclick="prevInt()">
+                        <span id="countInt" class="color-blue-light fs-1 " >1/5</span>
+                    </div>
+                    <div class="d-flex  flex-column align-items-center">
+                        <img class="rotate-180" src="img/icon-back.svg" alt="" onclick="nextInt()">
+                        <span id="nextInt" class="color-blue-light fs-1" >Continuar</span>
+                    </div>
+                </div>
+            </div>
+            <!-- VIDEO -->
+                <!-- <video id=intFrame class=" int-frame video-js vjs-fluid px-4 int-vid   " controls="" data-setup="{'playbackRates': [1, 1.5, 2], 'fluid': true, 'controlBar': { 'muteToggle': false }}" id="my-player" preload="auto"><source src="https://recursos2puntocero.com/recursos/EA/VIDEO/EA_LE_Unidad1_Nuevos_Amigos.mp4" type="video/mp4" /></video> -->
+            
+            <!-- INTERACTIVO -->
+                <iframe id="intFrame" class="int-frame" src="https://recursos2puntocero.com/recursos/EA/INT/L1U3/recurso02/" frameborder="0"></iframe>
+           
+            <!-- LOADER -->
+                <!-- <div id=intFrame class="int-frame loading">
+                <img width="180px" src="img/saludo.png" alt="">
+                    <h1 class="color-blue">Cargando...</h1>
+                    <div class="bouncing-loader lg">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                    </div>
+                </div> -->
+        </div>
+    </main>
+    
+    <footer>
+    </footer>
+
+    <script src="js/custom.js" ></script>
+</body>
+</html>
+    

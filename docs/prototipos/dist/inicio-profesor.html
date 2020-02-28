@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+    <link rel="stylesheet" href="css/main.css">
+    <title>Inicio Profesor</title>
+</head>
+<body id="profesor">
+    <header>
+        <div class="container">
+            <nav class="top-bar">
+                <div>
+                    <img style="height:70px" src="img/logo-actualidad.png" alt="">
+                </div>
+                <div class="menu d-none d-lg-flex">
+                    <a href="#target">
+                        <svg class="icon-menu ">
+                            <use xlink:href="img/icons.svg#icon-home"></use>
+                        </svg>
+                        <span>Inicio</span>
+                    </a>
+                    <a href="target">
+                        <svg class="icon-menu ">
+                            <use xlink:href="img/icons.svg#icon-monitor"></use>
+                        </svg>
+                        <span>Monitoreo</span>
+                    </a>
+                    <a href="target">
+                        <svg class="icon-menu ">
+                            <use xlink:href="img/icons.svg#icon-novedades"></use>
+                        </svg>
+                        <span>Novedades</span>
+                    </a>
+                    <a href="target">
+                        <svg class="icon-menu ">
+                            <use xlink:href="img/icons.svg#icon-notificacion"></use>
+                        </svg>
+                        <span>Notificaciones</span>
+                    </a>
+                    <a href="target" class="py-1">
+                        <div class="avatar-xs">
+                            <img style="width:60%;" src="img/user.svg" alt="">
+                        </div>
+                        <span class="mt-0">María Alejandra</span>
+                    </a>
+                    <a href="target">
+                        <svg class="icon-menu rotate-180 ">
+                            <use xlink:href="img/icons.svg#icon-salir"></use>
+                        </svg>
+                        <span>Salir</span>
+                    </a>
+                </div>
+                <div class="menu-responsive d-block d-lg-none">
+                    <div class="d-inline-block d-lg-none" id="menu_hamb" onclick="showMenu()">
+                        <div class="main-item menu-hamb">
+                            <span class="line line01"></span>
+                            <span class="line line02"></span>
+                            <span class="line line03"></span>
+                        </div>
+                    </div>
+                    <div id="menuMobileItems">
+                        <div class="menu d-flex flex-column">
+                            <a href="#target">
+                                <svg class="icon-menu ">
+                                    <use xlink:href="img/icons.svg#icon-home"></use>
+                                </svg>
+                                <span>Inicio</span>
+                            </a>
+                            <a href="target">
+                                <svg class="icon-menu ">
+                                    <use xlink:href="img/icons.svg#icon-monitor"></use>
+                                </svg>
+                                <span>Monitoreo</span>
+                            </a>
+                            <a href="target">
+                                <svg class="icon-menu ">
+                                    <use xlink:href="img/icons.svg#icon-novedades"></use>
+                                </svg>
+                                <span>Novedades</span>
+                            </a>
+                            <a href="target">
+                                <svg class="icon-menu ">
+                                    <use xlink:href="img/icons.svg#icon-notificacion"></use>
+                                </svg>
+                                <span>Notificaciones</span>
+                            </a>
+                            <a href="target" class="py-1">
+                                <div class="avatar-xs">
+                                    <img style="width:60%;" src="img/user.svg" alt="">
+                                </div>
+                                <span class="mt-0">María Alejandra</span>
+                            </a>
+                            <a href="target">
+                                <svg class="icon-menu rotate-180 ">
+                                    <use xlink:href="img/icons.svg#icon-salir"></use>
+                                </svg>
+                                <span>Salir</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>    
+        </div>    
+    </header>
+
+    <div class="bg-hero">
+        <div class="container">
+            <div class="row pt-5 ">
+                <div class="col-12">
+                    <h1 class="color-blue mb-0">Hola María Alejandra</h1>
+                    <h2 class="color-blue fw-l">Recientemente has visto estas unidades</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <img class="img-responsive" src="img/saludo.png" alt="">
+                </div>
+
+                <!-- SI NO HAY UNIDADES -->
+                    <!-- <div class="col-9 d-flex justify-content-center empty-unid align-items-center">
+                        <div class="info">
+                            Aquí podrás ver las unidades 
+                            en la que vayas avanzando…
+                        </div>
+                    </div> -->
+                <!-- /SI NO HAY UNIDADES -->
+
+                <div class="col-9 d-flex justify-content-lg-around justify-content-end flex-wrap flex-lg-nowrap">
+                
+                        <div class="card-unid mat"> 
+                            <div class="icon-materia"></div>
+                            <div class="numero">
+                                <div>5</div>
+                                <span>UNIDAD</span>
+                            </div>
+                            <h3 class="materia mx-auto text-center mb-0 fw-r">
+                                Matemáticas
+                            </h3>
+                            <div class="barra-progreso mt-0 mb-4">
+                                <div class="progreso" style="width: 40%">  </div>
+                            </div>
+                            <div class="d-block text-center">
+                                <a href="#target" class="btn  btn-primary text-uppercase ">continuar
+                                    <svg class="icon-menu ">
+                                        <use xlink:href="img/icons.svg#icon-btn-arrow"></use>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                   
+                        <div class="card-unid len"> 
+                            <div class="icon-materia"></div>
+                            <div class="numero">
+                                <div>3</div>
+                                <span>UNIDAD</span>
+                            </div>
+                            <h3 class="materia mx-auto text-center mb-0 fw-r">
+                                Lenguaje
+                            </h3>
+                            <div class="barra-progreso mt-0 mb-4">
+                                <div class="progreso" style="width: 40%">  </div>
+                            </div>
+                            <div class="d-block text-center">
+                                <a href="#target" class="btn  btn-primary text-uppercase ">continuar
+                                    <svg class="icon-menu ">
+                                        <use xlink:href="img/icons.svg#icon-btn-arrow"></use>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                   
+                        <div class="card-unid soc"> 
+                            <div class="icon-materia"></div>
+                            <div class="numero">
+                                <div>1</div>
+                                <span>UNIDAD</span>
+                            </div>
+                            <h3 class="materia mx-auto text-center mb-0 fw-r">
+                                Sociales
+                            </h3>
+                            <div class="barra-progreso mt-0 mb-4">
+                                <div class="progreso" style="width: 40%">  </div>
+                            </div>
+                            <div class="d-block text-center">
+                                <a href="#target" class="btn  btn-primary text-uppercase ">continuar
+                                    <svg class="icon-menu ">
+                                        <use xlink:href="img/icons.svg#icon-btn-arrow"></use>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    
+                        <div class="card-unid nat"> 
+                            <div class="icon-materia"></div>
+                            <div class="numero">
+                                <div>5</div>
+                                <span>UNIDAD</span>
+                            </div>
+                            <h3 class="materia mx-auto text-center mb-0 fw-r">
+                                Naturales
+                            </h3>
+                            <div class="barra-progreso mt-0 mb-4">
+                                <div class="progreso" style="width: 40%">  </div>
+                            </div>
+                            <div class="d-block text-center">
+                                <a href="#target" class="btn  btn-primary text-uppercase ">continuar
+                                    <svg class="icon-menu ">
+                                        <use xlink:href="img/icons.svg#icon-btn-arrow"></use>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    
+                </div> <!-- /col-9  -->
+            </div>
+        </div>
+    </div>
+    <!-- <div>
+        <img class="img-fluid" src="img/hero-curve.png" alt="">
+    </div> -->
+
+    <!-- BIBLIOTECA -->
+
+    <div class="container pt-5 pt-lg-0">
+        <div class="row mt-5 mt-lg-0">
+            <div class="col-12">
+                <h1 class="color-blue ml-5">Tu Biblioteca</h1>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="filtro">
+                <span class="color-blue-light">Ordenar por</span>
+                <div class="selectdiv">
+                    <select name="grados" id="grados">
+                        <option value="">Seleccione un grado</option>
+                        <option value="">Primer Grado</option>
+                        <option value="">Segundo Grado</option>
+                        <option value="">Tercer Grado</option>
+                        <option value="">Cuarto Grado</option>
+                    </select>
+                </div>
+                <div class="selectdiv">
+                    <select name="materia" id="materia">
+                        <option value="">Seleccionar materia</option>
+                        <option value="">Primer Grado</option>
+                        <option value="">Segundo Grado</option>
+                        <option value="">Tercer Grado</option>
+                        <option value="">Cuarto Grado</option>
+                    </select>
+                </div>
+                <div class="selectdiv">
+                    <select name="orden" id="orden">
+                        <option value="">Asc</option>
+                        <option value="">Desc</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <section class="grado">
+            <div class="row mt-4">
+                <div class="col-12">
+                    <h2 class="grado-seccion ml-5" > 03 <span>Tercer Grado</span> <img src="img/line-actualidad.png" alt=""> </h2>
+                </div>
+            </div>
+            <div class="wrap-libros">
+                <div class=" ml-5 pl-5 d-flex flex-wrap justify-content-around ">
+                    <a href="#target" class="card-libro">
+                        <div class="cover-libro">
+                            <img class="img-fluid" src="img/len03.png" alt="">
+                        </div>
+                        <div class="barra-porcentaje">
+                            <div class="barra-progreso">
+                                <div class="progreso" style="width: 40%"></div>
+                            </div>
+                            <span class="color-blue-light fw-b" >40%</span>
+                        </div>
+                    </a>
+                    <a href="#target" class="card-libro completado">
+                        <div class="cover-libro">
+                            <img class="img-fluid" src="img/mat03.png" alt="">
+                        </div>
+                        <div class="barra-porcentaje">
+                            <div class="barra-progreso">
+                                <div class="progreso" style="width: 100%"></div>
+                            </div>
+                            <span class="color-blue-light fw-b" >100%</span>
+                        </div>
+                    </a>
+                    <a href="#target" class="card-libro">
+                        <div class="cover-libro">
+                            <img class="img-fluid" src="img/soc03.png" alt="">
+                        </div>
+                        <div class="barra-porcentaje">
+                            <div class="barra-progreso">
+                                <div class="progreso" style="width: 40%"></div>
+                            </div>
+                            <span class="color-blue-light fw-b" >40%</span>
+                        </div>
+                    </a>
+                    <a href="#target" class="card-libro inactivo">
+                        <div class="cover-libro">
+                            <img class="img-fluid" src="img/len03.png" alt="">
+                        </div>
+                        <form class="agregar-cod"id="form" action="#">
+                            <label for="codLibro">Agregar código</label>
+                            <input type="text" id="codLibro" name="codLibro">
+                            <span class="color-error fs-14 text-center">El código no es&nbsp;válido</span>
+                            <input type="submit" class="btn btn-primary" value="Aceptar">
+                        </form>
+                    </a>
+                </div>
+            </div>
+        </section>
+        <section class="grado">
+            <div class="row mt-4">
+                <div class="col-12">
+                    <h2 class="grado-seccion ml-5" > 02 <span>Segundo Grado</span> <img src="img/line-actualidad.png" alt=""> </h2>
+                </div>
+            </div>
+            <div class="wrap-libros">
+                    <div class=" ml-5 pl-5 d-flex flex-wrap justify-content-around ">
+                            <a href="#target" class="card-libro expiro">
+                                <div class="cover-libro">
+                                    <img class="img-fluid" src="img/len03.png" alt="">
+                                </div>
+                                <div class="barra-porcentaje">
+                                    <div class="barra-progreso">
+                                        <div class="progreso" style="width: 40%"></div>
+                                    </div>
+                                    <span class="color-blue-light fw-b" >40%</span>
+                                </div>
+                            </a>
+                            <a class="card-libro expiro">
+                                <div class="cover-libro">
+                                    <img class="img-fluid" src="img/mat03.png" alt="">
+                                </div>
+                                <div class="barra-porcentaje">
+                                    <div class="barra-progreso">
+                                        <div class="progreso" style="width: 100%"></div>
+                                    </div>
+                                    <span class="color-blue-light fw-b" >100%</span>
+                                </div>
+                            </a>
+                            <a class="card-libro expiro">
+                                <div class="cover-libro">
+                                    <img class="img-fluid" src="img/soc03.png" alt="">
+                                </div>
+                                <div class="barra-porcentaje">
+                                    <div class="barra-progreso">
+                                        <div class="progreso" style="width: 40%"></div>
+                                    </div>
+                                    <span class="color-blue-light fw-b" >40%</span>
+                                </div>
+                            </a>
+                            <a class="card-libro expiro">
+                                <div class="cover-libro">
+                                    <img class="img-fluid" src="img/len03.png" alt="">
+                                </div>
+                                
+                            </a>
+                        </div>
+            </div>
+        </section>
+    </div>
+    <br><br><br><br><br>
+
+    <footer>
+        
+    </footer>
+
+    <script src="js/custom.js" ></script>
+</body>
+</html>
+    

@@ -1,0 +1,2 @@
+[15-Feb-2019 09:17:13 America/Caracas] PHP Fatal error:  Interface 'Doctrine\Bundle\DoctrineBundle\Mapping\EntityListenerServiceResolver' not found in /home/pr3b04rd/public_html/actualidad/vendor/doctrine/doctrine-bundle/Mapping/ContainerAwareEntityListenerResolver.php on line 8
+[15-Feb-2019 09:17:22 America/Caracas] PHP Fatal error:  Interface 'Doctrine\ORM\Mapping\EntityListenerResolver' not found in /home/pr3b04rd/public_html/actualidad/vendor/doctrine/doctrine-bundle/Mapping/EntityListenerServiceResolver.php on line 8

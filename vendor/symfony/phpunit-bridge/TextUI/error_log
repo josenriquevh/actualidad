@@ -1,0 +1,2 @@
+[16-Feb-2019 10:54:16 America/Caracas] PHP Warning:  Class 'Symfony\Bridge\PhpUnit\Legacy\CommandForV6' not found in /home/pr3b04rd/public_html/actualidad/vendor/symfony/phpunit-bridge/TextUI/Command.php on line 17
+[17-Feb-2019 00:34:35 America/Caracas] PHP Fatal error:  Class 'PHPUnit\Runner\Version' not found in /home/pr3b04rd/public_html/actualidad/vendor/symfony/phpunit-bridge/TextUI/TestRunner.php on line 16

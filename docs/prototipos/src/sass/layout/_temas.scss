@@ -1,0 +1,378 @@
+
+main#temas {
+    padding-left: 270px;
+    padding-bottom: 90px;
+    padding-top: 80px;
+
+    background-image: url(../img/bg-icon.png);
+    background-repeat: repeat;
+    
+
+
+    @media (max-width: 991px) {
+        padding-left: 0px;
+    }
+
+}
+
+main#temas.showMenuNav{
+    
+    aside{
+        left: 0px;
+    }
+}
+
+aside.temas {
+    padding: 0px;
+    overflow: auto;
+
+    .info-wrapper {
+        padding: 4px 1rem 4px;
+    }
+}
+
+aside .temas-nav{
+    list-style: none;
+    margin-left: 0;
+    padding-left: 0px;
+    padding-bottom:20vh;
+    margin-top: 4px;
+
+    li{
+        margin-bottom: 0px;
+        padding: 8px 0px;
+        
+        a{ 
+            display: block;
+            padding:0px 24px 0px 24px;
+
+            h4:nth-child(2) {font-size: 0.9rem;}
+         }
+    }
+    h4 {margin-bottom: 0px;
+       
+    }
+    
+}
+
+aside.bg-nat .temas-nav {
+    li:hover { 
+        background-color: #ffbe5440;
+        cursor: pointer;
+    }
+    li a{
+        color: white;
+    }
+    li.vista {
+        position: relative;
+        a{color: white;}
+        &:before {
+            content: url(../img/icon-check-white.svg);
+            position: absolute;
+            top: 11px;
+            right: 5px;
+            height: 22px;
+            width: 25px;
+           
+        }
+    }
+    li.locked {
+        position: relative;
+        color: darken($color-nat, 30%);
+        svg {
+            fill: darken($color-nat, 30%);
+            position: absolute;
+            top: 11px;
+            right: 11px;
+            height: 20px;
+            width: 20px;
+            opacity: 0.6;
+            
+           
+        }
+        a {color: darken($color-nat, 30%);}
+    }
+    li.unlocked {
+        position: relative;
+        color: darken($color-nat, 30%);
+
+        svg {
+            fill: darken($color-nat, 30%);
+            position: absolute;
+            top: 11px;
+            right: 11px;
+            height: 20px;
+            width: 20px;
+           
+        }
+        
+    }
+    li.forbidden{
+        position: relative;
+        color: darken($color-nat, 30%);
+        svg {
+            fill: darken($color-nat, 30%);
+            position: absolute;
+            top: 11px;
+            right: 12px;
+            height: 20px;
+            width: 20px;
+            opacity: 0.6;
+            
+        }
+        a {color: darken($color-nat, 30%);}
+    }
+    li.activa{
+        background-color: $naranja-light;
+        a {color: #383838 ;}
+      
+    }   
+}
+
+aside.bg-mat .temas-nav {
+    li:hover { 
+        background-color: #ffbe5440;
+        cursor: pointer;
+    }
+    li a{
+        color: white;
+    }
+    li.vista {
+        position: relative;
+        a{color: white;}
+        &:before {
+            content: url(../img/icon-check-white.svg);
+            position: absolute;
+            top: 11px;
+            right: 5px;
+            height: 22px;
+            width: 25px;
+           
+        }
+    }
+    li.locked {
+        position: relative;
+        color: darken($color-mat, 30%);
+        svg {
+            fill: darken($color-mat, 30%);
+            position: absolute;
+            top: 11px;
+            right: 11px;
+            height: 20px;
+            width: 20px;
+            opacity: 0.6;
+            
+           
+        }
+        a {color: darken($color-mat, 30%);}
+    }
+    li.unlocked {
+        position: relative;
+        color: darken($color-mat, 30%);
+        svg {
+            fill: darken($color-mat, 30%);
+            position: absolute;
+            top: 11px;
+            right: 11px;
+            height: 20px;
+            width: 20px;
+           
+        }
+        
+    }
+    li.forbidden{
+        position: relative;
+        color: darken($color-mat, 30%);
+        svg {
+            fill: darken($color-mat, 30%);
+            position: absolute;
+            top: 11px;
+            right: 12px;
+            height: 20px;
+            width: 20px;
+            opacity: 0.6;
+            
+           
+        }
+        a {color: darken($color-mat, 30%);}
+    }
+    li.activa{
+        background-color: $naranja-light;
+        a {color: #383838 ;}
+    }
+}
+
+aside.bg-len .temas-nav {
+    li:hover { 
+        background-color: #ffbe5440;
+        cursor: pointer;
+    }
+    li a{
+        color: white;
+    }
+    li.vista {
+        position: relative;
+        a{color: white;}
+        &:before {
+            content: url(../img/icon-check-white.svg);
+            position: absolute;
+            top: 11px;
+            right: 5px;
+            height: 22px;
+            width: 25px;
+           
+        }
+    }
+    li.locked {
+        position: relative;
+        color: darken($color-len, 30%);
+        svg {
+            fill: darken($color-len, 30%);
+            position: absolute;
+            top: 11px;
+            right: 11px;
+            height: 20px;
+            width: 20px;
+            opacity: 0.6;
+            
+           
+        }
+        a {color: darken($color-len, 30%);}
+    }
+    li.unlocked {
+        position: relative;
+        color: darken($color-len, 30%);
+        svg {
+            fill: darken($color-len, 30%);
+            position: absolute;
+            top: 11px;
+            right: 11px;
+            height: 20px;
+            width: 20px;
+           
+        }
+        
+    }
+    li.forbidden{
+        position: relative;
+        color: darken($color-len, 30%);
+        svg {
+            fill: darken($color-len, 30%);
+            position: absolute;
+            top: 11px;
+            right: 12px;
+            height: 20px;
+            width: 20px;
+            opacity: 0.6;
+            
+           
+        }
+        a {color: darken($color-len, 30%);}
+    }
+    li.activa{
+        background-color: $naranja-light;
+        a {color: #383838 ;}
+    }
+}
+
+aside.bg-soc .temas-nav {
+    li:hover { 
+        background-color: #ffbe5440;
+        cursor: pointer;
+    }
+    li a{
+        color: white;
+    }
+    li.vista {
+        position: relative;
+        a{color: white;}
+        &:before {
+            content: url(../img/icon-check-white.svg);
+            position: absolute;
+            top: 11px;
+            right: 5px;
+            height: 22px;
+            width: 25px;
+           
+        }
+    }
+    li.locked {
+        position: relative;
+        color: darken($color-soc, 30%);
+        svg {
+            fill: darken($color-soc, 30%);
+            position: absolute;
+            top: 11px;
+            right: 11px;
+            height: 20px;
+            width: 20px;
+            opacity: 0.6;
+            
+           
+        }
+        a {color: darken($color-soc, 30%);}
+    }
+    li.unlocked {
+        position: relative;
+        color: darken($color-len, 30%);
+        svg {
+            fill: darken($color-soc, 30%);
+            position: absolute;
+            top: 11px;
+            right: 11px;
+            height: 20px;
+            width: 20px;
+           
+        }
+        
+    }
+    li.forbidden{
+        position: relative;
+        color: darken($color-soc, 30%);
+        svg {
+            fill: darken($color-soc, 30%);
+            position: absolute;
+            top: 11px;
+            right: 12px;
+            height: 20px;
+            width: 20px;
+            opacity: 0.6;
+            
+           
+        }
+        a {color: darken($color-soc, 30%);}
+    }
+    li.activa{
+        background-color: $naranja-light;
+        a {color: #383838 ;}
+    }
+}
+
+
+.bg-header-tema {
+    background-image: url('../img/bg-header-tema.svg');
+    height: 230px;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 0px -60px;
+    color: $azul-primary;
+    padding: 2.25rem 2rem 2rem 3rem;
+    margin-bottom: -40px;
+
+    h2 {
+        font-weight: bold;
+    }
+}
+
+.cards-int {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.loading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

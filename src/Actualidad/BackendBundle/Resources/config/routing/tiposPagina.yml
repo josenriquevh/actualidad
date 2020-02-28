@@ -1,0 +1,15 @@
+_tiposPagina:
+    path:     /listado
+    defaults: { _controller: ActualidadBackendBundle:TipoPagina:index }
+
+_ajaxUpdateTipoPagina:
+    path:     /ajaxUpdateTipoPagina
+    defaults: { _controller: ActualidadBackendBundle:TipoPagina:ajaxUpdateTiposPagina }
+    requirements:
+        method: POST
+
+_ajaxEditTipoPagina:
+    path:     /ajaxEditTipoPagina
+    defaults: { _controller: ActualidadBackendBundle:TipoPagina:ajaxEditTiposPagina }
+    requirements:
+        method: GET

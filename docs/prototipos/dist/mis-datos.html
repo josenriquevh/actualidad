@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+    <link rel="stylesheet" href="css/main.css">
+    <title>Actualidad Mis datos</title>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="top-bar">
+                <div>
+                    <img style="height:70px" src="img/logo-actualidad-light.png" alt="">
+                </div>
+                <div class="menu d-none d-lg-flex">
+                    <a href="#target">
+                        <svg class="icon-menu ">
+                            <use xlink:href="img/icons.svg#icon-home"></use>
+                        </svg>
+                        <span>Inicio</span>
+                    </a>
+                    <a href="target">
+                        <svg class="icon-menu ">
+                            <use xlink:href="img/icons.svg#icon-monitor"></use>
+                        </svg>
+                        <span>Monitoreo</span>
+                    </a>
+                    <a href="target" >
+                        <svg class="icon-menu ">
+                            <use xlink:href="img/icons.svg#icon-novedades"></use>
+                        </svg>
+                        <span>Novedades</span>
+                    </a>
+                    <a href="target" >
+                        <svg class="icon-menu ">
+                            <use xlink:href="img/icons.svg#icon-notificacion"></use>
+                        </svg>
+                        <span>Notificaciones</span>
+                    </a>
+                    <a href="target" class="py-1 active ">
+                        <div class="avatar-xs">
+                            <img style="width:60%;" src="img/user.svg" alt="">
+                        </div>
+                        <span class="mt-0">María Alejandra</span>
+                    </a>
+                    <a href="target">
+                        <svg class="icon-menu rotate-180 ">
+                            <use xlink:href="img/icons.svg#icon-salir"></use>
+                        </svg>
+                        <span>Salir</span>
+                    </a>
+                </div>
+                <div class="menu-responsive d-block d-lg-none">
+                    <div class="d-inline-block d-lg-none" id="menu_hamb" onclick="showMenu()">
+                        <div class="main-item menu-hamb">
+                            <span class="line line01"></span>
+                            <span class="line line02"></span>
+                            <span class="line line03"></span>
+                        </div>
+                    </div>
+                    <div id="menuMobileItems">
+                        <div class="menu d-flex flex-column">
+                            <a href="#target">
+                                <svg class="icon-menu ">
+                                    <use xlink:href="img/icons.svg#icon-home"></use>
+                                </svg>
+                                <span>Inicio</span>
+                            </a>
+                            <a href="target">
+                                <svg class="icon-menu ">
+                                    <use xlink:href="img/icons.svg#icon-monitor"></use>
+                                </svg>
+                                <span>Monitoreo</span>
+                            </a>
+                            <a href="target">
+                                <svg class="icon-menu ">
+                                    <use xlink:href="img/icons.svg#icon-novedades"></use>
+                                </svg>
+                                <span>Novedades</span>
+                            </a>
+                            <a href="target">
+                                <svg class="icon-menu ">
+                                    <use xlink:href="img/icons.svg#icon-notificacion"></use>
+                                </svg>
+                                <span>Notificaciones</span>
+                            </a>
+                            <a href="target" class="py-1">
+                                <div class="avatar-xs">
+                                    <img style="width:60%;" src="img/user.svg" alt="">
+                                </div>
+                                <span class="mt-0">María Alejandra</span>
+                            </a>
+                            <a href="target">
+                                <svg class="icon-menu rotate-180 ">
+                                    <use xlink:href="img/icons.svg#icon-salir"></use>
+                                </svg>
+                                <span>Salir</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>    
+        </div>    
+    </header>
+
+    <main id="infoPages"  >
+            
+            <div class="bg-light-grey">
+                <div class="container ">
+                    <div class="row  align-items-center ">
+                        <div class="col-4 mt-3 text-left">
+                            <a href="#target" class=" btn-back ml-0 ">
+                                Volver al Inicio 
+                                <svg class="fill-white icon-materia-menu">
+                                    <use xlink:href="img/icons.svg#icon-go-back"></use>
+                                </svg>
+                            </a>
+                        </div>
+                        <div class="col-8 text-center mt-5 mb-5">
+                            <h1 class="color-blue fs-5">Mis Datos</h1>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+                <div class="container">
+                    <div class="row mt-4 justify-content-center justify-md-content-start">
+                        <div class="col-3 mb-4 mb-md-0">
+                            <div class="hover-edit position-relative">
+                                <span class="wrap-avatar" >
+                                    <img  src="img/avatar-datos.png" class="img-fluid bg" alt="">
+                                    <img src="img/icon-edit-avatar.svg" style="display:none;"  class="icon"  alt="">
+                                </span>
+                            </div>
+                            <img class="info-ilust img-fluid" src="img/il-datos.png" alt="">
+                        </div>
+                        <div class="col-12 col-md-9">
+                            <form action="">
+                                <div class="form-row ">
+                                    <div class="form-group offset-2 col-7 mb-4">
+                                        <label for="usuario">Nombre de usuario</label>
+                                        <input type="text" class="form-control" id="usuario" data-popover-content="#toolUsuario" data-toggle="popover" data-placement="right" >
+                                        <div id="toolUsuario" style="display:none;">
+                                            <div class="popover-body">
+                                              Ingresa solo caracteres alfanuméricos
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group offset-2 col-7 mb-5">
+                                        <label for="password">Correo electrónico</label>
+                                        <input type="password" class="form-control" id="passLogin" data-popover-content="#toolEmail" data-toggle="popover" data-placement="right">
+                                    </div>
+                                    <div id="toolEmail" style="display:none;">
+                                        <div class="popover-body">
+                                          Ingresa un formato válido "ejemplo@gmail.com "
+                                        </div>
+                                    </div>
+        
+                                </div>   
+
+                                <div class="form-row mb-4 justify-content-start align-items-center">
+                                    <label class="offset-2 pl-1" for="passSwitch">¿Quieres cambiar la contraseña? </label>
+                                    <label class="switch ml-4" onclick="passDis()">
+                                            <input type="checkbox" id="passSwitch" onclick="passDis()"  >
+                                            <span class="slider round ">
+                                                <span class="sw-text"></span>
+                                            </span>
+                                    </label>
+                                </div>
+
+                                <div class="form-row justify-content-center">
+                                    <div class="form-group  col-4 mb-4">
+                                        <label for="usuario">Cambiar contraseña</label>
+                                        <input type="password" class="form-control input-disabled " id="passLoginA" data-popover-content="#toolPass" data-toggle="popover" data-placement="bottom" >
+                                        <img style="position: absolute; top: 44px;right: 35px;" id="imgPassA" data-tipo="passLoginA" class="icon-menu img-disabled  " onclick="showPass(this)" src="img/eye.svg" alt="">
+                                    </div>
+                                    <div id="toolPass" style="display:none;">
+                                        <div class="popover-body">
+                                            Ingresa solo caracteres alfanuméricos entre 6 y 8 caracteres
+                                        </div>
+                                    </div>
+                                    <div class="form-group  col-4 mb-5">
+                                        <label for="password">Repetir contraseña</label>
+                                        <input type="password" class="form-control input-disabled" id="passLoginB">
+                                        <img style="position: absolute; top: 44px;right: 35px;" id="imgPassB" data-tipo="passLoginB" class="icon-menu img-disabled  " onclick="showPass(this)" src="img/eye.svg" alt="">
+                                    </div>
+                                </div>  
+
+                                <div class="row mb-4">
+                                    <h2 class="color-soc offset-2 ">Datos del alumno</h2>
+                                </div>
+                                <div class="form-row justify-content-center">
+                                    <div class="form-group  col-4 mb-4">
+                                        <label for="nombre">Nombre</label>
+                                        <input type="text" class="form-control" >
+                                    </div>
+                                    <div class="form-group  col-4 mb-5">
+                                        <label for="apellido">Apellido</label>
+                                        <input type="text" class="form-control" >
+                                    </div>
+                                </div>  
+
+                                <div class="form-row justify-content-center">
+                                    <div class="form-group  col-4 mb-4">
+                                        <label for="">Provincia</label>
+                                        <div class="selectdiv ">
+                                            <select>
+                                                <option selected> Seleccione </option>
+                                                <option>...</option>
+                                                <option>...</option>
+                                                <option>....</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group  col-4 mb-5">
+                                        <label for="">Ciudad</label>
+                                        <div class="selectdiv ">
+                                            <select>
+                                                <option selected> Seleccione </option>
+                                                <option>...</option>
+                                                <option>... </option>
+                                                <option>...</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>  
+
+                                <div class="form-row ">
+                                        <div class="form-group offset-2 col-8 mb-4">
+                                            <label for="">Colegio</label>
+                                            <div class="selectdiv ">
+                                                <select class="mw-100">
+                                                    <option selected> Seleccione </option>
+                                                    <option>...</option>
+                                                    <option>...</option>
+                                                    <option>....</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                </div>
+                                 <div class="form-row">
+                                            <div class="form-group offset-2  col-2 mb-5">
+                                            <label for="">Grado</label>
+                                            <div class="selectdiv ">
+                                                <select>
+                                                    <option selected> 1 </option>
+                                                    <option>...</option>
+                                                    <option>... </option>
+                                                    <option>...</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group  col-2 mb-5">
+                                            <label for="">Sección</label>
+                                            <div class="selectdiv ">
+                                                <select>
+                                                    <option selected> A </option>
+                                                    <option>...</option>
+                                                    <option>... </option>
+                                                    <option>...</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                </div> 
+                                <div class="form-group mb-5  ">
+                                    <div class=" col-4 ml-auto">
+                                        <a href="#target" class="btn  btn-primary text-uppercase ">
+                                            guardar
+                                        </a>
+                                    </div>
+                                </div>
+                                <br><br>
+                            </form>
+                        </div>
+
+                    </div>
+                    <div style="border-radius: 22px;" class="row bg-light-grey mb-5 pb-5 justify-content-center">
+                        <div class="col-12">
+                            <h1 class="text-center mt-4 mb-4 
+                            color-blue">Certificados</h1>
+                        </div>
+
+                        <a href="#" class=" col-6 col-lg-2 text-center mt-3 mb-4">
+                            <div class="certificado">
+                                <div class="certificado-listo" ></div>
+                                <img class="img-libro-agregado"  src="img/len01.png" alt="">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <span class=" fw-b btn btn-primary" > CERTIFICADO
+                                    
+                                    </span>
+                                    
+                                </div>
+                            </div>    
+                        </a>
+                        <a href="#" class=" col-6 col-lg-2 text-center mt-3 mb-4 ">
+                            <div class="certificado">
+                                <div class="certificado-listo" ></div>
+                                <img class="img-libro-agregado"  src="img/soc01.png" alt="">
+                                <div class="d-flex align-items-center justify-content-center">
+                                        <span class=" fw-b btn btn-primary" >CERTIFICADO
+                                    
+                                            </span>
+                                </div>
+                            </div>    
+                        </a>
+                        <a href="#" class=" col-6 col-lg-2 text-center mt-3 mb-4 ">
+                            <div class="certificado">
+                                <div class="certificado-listo" ></div>
+                                <img class="img-libro-agregado"  src="img/mat01.png" alt="">
+                                <div class="d-flex align-items-center justify-content-center">
+                                        <span class=" fw-b btn btn-primary" >CERTIFICADO
+                                    
+                                            </span>
+                                </div>
+                            </div>
+                        </a>
+                        <br>
+                        <br>
+                        <br>
+                      
+                     
+                    </div>
+                    <div class="w-100 mb-5 ">
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+
+                </div>
+       
+
+    </main>
+    <footer>
+        
+    </footer>
+    <script src="js/jquery.js" ></script>
+    <script src="js/popper.js" ></script>
+    <script src="js/bootstrap.js" ></script> 
+    <script src="js/tooltip.js" ></script>
+    <script src="js/custom.js" ></script>
+</body>
+</html>
+    

@@ -1,0 +1,116 @@
+//COLORES FUENTES
+.color-white        { color:white !important;}
+.color-blue         { color: $azul-primary !important; }
+.color-blue-light   { color: $azul-primary-light; }
+.color-error        {color: $red;}
+.color-gray         {color: $gray;}
+.color-gray-light   {color: $gray-light;}
+.color-green        {color: $verde;}
+.color-pink         {color: #FF5B9B;}
+.color-gold         {color: $color-gold;}
+
+
+// BG
+
+.bg-naranja { background-color: $color-nat; }
+.bg-nat { background-color: $color-nat; }
+.bg-mat { background-color: $color-mat; }
+.bg-len { background-color: $color-len; }
+.bg-soc { background-color: $color-soc; }
+.bg-gray { background-color: $gray; }
+.bg-gray-lighter { background-color:$gray-lighter;}
+
+
+//FILLS
+
+.fill-white {fill: white;}
+.fill-green {fill: $verde;}
+.fill-gold {fill: $color-gold;}
+
+
+// WEIGHT FONTS
+
+.fw-l { font-family: 'roboto-light';  font-weight: 200;}
+.fw-r { font-family: 'roboto-regular'; font-weight: 300;}
+.fw-b { font-family: 'roboto-bold';}
+
+.fsp-05 {letter-spacing: 0.5px;}
+
+
+// FONT SIZE 
+
+.fs-16 { font-size: 1rem !important;}
+.fs-14 { font-size: 0.8rem !important;}
+.fs-12 { font-size: 0.75rem;}
+// FONT-SIZE
+
+.fs-6 {font-size : 3rem;}
+.fs-5 {font-size : 2.375rem;}
+.fs-4 {font-size : 2rem;}
+.fs-3 {font-size : 1.5rem;}
+.fs-2-5 {font-size : 1.3rem;}
+.fs-2 {font-size : 1.25rem;}
+.fs-1 {font-size : 1rem;}
+
+
+//  ICONOS
+.icon-55 {width: 55px; height: 55px;}
+.icon-menu { width: 25px; height: 25px; }
+.icon-15 {width: 15px; height: 15px;}
+
+.avatar-xs {
+    background-color: white;
+    margin-top: 7px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+
+.rotate-180 { transform: rotateZ(180deg);}
+
+.link {color: $azul-primary-light;
+    &:hover { 
+        color: $naranja;
+        fill: $naranja;
+    +.icon-close {
+        fill: $naranja;
+    }
+    }
+}
+
+.disabled {  pointer-events: none; }
+
+.btn-disabled {  pointer-events: none; 
+    background-color: $gray !important; 
+    background-image: none;
+}
+.no-link { cursor: auto; color: inherit;}
+.no-link:hover { color: inherit;}
+.pointer { cursor: pointer;}
+.no-scroll {overflow: hidden;}
+
+.rounded { border-radius: 12px !important;}
+
+.h100vh { min-height: 100vh;}
+
+.border-top-0 { border-top: none !important; }
+.mw-100 {max-width: 100% !important;}
+
+.hiden {  opacity: 0 ; display: none; }
+.shown { opacity: 1;  display: block !important; }
+.tran-03 {transition: 0.3s}
+
+.bright {
+    -webkit-filter: brightness(120%); /* Safari 6.0 - 9.0 */
+			filter: brightness(120%);
+}

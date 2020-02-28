@@ -1,0 +1,29 @@
+actualidad_comun_homepage:
+    path:     /
+    defaults: { _controller: ActualidadComunBundle:Default:index }
+
+_logout:
+    path:     /logout/{ruta}
+    defaults: { _controller: ActualidadComunBundle:Default:logout }
+
+_ajaxUpload:
+    path:     /ajaxUpload
+    defaults: { _controller: ActualidadComunBundle:Default:ajaxUpload }
+    requirements:
+        _method: POST
+
+_ajaxServicioInteractivo:
+    path:     /ajaxServicioInteractivo
+    defaults: { _controller: ActualidadComunBundle:Default:ajaxServicioInteractivo }
+    requirements:
+        _method: POST
+
+_ajaxServicioEvaluacion:
+    path:     /ajaxServicioEvaluacion
+    defaults: { _controller: ActualidadComunBundle:Default:ajaxServicioEvaluacion }
+    requirements:
+        _method: POST
+
+_authException:
+    path:     /authException/{tipo}
+    defaults: { _controller: ActualidadComunBundle:Default:authException }

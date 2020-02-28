@@ -1,0 +1,4 @@
+[17-Feb-2019 02:18:43 America/Caracas] PHP Fatal error:  Class 'PHPUnit\Framework\TestCase' not found in /home/pr3b04rd/public_html/actualidad/vendor/symfony/phpunit-bridge/Tests/CoverageListenerTest.php on line 8
+[17-Feb-2019 07:02:44 America/Caracas] PHP Fatal error:  Class 'PHPUnit\Framework\TestCase' not found in /home/pr3b04rd/public_html/actualidad/vendor/symfony/phpunit-bridge/Tests/ProcessIsolationTest.php on line 15
+[17-Feb-2019 13:02:29 America/Caracas] PHP Fatal error:  Class 'PHPUnit\Framework\TestCase' not found in /home/pr3b04rd/public_html/actualidad/vendor/symfony/phpunit-bridge/Tests/ClockMockTest.php on line 23
+[17-Feb-2019 15:52:53 America/Caracas] PHP Fatal error:  Class 'PHPUnit\Framework\TestCase' not found in /home/pr3b04rd/public_html/actualidad/vendor/symfony/phpunit-bridge/Tests/DnsMockTest.php on line 18

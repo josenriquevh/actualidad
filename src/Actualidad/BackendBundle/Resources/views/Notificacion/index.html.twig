@@ -1,0 +1,49 @@
+{% extends '::admin.html.twig' %}
+
+{% block body %}
+
+<br><br>
+<input type="hidden" id="url_notificaciones" name="url_notificaciones" value="{# path ('_ajaxNotificaciones') #}">
+<div class="col text-right">
+    <a href="{{ path('_editNotificacion') }}" class="bttn__nr"><span class="fa fa-plus"></span><span class="text__nr">{{ 'Nuevo registro'|trans }}</span></a>
+</div>
+<br>
+
+<div class="row">
+    <div class="col-sm-16 col-md-16 col-lg-16 col-xl-16">
+        <div class="card">
+            <div class="card-header gradiente">
+                <h5 class="card-title">{{ 'Listado de notificaciones'|trans }}</h5>
+            </div>
+            <div class="card-block">
+                <div class="row" id="div-active-alert" style="display:none;">
+                    <div class="col-sm-2">
+                        &nbsp;
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="alert alert-danger" role="alert"> 
+                            <strong>{{ 'Error en el servidor'|trans }}!</strong> <span id="active-error">{{ 'Ha ocurrido un error en el servidor. Contacte al administrador del sistema.'|trans }}.</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        &nbsp;
+                    </div>
+                </div>
+                <div id="notificaciones">
+                    {{ include('ActualidadBackendBundle:Notificacion:listadoNotificaciones.html.twig', { 'notificaciones': notificaciones }) }}
+                </div>
+                <div class="load1 load-wrapper">
+                    <div class="loader">
+                        Loading...
+                    </div>  
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/admin/notificaciones.js') }}"></script>
+{% endblock %}

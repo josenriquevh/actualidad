@@ -1,0 +1,10 @@
+[14-Feb-2019 21:18:21 America/Caracas] PHP Fatal error:  Trait 'Fig\Link\LinkTrait' not found in /home/pr3b04rd/public_html/actualidad/vendor/fig/link-util/src/EvolvableLinkTrait.php on line 15
+[14-Feb-2019 21:18:29 America/Caracas] PHP Fatal error:  Trait 'Fig\Link\LinkProviderTrait' not found in /home/pr3b04rd/public_html/actualidad/vendor/fig/link-util/src/EvolvableLinkProviderTrait.php on line 15
+[14-Feb-2019 21:18:42 America/Caracas] PHP Fatal error:  Trait 'Fig\Link\TemplatedHrefTrait' not found in /home/pr3b04rd/public_html/actualidad/vendor/fig/link-util/src/LinkTrait.php on line 14
+[14-Feb-2019 21:18:44 America/Caracas] PHP Fatal error:  Interface 'Psr\Link\EvolvableLinkInterface' not found in /home/pr3b04rd/public_html/actualidad/vendor/fig/link-util/src/Link.php on line 9
+[14-Feb-2019 21:18:46 America/Caracas] PHP Fatal error:  Interface 'Psr\Link\EvolvableLinkProviderInterface' not found in /home/pr3b04rd/public_html/actualidad/vendor/fig/link-util/src/GenericLinkProvider.php on line 9
+[16-Feb-2019 10:55:31 America/Caracas] PHP Fatal error:  Interface 'Psr\Link\EvolvableLinkInterface' not found in /home/pr3b04rd/public_html/actualidad/vendor/fig/link-util/src/Link.php on line 9
+[16-Feb-2019 10:55:33 America/Caracas] PHP Fatal error:  Trait 'Fig\Link\LinkTrait' not found in /home/pr3b04rd/public_html/actualidad/vendor/fig/link-util/src/EvolvableLinkTrait.php on line 15
+[17-Feb-2019 03:53:23 America/Caracas] PHP Fatal error:  Trait 'Fig\Link\LinkProviderTrait' not found in /home/pr3b04rd/public_html/actualidad/vendor/fig/link-util/src/EvolvableLinkProviderTrait.php on line 15
+[17-Feb-2019 05:09:08 America/Caracas] PHP Fatal error:  Trait 'Fig\Link\TemplatedHrefTrait' not found in /home/pr3b04rd/public_html/actualidad/vendor/fig/link-util/src/LinkTrait.php on line 14
+[17-Feb-2019 06:05:56 America/Caracas] PHP Fatal error:  Interface 'Psr\Link\EvolvableLinkProviderInterface' not found in /home/pr3b04rd/public_html/actualidad/vendor/fig/link-util/src/GenericLinkProvider.php on line 9

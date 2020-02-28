@@ -1,0 +1,40 @@
+_profesoresActivos:
+    path:     /profesoresActivos
+    defaults: { _controller: ActualidadBackendBundle:ReportesJT:profesoresActivos }
+
+_estadisticasAlumnos:
+    path:     /estadisticasAlumnos
+    defaults: { _controller: ActualidadBackendBundle:ReportesJT:estadisticasAlumnos }
+
+_profesoresActivosExcel:
+    path:     /profesoresActivosExcel
+    defaults: { _controller: ActualidadBackendBundle:ReportesJT:ajaxExcelProfesoresActivos }
+
+_ajaxDetalleParticipante:
+    path: /ajaxDetalleParticipante
+    defaults: { _controller: ActualidadBackendBundle:ReportesJT:ajaxDetalleParticipante }
+    requirements:
+        _method: POST
+
+_ajaxInteraccionesUnidad:
+    path: /ajaxInteraccionesUnidad
+    defaults: { _controller: ActualidadBackendBundle:ReportesJT:ajaxInteraccionesUnidad }
+
+_exportarReportePdf:
+    path: /exportarReportePdf/{libro_id}/{titulo_reporte}/{grafico_name}/{adicional}
+    defaults: { _controller: ActualidadBackendBundle:ReportesJT:exportarReportePdf, libro_id: 0, titulo_reporte: 0, grafico_name: 0, adicional: null }
+
+_codigosActivosProvinciaCiudad:
+    path: /codigosActivosProvinciaCiudad
+    defaults: { _controller: ActualidadBackendBundle:ReportesJT:codigosActivosProvinciaCiudad }
+
+
+_ajaxCodigosActivosProvinciaCiudad:
+    path: /ajaxCodigosActivosProvinciaCiudad
+    defaults: { _controller: ActualidadBackendBundle:ReportesJT:ajaxCodigosActivosProvinciaCiudad }
+
+_ajaxSaveImg:
+    path:     /ajaxSaveImg
+    defaults: { _controller: ActualidadBackendBundle:ReportesJT:ajaxSaveImg }
+    requirements:
+        _method: POST

@@ -1,0 +1,38 @@
+{% for elemento in elementos %}
+    {% set vista = elemento.completado ? 'vista' : '' %}
+    {% set activa = elemento.activa ? 'activa' : '' %}
+    {% set blocked = elemento.blocked ? 'blocked' : '' %}
+    {% set forbidden = elemento.forbidden ? 'forbidden' : '' %}
+    {% set locked = elemento.locked ? 'locked' : '' %}
+    {% set unlocked = elemento.unlocked ? 'unlocked' : '' %}
+    {% set tema_id = elemento.es_evaluacion ? 0 : elemento.id %}
+    {% set prueba_id = elemento.es_evaluacion ? elemento.id : 0 %}
+    <li class="{{ vista }} {{ activa }} {{ forbidden }} {{ locked }} {{ unlocked }}">
+        <a href="{{ path('_temas', { 'unidad_id': unidad_id, 'tema_id': tema_id, 'evaluacion': prueba_id }) }}" id="sb-{{ elemento.id }}" data="{{ elemento.id }}" tipo="tema" class="{{ blocked }}">
+            {% if not elemento.es_evaluacion %}
+                <h4 class="text-uppercase">{{ 'Tema'|trans }} {{ elemento.orden }}</h4>
+            {% endif %}
+            <h4 {% if elemento.es_evaluacion %}class="text-uppercase"{% endif %}>{{ elemento.titulo }}</h4>
+        </a>
+        {% if unlocked == 'unlocked' %}
+            <svg>
+                <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-unlock') }}"></use>
+            </svg>
+        {% elseif locked == 'locked' %}
+            <svg class="fill-white">
+                <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-lock') }}"></use>
+            </svg>
+        {% elseif forbidden == 'forbidden' %}
+            <svg>
+                <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-forbidden') }}"></use>
+            </svg>
+        {% endif %}
+        {# Campos hidden #}
+        {% if not elemento.es_evaluacion %}
+            {% set completado = elemento.completado ? 1 : 0 %}
+            <input type="hidden" id="ordenTema{{ elemento.id }}" name="ordenTema{{ elemento.id }}" value="{{ loop.index }}">
+            <input type="hidden" id="tOrder{{ loop.index }}" name="tOrder{{ loop.index }}" value="{{ elemento.id }}">
+            <input type="hidden" id="temaVisto{{ elemento.id }}" name="temaVisto{{ elemento.id }}" value="{{ completado }}">
+        {% endif %}
+    </li>
+{% endfor %}

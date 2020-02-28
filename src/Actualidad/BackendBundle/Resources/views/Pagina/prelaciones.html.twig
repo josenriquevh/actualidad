@@ -1,0 +1,109 @@
+{% extends '::admin.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/vendor/jstree/dist/themes/default/style.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/SpinKit-master/css/spinkit.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('assets/css/light_adminux.css') }}">
+    <style type="text/css">
+        .div-chk {
+            padding-top: 10px;
+            padding-left: 25px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<input type="hidden" id="url_tree" name="url_tree" value="{{ path('_ajaxTreePaginas') }}">
+<input type="hidden" id="resets" name="resets" value="1">
+<input type="hidden" id="url_select_pagina" name="url_select_pagina" value="{{ path('_ajaxGetSelectPagina') }}">
+<input type="hidden" id="url_unidades" name="url_unidades" value="{{ path('_ajaxGetUnidadesPreladas') }}">
+<input type="hidden" id="url_hermanas" name="url_hermanas" value="{{ path('_ajaxGetUnidadesPrelar') }}">
+<input type="hidden" id="url_prelacion" name="url_prelacion" value="{{ path('_ajaxPrelar') }}">
+<input type="hidden" id="error-msg-pagina_padre_id" name="error-msg-pagina_padre_id" value="{{ 'Error obteniendo la lista de libros'|trans }}">
+<input type="hidden" id="error-msg-pagina_id" name="error-msg-pagina_id" value="{{ 'Error obteniendo la lista de unidades'|trans }}">
+<input type="hidden" id="error-msg-prelada" name="error-msg-prelada" value="{{ 'Error al prelar la unidad'|trans }}">
+<br>
+
+<div class="row align-items-center justify-content-between">
+    <div class="col-12 col-sm-12 page-title">
+        <h3>{{ 'Prelaciones de Unidades'|trans }}</h3>
+    </div>
+</div>
+
+<div class="col-sm-8 col-md-8 col-lg-8 alert alert-danger" role="alert" id="div-error" style="display:none;">
+    <ul></ul>
+</div>
+<div class="col-sm-8 col-md-8 col-lg-8 alert alert-danger" role="alert" id="div-error-server" style="display:none;">
+</div>
+<div class="row">
+    <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8 offset-sm-4 offset-md-4 offset-lg-4">
+        <div class="card">
+            <div class="card-header"  style=" background: linear-gradient(to right, #d5ff00 0%, #A3C300 100%); ">
+                <h5 class="card-title">{{ 'Filtro'|trans }}</h5>
+            </div>
+            <div class="card-block">
+                <div class="row">
+                    <div class="col-md-16 col-sm-16 col-lg-16 col-xl-16">
+                        <label for="empresa_id" class="col-sm-8 col-md-8 col-lg-8 offset-sm-4 offset-md-4 offset-lg-4">{{ 'Empresa'|trans }}</label>
+                        <div class="row">
+                            <div class="col-sm-8 col-md-8 col-lg-8 offset-sm-4 offset-md-4 offset-lg-4">
+                                <select class="form_sty_sel form-control" style="border-radius: 5px" id="empresa_id" name="empresa_id" data="pagina_padre_id" entity="EaPagina" orderBy="orden">
+                                    <option value=""></option>
+                                    {% for empresa in empresas %}
+                                        <option value="{{ empresa.id }}">{{ empresa.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                                <span class="fa fa-industry"></span>
+                                <span class="bttn_d"><img src="{{ asset('img/down-arrowbck.png') }}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-16 col-sm-16 col-lg-16 col-xl-16">
+                        <label for="pagina_padre_id" class="col-sm-8 col-md-8 col-lg-8 offset-sm-4 offset-md-4 offset-lg-4">{{ 'Libro'|trans }}</label>
+                        <div class="row">
+                            <div class="col-sm-8 col-md-8 col-lg-8 offset-sm-4 offset-md-4 offset-lg-4">
+                                <select class="form_sty_sel form-control reset1" style="border-radius: 5px" id="pagina_padre_id" name="pagina_padre_id" reset="1">
+                                    <option value=""></option>
+                                </select>
+                                <span class="fa fa-book"></span>
+                                <span class="bttn_d"><img src="{{ asset('img/down-arrowbck.png') }}"></span>
+                                <img id="loader-pagina_padre_id" class="img-loader" src="{{ asset('img/ui-anim_basic_16x16.gif') }}" style="display:none;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" id="div-paginas" style="display:none;">
+    <div class="col-sm-16">
+        <div class="card">
+            <div class="card-header gradiente">
+                <h5 class="card-title" id="panelTitle">{{ 'Unidades'|trans }}</h5>
+            </div>
+            <div class="card-block">
+                <div id="listado">
+                </div>
+                <div class="load1 load-wrapper">
+                    <div class="loader">
+                        Loading...
+                    </div>  
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('assets/vendor/jstree/dist/jstree.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/admin/prelaciones.js') }}"></script>
+{% endblock %}

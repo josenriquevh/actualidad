@@ -1,0 +1,74 @@
+
+.circle {
+    background-color: $gray-light;
+    border-radius: 50%;
+    width: 43px;
+    height: 43px;
+    font-size: 20px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 0.8;
+    padding: 0.8rem;
+    color: #fff;
+  }
+  
+  .xs-circle {
+    @extend .circle;
+    font-size: 0.75rem;
+    width: 35px;
+    height: 35px;
+  }
+  
+  .circle-pasos {
+      background-color: $gray-light;
+      color: #666;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      font-weight: 500;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 0.8;
+      padding: 0.9rem;
+      position: relative;
+  
+      &.completo {
+          background-color: $verde-light;
+          color: white;
+      }
+  }
+  
+  .node {
+      position: relative;
+  }
+  
+  .node:not(:last-child):before {
+      content: " ";
+      background-color:$gray-light;
+      height: 6px;
+      width: 89%;
+      position: absolute;
+      top: 16px;
+      left: 55%;
+  }
+  
+  .node.completo:not(:last-child):before {
+      background-color: $verde-light;
+  }
+  
+  .icon-svg { fill: cyan;}
+  
+  .input-cod {
+    border-radius: 0px !important;
+    border: 0px !important;
+    border-bottom: 2px solid #42B3E5 !important;
+    color: #0872B9 !important;
+    font-size: 1.5rem !important;
+    width: 70% !important;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    
+  }

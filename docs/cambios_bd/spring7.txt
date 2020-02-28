@@ -1,0 +1,9 @@
+1. Nueva tabla: admin_ayuda_interactivo
+
+2. Nuevo campo foráneo: ea_pagina.ayuda_interactivo_id FOREIGN KEY (ayuda_interactivo_id) REFERENCES admin_ayuda_interactivo (id).
+
+3. Función modificada: fnunidades_recientes.sql
+
+4. Función modificada: fngenerar_codigos.sql
+
+5. Ampliar longitud del campo Ea_pagina.titulo y Ea_pagina.subtitulo a 500 caracteres. 

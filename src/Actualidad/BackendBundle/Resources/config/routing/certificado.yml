@@ -1,0 +1,21 @@
+_certificados:
+    path:     /listado
+    defaults: { _controller: ActualidadBackendBundle:Certificado:index }
+
+_registroCertificado:
+    path:     /registroCertificado/{certificado_id}
+    defaults: { _controller: ActualidadBackendBundle:Certificado:registro, certificado_id: 0 }
+
+_ajaxLibrosCertificado:
+    path:     /ajaxLibros
+    defaults: { _controller: ActualidadBackendBundle:Certificado:ajaxLibros }
+    requirements:
+        _method: GET
+
+_showCertificado:
+    path:     /mostrarCertificado/{certificado_id}
+    defaults: { _controller: ActualidadBackendBundle:Certificado:mostrar }
+
+_generarPdf:
+    path:     /generarPdf/{certificado_id}
+    defaults: { _controller: ActualidadBackendBundle:Certificado:generarPdf }

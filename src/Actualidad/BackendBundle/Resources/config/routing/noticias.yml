@@ -1,0 +1,11 @@
+_noticias:
+    path:     /noticias
+    defaults: { _controller: ActualidadBackendBundle:Noticia:index }
+
+_registroNoticia:
+    path:     /registroNoticia/{noticia_id}
+    defaults: { _controller: ActualidadBackendBundle:Noticia:registroNoticia, noticia_id: 0 }
+
+_showNovedad:
+    path:     /mostrarNoticiaNovedad/{noticia_id}
+    defaults: { _controller: ActualidadBackendBundle:Noticia:mostrarNoticiaNovedad }

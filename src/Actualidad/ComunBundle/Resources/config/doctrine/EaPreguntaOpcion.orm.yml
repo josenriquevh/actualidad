@@ -1,0 +1,45 @@
+Actualidad\ComunBundle\Entity\EaPreguntaOpcion:
+    type: entity
+    table: ea_pregunta_opcion
+    indexes:
+        IDX_96D3BB8231A5801E:
+            columns:
+                - pregunta_id
+        IDX_96D3BB825BDBF2F:
+            columns:
+                - opcion_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        correcta:
+            type: boolean
+            nullable: true
+    manyToOne:
+        pregunta:
+            targetEntity: EaPregunta
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                pregunta_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        opcion:
+            targetEntity: EaOpcion
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                opcion_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

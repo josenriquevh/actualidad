@@ -1,0 +1,32 @@
+Actualidad\ComunBundle\Entity\AdminAyudaInteractivo:
+    type: entity
+    table: admin_ayuda_interactivo
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        mensaje:
+            type: string
+            nullable: true
+            length: 500
+            options:
+                fixed: false
+        gif:
+            type: string
+            nullable: true
+            length: 500
+            options:
+                fixed: false
+        nombre:
+            type: string
+            nullable: true
+            length: 500
+            options:
+                fixed: false
+    lifecycleCallbacks: {  }

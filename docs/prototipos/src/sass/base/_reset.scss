@@ -1,0 +1,15 @@
+body, html {
+    position: relative;
+    min-height: 100vh;
+}
+
+main {
+    padding-bottom: 200px;
+}
+
+a:hover { text-decoration: none; }
+
+select:focus {
+    outline: 0 !important;
+    box-shadow: none;
+}

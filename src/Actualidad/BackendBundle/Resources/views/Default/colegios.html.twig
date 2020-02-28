@@ -1,0 +1,21 @@
+<table class="table" id="dt">
+    <thead class="sty__title">
+       <tr>
+            <th class="hd__title text-center">{{ 'Colegio'|trans }}</th>
+            <th class="hd__title text-center">{{ 'Docentes activos'|trans }}</th>
+            <th class="hd__title text-center">{{ 'Alumnos activos'|trans }}</th>
+            <th class="hd__title text-center">{{ 'Libros activos'|trans }}</th>
+       </tr>
+    </thead>
+    <tbody>
+        {% for colegio in colegios %}
+            {% set eo = cycle(['odd', 'even'], loop.index) %}
+            <tr class="{{ eo }}">
+                <td>{{ colegio.colegio }}</td>
+                <td class="text-center"><span>{{ colegio.profesores }} <i class="fa fa-user"></i></span></td>
+                <td class="text-center"><span>{{ colegio.alumnos }} <i class="fa fa-user"></i></span></td>
+                <td class="text-center"><span>{{ colegio.libros }} <i class="fa fa-book"></i></span></td>
+            </tr>
+        {% endfor %}
+   </tbody>
+</table>

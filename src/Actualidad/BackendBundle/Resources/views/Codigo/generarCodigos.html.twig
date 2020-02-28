@@ -1,0 +1,236 @@
+{% extends '::admin.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap-datepicker-1.6.4-dist/css/bootstrap-datepicker.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/jstree/dist/themes/default/style.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/datatables/RowReorder-1.2.3/css/rowReorder.dataTables.min.css') }}" type="text/css">
+    <style type="text/css">
+        .modal-dialog {
+            max-width: 60%;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+<input type="hidden" id="error-msg-codigos" name="error-msg-codigos" value="{{ 'Error al generar los códigos'|trans }}.">
+<input type="hidden" id="error-msgc-excel" name="error-msg-excel" value="{{ 'Error al generar la lista de códigos'|trans }}.">
+<input type="hidden" id="error-msg-excel" name="error-msg-excel" value="{{ 'Error al descargar la lista de códigos'|trans }}.">
+<input type="hidden" id="error-msg-total" name="error-msg-total" value="{{ 'Se han generado todos los códigos posibles para el prefijo indicado'|trans }}.">
+<input type="hidden" id="alert-msg-disponibles" name="alert-msg-disponibles" value="{{ 'Pocos códigos disponibles'|trans }}: ">
+<input type="hidden" id="alert-msg-disponibles-cont" name="alert-msg-disponibles-cont" value="{{ 'Inténtalo de nuevo'|trans }}. ">
+
+<input type="hidden" id="error-msg-server" name="error-msg-server" value="{{ 'Error en el servidor'|trans }}">
+
+<br>
+<input type="hidden" id="excelCargaUrl" name="excelCargaUrl" value="{{ path('_ajaxGenerarExcelCarga') }}">
+<input type="hidden" id="indices" name="indices" value="">
+<div class="row align-items-center justify-content-between">
+    <div class="col text-left">
+        <a href="{{ path('_codigos',{'empresa_id':libro.empresa.id,'grado_id':libro.grado.id})}}" class="bttn__bck"><span class="fa fa-clipboard"></span><span class="text__bck">{{ 'Ir al listado'|trans }}</span></a>
+    </div>  
+</div>
+<div class="col-sm-8 col-md-8 col-lg-8 alert alert-danger" role="alert" id="div-error" style="display:none;">
+    <ul></ul>
+</div>
+<div class="col-sm-8 col-md-8 col-lg-8 alert alert-danger" role="alert" id="div-error-server" style="display:none;" >
+</div>
+
+<div class="row">
+    <div class="col-sm-16 col-md-16 col-lg-16 col-xl-16 " >
+        <div class="card">
+            <div class="card-header"  style=" background: linear-gradient(to right, #d5ff00 0%, #A3C300 100%); ">
+                <h5 class="card-title">{{ 'Generar códigos'|trans }}</h5>
+            </div>
+            <div class="card-block">
+                <div class="row">
+                    <div class="col-sm-16 col-md-16 col-lg-16">
+                        <div class="form-group">
+                            <label for="titulo_libro" class="col-sm-10 col-md-10 col-lg-10 col-form-label">{{ 'Título'|trans }}</label>
+                            <div class="col-sm-16 col-md-16 col-lg-16">
+                                <input type="text" class="form-control form_sty1" name="titulo_libro" id="titulo_libro" value="{{ libro.titulo}}" readonly> 
+                                <span class="fa fa-font" ></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <BR>
+                <div class="row">
+                    <div class="col-sm-8 col-md-8 col-lg-8">
+                        <div class="form-group">
+                            <label for="tipo_libro" class="col-sm-10 col-md-10 col-lg-10 col-form-label">{{ 'Tipo'|trans }}</label>
+                            <div class="col-sm-16 col-md-16 col-lg-16">
+                                <input type="text" class="form-control form_sty1" name="tipo_libro" id="tipo_libro" value="{{ libro.tipoPagina.nombre}}" readonly=""> 
+                                <span class="fa fa-tag" ></span>  
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8 col-md-8 col-lg-8">
+                        <div class="form-group">
+                            <label for="grado_libro" class="col-sm-10 col-md-10 col-lg-10 col-form-label">{{ 'Grado'|trans }}</label>
+                            <div class="col-sm-16 col-md-16 col-lg-16">
+                                <input type="text" class="form-control form_sty1" name="grado_libro" id="grado_libro" value="{{ libro.grado.nombre}}" readonly> 
+                                <span class="fa fa-sort-numeric-asc" ></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <BR>
+                <form id="formCodigos" name="form" method="POST" action="{{ path( '_ajaxCargaMasivaGenerar')}}">
+                    <input type="hidden" name="libro_id" id="libro_id" value="{{ libro.id }}">
+                    <div class="row">
+                        <div class="col-sm-8 col-md-8 col-lg-8" >
+                            <label for="desde" class="col-sm-16 col-md-16 col-lg-16 col-form-label">{{ 'Fecha de inicio'|trans }}</label>
+                            <div class="col-sm-16 col-md-16 col-lg-16" >
+                                <input type="text" class="form-control form_sty1 date_picker" id="fecha_desde" name="fecha_desde" placeholder="DD/MM/YYYY" value="{{ fecha_desde }}" >
+                                <span class="fa fa-calendar"></span>
+                             </div>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-lg-8" >
+                            <label for="hasta" class="col-sm-16 col-md-16 col-lg-16 col-form-label">{{ 'Fecha de vencimiento'|trans }}</label>
+                            <div class="col-sm-16 col-md-16 col-lg-16" >
+                                <input type="text" class="form-control form_sty1 date_picker" id="fecha_hasta" name="fecha_hasta" placeholder="DD/MM/YYYY"  >
+                                <span class="fa fa-calendar"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <BR>
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 col-lg-4" >
+                            <div class="form-group">
+                                <label for="renovable" class="col-2 col-form-label">{{ 'Renovable'|trans }}</label>
+								<div class="col-14">
+                                    <div class="can-toggle demo-rebrand-2 small">
+                                        <input id="renovable" id="activo" name="renovable" type="checkbox" value="FALSE">
+                                        <label for="renovable">
+											<div class="can-toggle__switch" data-checked="{{ 'Sí'|trans }}" data-unchecked="No"></div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-6"  >
+                            <div class="form-group">
+                                <label for="cantidad_renovaciones" class="col-sm-16 col-md-16 col-lg-16 col-form-label" >{{ 'Cantidad máxima de renovaciones'|trans }}</label>
+                                 <div class="col-sm-16 col-md-16 col-lg-16">
+                                    <input type="number" class="form-control form_sty1 " name="cantidad_renovaciones" id="cantidad_renovaciones" value="0" readonly>
+                                   <span class="fa fa-slack"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-6"  >
+                            <div class="form-group">
+                                <label for="cantidad_ejemplares" class="col-sm-16 col-md-16 col-lg-16 col-form-label" >{{ 'Cantidad de ejemplares nuevos'|trans }}</label>
+								<div class="col-sm-16 col-md-16 col-lg-16">
+                                    <input type="number" class="form-control form_sty1 " name="cantidad_ejemplares" id="cantidad_ejemplares" value="">
+                                    <span class="fa fa-slack"></span>
+                                </div>
+                            </div>
+                        </div>                        
+                    </div>
+                    <BR>
+                    <div class="row">
+						<div class="col-sm-6 col-md-6 col-lg-6"  >
+                            <div class="form-group">
+                                <label for="cantidad_ejemplares" class="col-sm-16 col-md-16 col-lg-16 col-form-label" >{{ 'Prefijo del código'|trans }}</label>
+                                <div class="col-sm-16 col-md-16 col-lg-16">
+                                    <input type="text" class="form-control form_sty1 " name="prefijo" id="prefijo" value="{{ prefijo }}" maxlength="14" readonly >
+                                    <span class="fa fa-barcode"></span>
+                                </div>
+                            </div>
+                        </div>   
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-sm-16 col-md-16 text-right" id="btn-excel" style="display:none;" >
+                                <button type="button" id="excel-btn" class="bttn__saved" data-toggle="tooltip" data-href="" data-placement="bottom" title="{{ 'Descargar Excel'|trans }}"> 
+                                <span class="fa fa-download"></span></button>
+                            </div>
+                            <div class="col-sm-16 col-md-16 text-right" id="btn-process"  >
+                                <button type="button" id="process" class="bttn__saved" data-toggle="tooltip" data-placement="bottom" title="{{ 'Generar códigos'|trans }}"><span class="fa fa-check"></span></button>
+                            </div>
+                            <div class="col-sm-16 col-md-16 text-right" id="generar-excel" style="display:none;" >
+                                <button type="button" id="btn-generar-excel" class="bttn__saved" data-toggle="tooltip" data-placement="bottom" title="{{ 'Generar Excel'|trans }}"><span class="fa fa-file-excel-o"></span></button>
+                            </div>
+                            <div class="col-sm-16 col-md-16 text-right" id="img-loader" style="display:none">
+                                <img class="img-loader" src="{{ asset('img/ui-anim_basic_16x16.gif') }}" style="">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-16 col-md-16 ">
+                                <div class="alert alert-success" role="alert" id="alert-success" style="margin-top: 1%;display:none;"> 
+                                    <strong>{{ 'Bien hecho'|trans }}!</strong> {{ 'Cantidad de registros creados'|trans }}: <span id="inserts"></span>. 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>            
+                <BR>            
+            </div>
+        </div>
+    </div>
+</div>
+    
+{% endblock %}
+
+{% block formModal %}
+   
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('assets/vendor/bootstrap-datepicker-1.6.4-dist/js/bootstrap-datepicker.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendor/bootstrap-datepicker-1.6.4-dist/locales/bootstrap-datepicker.es.min.js') }}" charset="UTF-8"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendor/jstree/dist/jstree.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendor/datatables/RowReorder-1.2.3/js/dataTables.rowReorder.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('jq/jquery-validation-1.15.0/dist/jquery.validate.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/admin/codigos.js') }}"></script>
+    <script type="text/javascript">
+        $("#formCodigos").validate({
+            errorLabelContainer: "#div-error ul",
+            wrapper: "li",
+            ignore: "",
+            rules: {
+                'fecha_desde': {
+                    required: true
+                },
+                'fecha_hasta':{
+                    required: true 
+                },
+                'cantidad_ejemplares':{
+                    required: true,
+                    min: 1
+                },
+                'prefijo': {
+                    required: true
+                },
+                'cantidad_renovaciones': {
+                    required: {
+                        depends: function(element) {
+                            return $("#renovable").is(":checked");
+                        }
+                    }
+                }
+            },
+            messages: {
+                'fecha_desde': { 
+                    required: "- {{ 'La fecha de inicio es requerida'|trans }}."
+                },
+                'fecha_hasta': { 
+                    required: "- {{ 'La fecha de vencimiento es requerida'|trans }}."
+                },
+                'cantidad_ejemplares': { 
+                    required: "- {{ 'La cantidad de ejemplares es requerida'|trans }}.",
+                    min: "- {{ 'La cantidad mínima de ejemplares es'|trans }}." 
+                },
+                'prefijo':{ 
+                    required: "- {{ 'El prefijo del código es requerido'|trans }}."
+                },
+                'cantidad_renovaciones':{ 
+                    required: "- {{ 'La cantidad de renovaciones es requerida'|trans }}."
+                }
+            }
+        });
+    </script>
+{% endblock %}

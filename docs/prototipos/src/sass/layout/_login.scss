@@ -1,0 +1,26 @@
+#login {
+
+    label {
+        color: $naranja-light;
+        font-size: 1rem;
+        margin-left: 1rem;
+    }
+
+    input[type=text], input[type=password] {
+        border-radius: 30px;
+        height: 53px;
+        border-bottom: 0;
+        color: $azul-primary-light;
+        width: 100%;
+        padding-left: 1.2rem;
+        border: 3px solid transparent;
+
+        &:focus {
+            border: 3px solid $naranja-light;
+        }
+    }
+
+    a:hover {
+        color:white;
+    }
+}

@@ -1,0 +1,65 @@
+_index:
+    path:     /
+    defaults: { _controller: ActualidadFrontendBundle:Default:index }
+
+_inicio:
+    path:     /inicio/{rol_id}
+    defaults: { _controller: ActualidadFrontendBundle:Default:inicio, rol_id: 2 }
+
+_ajaxAddCode:
+    path:     /ajaxAddCode
+    defaults: { _controller: ActualidadFrontendBundle:Default:ajaxAddCode }
+    requirements:
+        _method: POST
+
+contenido:
+    resource: "@ActualidadFrontendBundle/Resources/config/routing/contenido.yml"
+    prefix: /contenido
+
+usuario:
+    resource: "@ActualidadFrontendBundle/Resources/config/routing/usuario.yml"
+    prefix: /usuario
+
+notificaciones:
+    resource: "@ActualidadFrontendBundle/Resources/config/routing/notificaciones.yml"
+    prefix: /notificaciones
+
+_login:
+    path:     /login/{rol_id}
+    defaults: { _controller: ActualidadFrontendBundle:Default:login }
+
+_actualizacionUsuario:
+    path:     /actualizacion/{rol_id}
+    defaults: { _controller: ActualidadFrontendBundle:Default:actualizacionUsuario }
+
+_ajaxSeccion:
+    path:     /ajaxSeccion
+    defaults: { _controller: ActualidadFrontendBundle:Default:ajaxSeccion }
+    requirements:
+        _method: GET
+
+_olvidoPass:
+    path:     /olvidoPass
+    defaults: { _controller: ActualidadFrontendBundle:Default:olvidoPass }
+
+_ajaxValidar:
+    path:     /ajaxValidar
+    defaults: { _controller: ActualidadFrontendBundle:Default:ajaxValidar }
+    requirements:
+        _method: GET
+
+_ajaxContrasena:
+    path:     /ajaxContrasena
+    defaults: { _controller: ActualidadFrontendBundle:Default:ajaxContrasena }
+    requirements:
+        _method: GET
+
+_ajaxNoti:
+    path:     /ajaxNoti
+    defaults: { _controller: ActualidadFrontendBundle:Default:ajaxNoti }
+    requirements:
+        method: GET
+
+_certificadoPdf:
+    path:     /certificadoPdf/{certificado_id}
+    defaults: { _controller: ActualidadFrontendBundle:Default:certificadoPdf }

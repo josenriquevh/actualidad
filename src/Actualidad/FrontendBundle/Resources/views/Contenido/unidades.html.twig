@@ -1,0 +1,129 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+{{ parent() }}
+<main id="unidades-{{ libro.css }}">
+
+    <div class="bg-hero-unid">
+        <div class="container">
+            {#<a class="color-white mt-4 position-absolute" href="#">
+                <svg class="icon-menu fill-white rotate-180">
+                    <use  xlink:href="{{ asset('front/dist/img/icons.svg#icon-btn-arrow') }}"></use>
+                </svg>
+                {{ 'Volver a Inicio'|trans }}
+            </a>#}
+            <div class="row pt-5 justify-content-center align-items-center flex-column pb-5">
+                <svg class="fill-white icon-head-unid">
+                    <use  xlink:href="{{ asset('front/dist/img/icons.svg#icon-'~libro.css) }}"></use>
+                </svg>
+                <h1 class="color-white fs-5">{{ libro.titulo }}</h1>
+            </div>
+        </div>
+    </div>
+
+    <section id="currentUnid" class="d-flex justify-content-center position-relative" >
+        <div class="card-unid-current {{ libro.css }}"> 
+            <div class="info-current mr-2">
+                <div class="numero mb-3">
+                    <div>{{ unidad_reciente.orden }}</div>
+                    <span>{{ 'UNIDAD'|trans }}</span>
+                </div>
+                <div class="barra-porcentaje">
+                    <div class="barra-progreso my-3 mx-2 w-50">
+                        <div class="progreso" style="width: {{ unidad_reciente.avance }}%"></div>
+                    </div>
+                    <span>{{ unidad_reciente.avance }}%</span>
+                </div>
+                <div class="d-block text-center mt-2">
+                    {% if unidad_reciente.url_reciente == '_temas' %}
+                        <a href="{{ path(unidad_reciente.url_reciente, { 'unidad_id': unidad_reciente.id, 'tema_id': unidad_reciente.parametro_tema_reciente }) }}" class="btn btn-primary text-uppercase">
+                    {% else %}
+                        <a href="{{ path(unidad_reciente.url_reciente, { 'unidad_id': unidad_reciente.id }) }}" class="btn btn-primary text-uppercase">
+                    {% endif %}
+                        {{ unidad_reciente.button_text }}
+                        <svg class="icon-menu">
+                            <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-btn-arrow') }}"></use>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="content">
+                <h2>{{ unidad_reciente.titulo }}</h2>
+                {% if unidad_reciente.temas|length > 0 %}
+                    <ol>
+                        {% for tema in unidad_reciente.temas %}
+                            {% if tema.completado %}
+                                <li class="checked">{{ tema.titulo }}</li>
+                            {% else %}
+                                <li>{{ tema.titulo }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ol>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    {# TODAS LAS UNIDADES #}
+
+    <div class=" all-unid container  pt-5 pt-lg-0">
+        <div class="row mt-4">
+            <div class="col-12">
+                <h1 class="color-blue ml-5" > {{ 'Unidades'|trans }} <img class="ml-3" src="{{ asset('front/dist/img/line-actualidad.png') }}" alt=""> </h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-9 py-5 d-flex flex-wrap align-items-start justify-content-between">
+                {% for unidad in unidades %}
+                    <div class="card-unid-single {{ libro.css }} {{ unidad.status_css }}">
+                        <div class="icon-materia d-flex  justify-content-between">
+                            <div class="counter fs-14" >{{ unidad.orden }} / {{ unidades|length }}</div>
+                        </div>
+                        <div class="info-current">
+                            <div class="numero mb-3">
+                                <div>{{ unidad.orden }}</div>
+                                <span>{{ 'UNIDAD'|trans }}</span>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <h3 class="ml-2 mt-3 fw-b">{{ unidad.titulo }}</h3>
+                            <div class="barra-porcentaje">
+                                <span class="fs-3">{{ unidad.avance }}%</span>
+                                <div class="barra-progreso my-2 mx-2">
+                                    <div class="progreso" style="width: {{ unidad.avance }}%"></div>
+                                </div>
+                            </div>
+                            <div class="d-block text-center w-75 mx-auto {% if unidad.status == estatus_pagina_completada %}mb-3{% endif %}">
+                                {% if unidad.url == '_temas' %}
+                                    <a href="{{ path(unidad.url, { 'unidad_id': unidad.id, 'tema_id': unidad.parametro_tema }) }}" class="btn btn-primary text-uppercase">
+                                {% elseif unidad.url == '_intro' %}
+                                    <a href="{{ path(unidad.url, { 'unidad_id': unidad.id }) }}" class="btn btn-primary text-uppercase">
+                                {% else %}
+                                    <a href="#" class="btn btn-primary text-uppercase">
+                                {% endif %}
+                                    {{ unidad.button_text }}
+                                    {% if unidad.status != estatus_pagina_completada %}
+                                        <svg class="icon-menu">
+                                            <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-btn-arrow') }}"></use>
+                                        </svg>
+                                    {% endif %}
+                                </a>
+                            </div>
+                        </div> 
+                        <svg class="bg-icon">
+                            <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-'~libro.css) }}"></use>
+                        </svg>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="col-3 prof-float">
+                <h3 class="fs-3 color-blue">{{ 'Vas por esta unidad'|trans }}</h3>
+                <h3 class="d-none fs-3 color-blue">{{ 'Comencemos a aprender'|trans }}</h3>
+                <img class="img-responsive" src="{{ asset('front/dist/img/profesora.png') }}" alt="">
+            </div>
+        </div>
+    </div>
+
+</main>
+
+{% endblock %}

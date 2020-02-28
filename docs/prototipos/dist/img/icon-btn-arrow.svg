@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="19px" height="13px" viewBox="0 0 19 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.1 (51147) - http://www.bohemiancoding.com/sketch -->
+    <title>Group</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="2unid-Mat" transform="translate(-127.000000, -201.000000)" fill="#F9F7FA">
+            <g id="Group" transform="translate(127.000000, 201.000000)">
+                <path d="M19,6.4996061 C19,7.37250052 7.52291452,13.5099635 6.46858908,12.9659225 C5.41426365,12.4218814 6.46858908,0.570530247 6.46858908,0.0332897186 C6.46858908,-0.50395081 19,5.62671167 19,6.4996061 Z" id="Triangle"></path>
+                <rect id="Rectangle-5" x="0" y="4" width="10" height="5" rx="1"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

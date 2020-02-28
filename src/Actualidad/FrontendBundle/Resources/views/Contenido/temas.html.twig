@@ -1,0 +1,276 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .prev, .continuar {
+            cursor: pointer;
+        }
+        .blocked > img, img.blocked {
+            filter: grayscale(100%);
+        }
+        .blocked > span {
+            color: #8E8C8F !important;
+        }
+        video#ifr:active, video#ifr:focus {
+        outline: none;
+        }
+        .int-frame{
+            height: 560px;
+        }
+        .crtl-lateral{
+            max-height: 560px;
+        }
+    </style>
+{% endblock %}
+
+{% block header %}
+    <div class="container-fluid">
+        <nav class="top-bar">
+            <svg onclick="toggleMenuNav()" style="width:54px; height:25px" id="closeMenuNav" class="pointer rotate-180 d-inline-block d-lg-none">
+                <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-collapse') }}"></use>
+            </svg>
+            <div class="ctrl-header flex-column align-items-center">
+                <img width="40px" src="{{ asset('front/dist/img/icon-back.svg') }}" alt="" class="prev">
+                <span class="fs-1 countInt">1/{{ recursos_length }}</span>
+            </div>
+            <div>
+                <img style="height:70px" src="{{ asset('front/dist/img/logo-actualidad-light.png') }}" alt="">
+            </div>
+            <div class="ctrl-header flex-column align-items-center next">
+                <img width="40px" class="rotate-180 continuar" src="{{ asset('front/dist/img/icon-back.svg') }}" alt="">
+                <span class="fs-1" >{{ 'Continuar'|trans }}</span>
+            </div>
+            <div class="menu d-none d-lg-flex">
+                <a href="{{ path('_inicio', { 'rol_id': app.session.get('usuario').rol_id }) }}">
+                    <svg class="icon-menu">
+                        <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-home') }}"></use>
+                    </svg>
+                    <span>{{ 'Inicio'|trans }}</span>
+                </a>
+                {% if app.session.get('usuario').rol_id == rol.profesor %}
+                    <a href="#">
+                        <svg class="icon-menu">
+                            <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-monitor') }}"></use>
+                        </svg>
+                        <span>{{ 'Monitoreo'|trans }}</span>
+                    </a>
+                    <a href="#">
+                        <svg class="icon-menu ">
+                            <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-novedades') }}"></use>
+                        </svg>
+                        <span>{{ 'Novedades'|trans }}</span>
+                    </a>
+                {% endif %}
+                {{ include('ActualidadFrontendBundle:Notificaciones:notificaciones.html.twig') }}
+                <a href="{{ path('_actualizacionUsuario', { 'rol_id': app.session.get('usuario').rol_id }) }}" class="py-1">
+                    <div class="avatar-xs">
+                        {% set img = app.session.get('usuario').foto is defined ? app.session.get('usuario').foto != '' ? uploads~app.session.get('usuario').foto : asset('front/dist/img/user.svg') : asset('front/dist/img/user.svg') %}
+                        <img src="{{ img }}" alt="">
+                    </div>
+                    <span class="mt-0">{{ app.session.get('usuario').nombre }} {{ app.session.get('usuario').apellido }}</span>
+                </a>
+                <a href="{{ path('_logout', { 'ruta': '_index' }) }}">
+                    <svg class="icon-menu rotate-180">
+                        <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-salir') }}"></use>
+                    </svg>
+                    <span>{{ 'Salir'|trans }}</span>
+                </a>
+            </div>
+            <div class="menu-responsive d-block d-lg-none">
+                <div class="d-inline-block d-lg-none" id="menu_hamb" onclick="showMenu()">
+                    <div class="main-item menu-hamb">
+                        <span class="line line01"></span>
+                        <span class="line line02"></span>
+                        <span class="line line03"></span>
+                    </div>
+                </div>
+                <div id="menuMobileItems">
+                    <div class="menu d-flex flex-column">
+                        <a href="{{ path('_inicio', { 'rol_id': app.session.get('usuario').rol_id }) }}">
+                            <svg class="icon-menu ">
+                                <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-home') }}"></use>
+                            </svg>
+                            <span>{{ 'Inicio'|trans }}</span>
+                        </a>
+                        {% if app.session.get('usuario').rol_id == rol.profesor %}
+                            <a href="#">
+                                <svg class="icon-menu ">
+                                    <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-monitor') }}"></use>
+                                </svg>
+                                <span>{{ 'Monitoreo'|trans }}</span>
+                            </a>
+                            <a href="#">
+                                <svg class="icon-menu ">
+                                    <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-novedades') }}"></use>
+                                </svg>
+                                <span>{{ 'Novedades'|trans }}</span>
+                            </a>
+                        {% endif %}
+                        <a href="#">
+                            <svg class="icon-menu">
+                                <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-notificacion') }}"></use>
+                            </svg>
+                            <span>{{ 'Notificaciones'|trans }}</span>
+                        </a>
+                        <a href="#" class="py-1">
+                            <div class="avatar-xs">
+                                <img style="width:60%;" src="{{ img }}" alt="">
+                            </div>
+                            <span class="mt-0">{{ app.session.get('usuario').nombre }} {{ app.session.get('usuario').apellido }}</span>
+                        </a>
+                        <a href="{{ path('_logout', { 'ruta': '_index' }) }}">
+                            <svg class="icon-menu rotate-180 ">
+                                <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-salir') }}"></use>
+                            </svg>
+                            <span>{{ 'Salir'|trans }}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>    
+    </div>
+{% endblock %}
+
+{% block body %}
+{{ parent() }}
+<input type="hidden" id="recurso_actual" name="recurso_actual" value="0">
+<input type="hidden" id="total_recursos" name="total_recursos" value="{{ recursos_length }}">
+<input type="hidden" id="total_temas" name="total_temas" value="{{ temas_length }}">
+<input type="hidden" id="url_resource" name="url_resource" value="{{ path('_ajaxResource') }}">
+<input type="hidden" id="usuario_id" name="usuario_id" value="{{ app.session.get('usuario').id }}">
+<input type="hidden" id="url_servicio" name="url_servicio" value="{{ url('_ajaxServicioInteractivo') }}">
+<input type="hidden" id="url_finishResource" name="url_finishResource" value="{{ path('_ajaxFinishResource') }}">
+<input type="hidden" id="url_refresh" name="url_refresh" value="{{ path('_ajaxRefreshMenu') }}">
+<input type="hidden" id="make_ajax" name="make_ajax" value="{{ make_ajax }}">
+<input type="hidden" id="servidor_recursos" name="servidor_recursos" value="{{ servidor_recursos }}">
+<input type="hidden" id="dominio_origen" name="dominio_origen" value="{{ app.request.getSchemeAndHttpHost() }}">
+<input type="hidden" id="localhost" name="localhost" value="{{ localhost }}">
+<input type="hidden" id="unidad_id" name="unidad_id" value="{{ unidad.id }}">
+<input type="hidden" id="tema_id" name="tema_id" value="{{ tema.id }}">
+<input type="hidden" id="pagina_id" name="pagina_id" value="0">
+<input type="hidden" id="es_interactivo" name="es_interactivo" value="0">
+<input type="hidden" id="tiene_evaluacion" name="tiene_evaluacion" value="{{ tiene_evaluacion }}">
+<input type="hidden" id="evaluacion" name="evaluacion" value="{{ evaluacion }}">
+<input type="hidden" id="url_temas" name="url_temas" value="{{ path('_temas', { 'unidad_id': unidad.id }) }}">
+<input type="hidden" id="url_evaluacion" name="url_evaluacion" value="{{ path('_evaluacion', { 'unidad_id': unidad.id }) }}">
+<input type="hidden" id="url_unidades" name="url_unidades" value="{{ path('_unidades', { 'pagina_id': libro.id }) }}">
+<input type="hidden" id="timer" name="timer" value="">
+<input type="hidden" id="img_gif" name="img_gif" value="{{ asset('front/dist/img/pareo.gif') }}">
+
+<main id="temas">
+
+    <aside class="bg-{{ libro.css }} temas" data-simplebar>
+        <nav>
+            <div class="info-wrapper">
+                <div class="d-flex justify-content-center align-items-center">
+                    <svg class="fill-white icon-materia-menu mr-3">
+                        <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-'~libro.css) }}"></use>
+                    </svg>
+                    <p class="mb-0">{{ libro.titulo }}</p>
+                </div>
+                <div class="info-unidad">
+                    <h5 class="mb-0">{{ 'UNIDAD'|trans }}</h5>
+                    <h2 class="fs-6 mt-0">{{ unidad.orden }}</h2>
+                    <div class="titulo-unidad text-left mb-2">
+                        {{ unidad.titulo }} 
+                    </div>
+                </div>
+            </div>
+            <ul class="temas-nav" id="sidebar_menu">
+                {{ sidebar_menu|raw }}
+            </ul>
+        </nav>
+    </aside>
+    
+    <div class="bg-header-tema">
+        <h2>{{ 'UNIDAD'|trans }}: <span>{{ unidad.titulo }}</span></h2>
+        <h2>{{ 'TEMA'|trans }}: <span class="fw-l w-50">{{ tema.titulo }}</span></h2>
+        <div style="top:110px;" class="saltar-intro position-absolute d-flex align-items-center">
+            <a href="{{ path('_unidades', { 'pagina_id': libro.id }) }}" class="btn-back">
+                {{ 'Volver a Unidades'|trans }}
+                <svg class="fill-white icon-materia-menu">
+                    <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-go-back') }}"></use>
+                </svg>
+            </a>
+        </div>
+    </div>
+    
+    <div class="content position-relative w-100 p-4">
+        <div class="cards-int pl-0 pl-lg-5 mx-auto w-80 justify-content-start">
+            {{ cards|raw }}
+        </div>
+    </div>
+    
+    <div id="interactivo" class="interactivo">
+        <div class="controles position-relative w-100">
+            {#<div id="help" title="{{ 'Haz click para ver cómo funciona el interactivo'|trans }}" class="helper" onclick="helper()" style="display: none;" >
+                <div class="postion-relative" >
+                    <img style="display:none; width:285px;" id="helpergif" class="img-fluid tran-03 m-2" src="{{ asset('front/dist/img/pareo.gif') }}" alt="">
+                    <svg id="helperclose" class="icon-close position-absolute" style="display:none; top:0; right:0; z-index:301">
+                        <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-closes') }}"></use>
+                    </svg>
+                </div>
+                <img id="iconHelper" class="img-fluid tran-03" src="{{ asset('front/dist/img/icon-helper.png') }}" style=" width:18px;" alt="">
+            </div>#}
+            <div class="ctrl-cerrar text-right" id="help-close">
+                <svg class="icon-close mr-5" onclick="hideInt()">
+                    <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-close') }}"></use>
+                </svg>
+            </div>
+            <div class="crtl-lateral">
+                <div class="d-flex flex-column align-items-center">
+                    <img src="{{ asset('front/dist/img/icon-back.svg') }}" alt="" class="prev">
+                    <span class="color-blue-light fs-1 countInt">1/{{ recursos_length }}</span>
+                </div>
+                <div class="d-flex flex-column align-items-center next">
+                    <img class="rotate-180 continuar" src="{{ asset('front/dist/img/icon-back.svg') }}" alt="">
+                    <span class="color-blue-light fs-1">{{ 'Continuar'|trans }}</span>
+                </div>
+            </div>
+        </div>
+
+
+        <!--<div id="controls" class="controles position-relative w-100">
+            <div class="ctrl-cerrar text-right">
+                <svg class="icon-close mr-5" onclick="hideInt()" id="closeInt">
+                    <use xlink:href="{{ asset('front/dist/img/icons.svg#icon-close') }}"></use>
+                </svg>
+            </div>
+            <div class="crtl-lateral">
+                <div class="d-flex flex-column align-items-center">
+                    <img src="{{ asset('front/dist/img/icon-back.svg') }}" alt="" class="prev">
+                    <span id="countInt" class="color-blue-light fs-1">1/{{ recursos_length }}</span>
+                </div>
+                <div id="next" class="d-flex flex-column align-items-center">
+                    <img class="rotate-180" src="{{ asset('front/dist/img/icon-back.svg') }}" alt="" id="continuar">
+                    <span class="color-blue-light fs-1">{{ 'Continuar'|trans }}</span>
+                </div>
+            </div>
+        </div>-->
+        <div id="resourse-content">
+            <!--<iframe id="ifr" class="int-frame" src="https://recursos2puntocero.com/recursos/EA/INT/L1U3/recurso02/" frameborder="0"></iframe>-->
+        </div>
+        <div id="loader" class="int-frame loading">
+            <img width="180px" src="{{ asset('front/dist/img/saludo.png') }}" alt="">
+            <h1 class="color-blue">{{ 'Cargando'|trans }}...</h1>
+            <div class="bouncing-loader lg">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+</main>
+{% block footer %}
+    <footer class="solid">
+    </footer>
+{% endblock %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/front/temas.js') }}"></script>
+{% endblock %}

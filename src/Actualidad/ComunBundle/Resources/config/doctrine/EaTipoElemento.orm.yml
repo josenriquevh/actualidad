@@ -1,0 +1,20 @@
+Actualidad\ComunBundle\Entity\EaTipoElemento:
+    type: entity
+    table: ea_tipo_elemento
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        nombre:
+            type: string
+            nullable: true
+            length: 50
+            options:
+                fixed: false
+    lifecycleCallbacks: {  }

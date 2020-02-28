@@ -1,0 +1,129 @@
+{% extends '::admin.html.twig' %}
+
+{% block menu %}
+    &nbsp;
+{% endblock %}
+
+{% block body %}
+<br>
+<br>
+
+<input type="hidden" id="url_try" name="url_try" value="{{ path('_ajaxTryCase') }}">
+
+<div class="row align-items-center justify-content-between">
+    <div class="col-12 col-sm-12 page-title">
+        <h3>{{ 'Prueba de la evaluación'|trans }}</h3>
+    </div>
+    <div class="col text-right ">
+        <a href="{{ path('_verEvaluacionInteractivo', { 'pregunta_id': pregunta_opcion.pregunta.id, 'reset': 1 })}}" class="bttn__nre"><span class="fa fa-eraser" style="margin-top: 8px;"></span><span class="text__nre">{{ 'Limpiar intentos'|trans }}</span></a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-16">
+        <div class="card">
+            <div class="card-header gradiente">
+                <div class="card-title">
+                    <h6>{{ 'Vista previa de la evaluación'|trans }}</h6>
+                </div>
+            </div>
+            <div class="card-block">
+                <div class="row">
+                    <div class="col-sm-16">
+                        <br>
+                        <div class="content__wrapper">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-sm-16" id="div-caso">
+                                        Caso de Prueba:<br>
+                                        {{ dump(caso) }}
+                                        {{ app.request.getSchemeAndHttpHost() }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-16">
+                                        {{ pregunta_opcion.opcion.descripcion|raw }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        // Prueba del postMessage
+        setTimeout(function() {
+            postMessage({{ caso.prueba_log_id }}, "{{ caso.correctas }}", "{{ caso.incorrectas }}", {{ caso.intentos }});
+        }, 5000);
+
+        function receiveMessage(event)
+        {
+            // Do we trust the sender of this message?
+            if (event.origin !== "{{ servidor_recursos }}")
+                return;
+
+            var try_again = event.data.try_again;
+            var intentos = event.data.intentos;
+        
+            console.log('try_again:'+try_again+', intentos:'+intentos);
+
+            if (try_again == 1)
+            {
+                console.log('Ejecutar ajax para try_again');
+                $.ajax({
+                   type:"POST",
+                   url: $('#url_try').val(),
+                   async: true,
+                   data: { pregunta_id: {{ caso.pregunta_id }}, intentos: intentos, usuario_id: {{ app.session.get('usuario').id }} },
+                   dataType: "json",
+                   success: function(data){
+                        $('#div-caso').html(data.html);
+                        postMessage(data.prueba_log_id, data.correctas, data.incorrectas, intentos);
+                   },
+                   error: function(){
+                        console.log('Error en el servidor al llamar a _ajaxTryCase');
+                        postMessage({{ caso.prueba_log_id }}, "{{ caso.correctas }}", "{{ caso.incorrectas }}", {{ caso.intentos }});
+                   }
+                });
+            }
+            else {
+                console.log('Se finaliza la prueba o no quiere volver a intentar');
+            }
+
+        }
+
+        window.addEventListener("message", receiveMessage, false);
+
+        function postMessage(prueba_log_id, correctas, incorrectas, intentos)
+        {
+            var iframe = document.getElementById('ifr');
+            if (iframe !== null)
+            {
+                iframe.contentWindow.postMessage({
+                    prueba_log_id: prueba_log_id,
+                    pregunta_id: {{ caso.pregunta_id }},
+                    correctas: correctas,
+                    incorrectas: incorrectas,
+                    intentos: intentos,
+                    make_ajax: {{ caso.make_ajax }},
+                    url: "{{ url(caso.url) }}",
+                    max_intentos: {{ caso.max_intentos }},
+                    min_correctas: {{ caso.min_correctas }},
+                    dominio_origen: "{{ app.request.getSchemeAndHttpHost() }}",
+                }, "{{ servidor_recursos }}");
+            }
+            else {
+                console.log('No existe iframe con id ifr');
+            }
+        }
+
+    </script>
+{% endblock %}

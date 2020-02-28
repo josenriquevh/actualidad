@@ -1,0 +1,87 @@
+Actualidad\ComunBundle\Entity\EaCertificado:
+    type: entity
+    table: ea_certificado
+    indexes:
+        IDX_A443CECC521E1991:
+            columns:
+                - empresa_id
+        IDX_A443CECC1AAC87BB:
+            columns:
+                - tipo_certificado_id
+        IDX_A443CECC91A441CC:
+            columns:
+                - grado_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        entidadId:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+            column: entidad_id
+        imagen:
+            type: string
+            nullable: true
+            length: 250
+            options:
+                fixed: false
+        encabezado:
+            type: text
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        descripcion:
+            type: text
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        fechaCreacion:
+            type: date
+            nullable: true
+            column: fecha_creacion
+        fechaModificacion:
+            type: date
+            nullable: true
+            column: fecha_modificacion
+    manyToOne:
+        empresa:
+            targetEntity: AdminEmpresa
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                empresa_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        tipoCertificado:
+            targetEntity: EaTipoCertificado
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                tipo_certificado_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        grado:
+            targetEntity: AdminGrado
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                grado_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

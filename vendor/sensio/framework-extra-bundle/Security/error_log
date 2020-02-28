@@ -1,0 +1,1 @@
+[17-Feb-2019 10:21:33 America/Caracas] PHP Fatal error:  Class 'Symfony\Component\Security\Core\Authorization\ExpressionLanguage' not found in /home/pr3b04rd/public_html/actualidad/vendor/sensio/framework-extra-bundle/Security/ExpressionLanguage.php on line 22

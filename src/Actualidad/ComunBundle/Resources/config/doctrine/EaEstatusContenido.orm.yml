@@ -1,0 +1,20 @@
+Actualidad\ComunBundle\Entity\EaEstatusContenido:
+    type: entity
+    table: ea_estatus_contenido
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        nombre:
+            type: string
+            nullable: true
+            length: 20
+            options:
+                fixed: false
+    lifecycleCallbacks: {  }

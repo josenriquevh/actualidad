@@ -1,0 +1,37 @@
+_tutorial:
+    path:     /tutorial
+    defaults: { _controller: ActualidadBackendBundle:Tutorial:index }
+
+_ajaxUpdateTutorial:
+    path:     /ajaxUpdateTutorial
+    defaults: { _controller: ActualidadBackendBundle:Tutorial:ajaxUpdateTutorial }
+    requirements:
+        method: POST
+
+_ajaxEditTutorial:
+    path:     /ajaxEditTutorial
+    defaults: { _controller: ActualidadBackendBundle:Tutorial:ajaxEditTutorial }
+    requirements:
+        method: GET
+
+_ajaxRefreshTable:
+    path: /_ajaxRefreshTable
+    defaults: { _controller: ActualidadBackendBundle:Tutorial:ajaxRefreshTable}
+
+
+_ajaxDeleteTutorial:
+    path: /_ajaxDeleteTutorial
+    defaults: { _controller: ActualidadBackendBundle:Tutorial:ajaxDeleteTutorial}
+
+
+_ajaxUploadFileTutorial:
+    path: /_ajaxUploadFileTutorial
+    defaults: { _controller: ActualidadBackendBundle:Tutorial:ajaxUploadFileTutorial}
+
+_registroTutorial:
+    path:     /registroTutorial/{tutorial_id}
+    defaults: { _controller: ActualidadBackendBundle:Tutorial:registroTutorial, tutorial_id: 0 }
+
+_showTutorial:
+    path:     /mostrarTutorial/{tutorial_id}
+    defaults: { _controller: ActualidadBackendBundle:Tutorial:mostrarTutorial }

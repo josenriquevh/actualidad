@@ -1,0 +1,176 @@
+{% extends '::admin.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/vendor/jstree/dist/themes/default/style.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/datatables/RowReorder-1.2.3/css/rowReorder.dataTables.min.css') }}" type="text/css">
+    <style type="text/css">
+        .modal-dialog {
+            max-width: 60%;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<input type="hidden" id="url_edit" name="url_edit" value="{{ path('_ajaxGetPage') }}">
+<input type="hidden" id="url_list" name="url_list" value="{{ path('_paginas') }}">
+<input type="hidden" id="url_paginas" name="url_paginas" value="{{ path('_ajaxGetPaginas') }}">
+<input type="hidden" id="url_tree" name="url_tree" value="{{ path('_ajaxTreePaginas') }}">
+<input type="hidden" id="resets" name="resets" value="2">
+<input type="hidden" id="error-msg-paginas" name="error-msg-paginas" value="{{ 'Error obteniendo la lista de páginas'|trans }}">
+<input type="hidden" id="error-msg-unidad_id" name="error-msg-unidad_id" value="Error obteniendo la lista de unidades">
+<br>
+
+<div class="row align-items-center justify-content-between">
+    <div class="col-12 col-sm-12 page-title">
+        <h3>{{ 'Configuración de páginas'|trans }}</h3>
+    </div>
+    <div class="col text-right ">
+        <a href="{{ path('_newPagina')}}" class="bttn__nr"><span class="fa fa-plus" style="margin-top: 8px;"></span><span class="text__nr">{{ 'Nueva página'|trans }}</span></a>
+    </div>
+</div>
+
+<div class="col-sm-8 col-md-8 col-lg-8 alert alert-danger" role="alert" id="div-error" style="display:none;">
+    <ul></ul>
+</div>
+<div class="col-sm-8 col-md-8 col-lg-8 alert alert-danger" role="alert" id="div-error-server" style="display:none;">
+</div>
+<div class="row">
+    <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8 offset-sm-4 offset-md-4 offset-lg-4">
+        <div class="card">
+            <div class="card-header"  style=" background: linear-gradient(to right, #d5ff00 0%, #A3C300 100%); ">
+                <h5 class="card-title">{{ 'Filtro'|trans }}</h5>
+            </div>
+            <div class="card-block">
+                <div class="row">
+                    <div class="col-md-16 col-sm-16 col-lg-16 col-xl-16">
+                        <label for="grado_id" class="col-sm-6 col-md-6 col-lg-16 offset-sm-5 offset-md-5 offset-lg-5">{{ 'Grado'|trans }}</label>
+                        <div class="row">
+                            <div class="col-sm-6 col-md-6 col-lg-6 offset-sm-5 offset-md-5 offset-lg-5">
+                                <select class="form_sty_sel form-control" style="border-radius: 5px" id="grado_id" name="grado_id">
+                                    <option value="0"></option>
+                                    {% for grado in grados %}
+                                        <option value="{{ grado.id }}">{{ grado.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                                <span class="fa fa-sort-numeric-asc"></span>
+                                <span class="bttn_d"><img src="{{ asset('img/down-arrowbck.png') }}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-16 col-sm-16 col-lg-16 col-xl-16">
+                        <label for="empresa_id" class="col-sm-6 col-md-6 col-lg-16 offset-sm-5 offset-md-5 offset-lg-5">{{ 'Empresa'|trans }}</label>
+                        <div class="row">
+                            <div class="col-sm-6 col-md-6 col-lg-6 offset-sm-5 offset-md-5 offset-lg-5">
+                                <select class="form_sty_sel form-control" style="border-radius: 5px" id="empresa_id" name="empresa_id">
+                                    <option value="0"></option>
+                                    {% for empresa in empresas %}
+                                        <option value="{{ empresa.id }}">{{ empresa.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                                <span class="fa fa-industry"></span>
+                                <span class="bttn_d"><img src="{{ asset('img/down-arrowbck.png') }}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" id="div-paginas" style="display:none;">
+    <div class="col-sm-16">
+        <div class="card">
+            <div class="card-header gradiente">
+                <h5 class="card-title" id="panelTitle">{{ 'Páginas principales'|trans }}</h5>
+            </div>
+            <div class="card-block">
+                <div id="listado">
+                    
+                </div>
+                <div class="load1 load-wrapper">
+                    <div class="loader">
+                        Loading...
+                    </div>  
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block formModal %}
+    <div class="modal-header" style="background: linear-gradient(to right, #0084db 0%, #00558D 100%); color: #fff;">
+        <h5 class="modal-title" id="exampleModalLongTitle">{{ 'Duplicar página y sub-páginas'|trans }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" style="color: #fff;">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form id="form" name="form" action="{{ path( '_ajaxDuplicatePage')}}" method="POST">
+            <input type="hidden" id="pagina_id" name="pagina_id" value="">
+            <div class="form-group">
+                <label for="titulo" class="form-control-label">{{ 'Título para esta página'|trans }}:</label>
+                <input type="text" class="form-control form_sty_modal" id="titulo" name="titulo" value="">
+                <span class="fa fa-cube"></span>
+            </div>
+            <div class="form-group">
+                <label for="tipo_pagina_id" class="form-control-label">{{ 'Tipo de página'|trans }}:</label>
+                <select class="form-control form_sty_select" name="tipo_pagina_id" id="tipo_pagina_id">
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="estatus_contenido_id" class="form-control-label">{{ 'Estatus'|trans }}:</label>
+                <select class="form-control form_sty_select" name="estatus_contenido_id" id="estatus_contenido_id">
+                </select>
+            </div>
+        </form>
+        <div class="alert alert-success" role="alert" id="alert-success" style="display:none;"> 
+            <strong>{{ 'Bien hecho'|trans }}!</strong> {{ 'Cantidad de registros creados'|trans }}: <span id="inserts"></span>. 
+        </div>
+        <div class="card" id="detail" style="display:none;">
+            <div class="card-header" style="background: linear-gradient(to right, #0084db 0%, #00558D 100%);">
+                <h4 class="card-title" style="color: #fff; text-transform: uppercase">{{ 'Estructura'|trans }}</h4>
+            </div>
+            <div class="card-block">
+                <div class="container">
+                    <div class="row justify-content-between">
+                        <div class="col-sm-16 col-md-16 col-lg-16 col-xl-16 pnl__tree" id="tree_paginas">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('assets/vendor/jstree/dist/jstree.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendor/datatables/RowReorder-1.2.3/js/dataTables.rowReorder.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('jq/jquery-validation-1.15.0/dist/jquery.validate.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/admin/paginas.js') }}"></script>
+    <script type="text/javascript">
+        $("#form").validate({
+            rules: {
+                'titulo': {
+                    required: true,
+                    minlength: 3
+                }
+            },
+            messages: {
+                'titulo': {
+                    titulo: "{{ 'Este campo es requerido'|trans }}.",
+                    minlength: "{{ 'Debe ser mínimo de 3 caracteres'|trans }}."
+                }
+            }
+        });
+    </script>
+{% endblock %}

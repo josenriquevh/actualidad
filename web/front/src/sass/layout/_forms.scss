@@ -1,0 +1,13 @@
+input[type=text] {
+    border: 0px;
+    border-bottom: 2px solid $azul-primary-light;
+
+    color: $azul-primary;
+    font-size: 1.2rem;
+    width: 80%;
+}
+
+input:focus {
+    box-shadow:none !important;
+    outline: 0 none;
+  }

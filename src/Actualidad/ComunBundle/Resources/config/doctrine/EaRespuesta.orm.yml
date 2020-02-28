@@ -1,0 +1,64 @@
+Actualidad\ComunBundle\Entity\EaRespuesta:
+    type: entity
+    table: ea_respuesta
+    indexes:
+        IDX_9806980A31A5801E:
+            columns:
+                - pregunta_id
+        IDX_9806980A5BDBF2F:
+            columns:
+                - opcion_id
+        IDX_9806980A25A67894:
+            columns:
+                - prueba_log_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        nro:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+        fechaCreacion:
+            type: datetime
+            nullable: true
+            column: fecha_creacion
+    manyToOne:
+        pregunta:
+            targetEntity: EaPregunta
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                pregunta_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        opcion:
+            targetEntity: EaOpcion
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                opcion_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        pruebaLog:
+            targetEntity: EaPruebaLog
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                prueba_log_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }
